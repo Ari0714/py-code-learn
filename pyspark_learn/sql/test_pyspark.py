@@ -1,5 +1,4 @@
 import findspark
-
 findspark.init()
 from datetime import datetime, timedelta
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType, DecimalType, FloatType
