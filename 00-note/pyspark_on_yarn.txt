@@ -1,0 +1,35 @@
+
+conda activate superset
+
+
+pip install --upgrade setuptools
+python -m pip install --upgrade pip
+
+pip install pyspark==2.4.3 -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+export PYSPARK_PYTHON=/opt/miniconda3/envs/superset/bin/python3
+
+
+standalone提交：
+spark-submit \
+--master spark://hdp:7077 \
+--driver-memory 1g \
+--num-executors 2 \
+--executor-memory 2g \
+--executor-cores 1 \
+--total-executor-cores 2 \
+--py-files dbscan.zip dbscan.py
+
+
+yarn提交：
+spark-submit \
+--master yarn \
+--deploy-mode cluster \
+--driver-memory 1g \
+--num-executors 2 \
+--executor-memory 2g \
+--executor-cores 1 \
+--total-executor-cores 2 \
+--py-files pyspark-wc.zip wordcount.py \
+hdfs://class3:9000/input/word.txt hdfs://class3:9000/output/01
+
