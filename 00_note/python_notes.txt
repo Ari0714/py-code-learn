@@ -18,6 +18,9 @@ pip install matplotlib -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install pandas -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install pymysql -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install pyhdfs -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install jieba -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+
 
 pip install clickhouse_driver -i https://pypi.tuna.tsinghua.edu.cn/simple
 

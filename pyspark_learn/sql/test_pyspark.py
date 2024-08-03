@@ -1,4 +1,5 @@
 import findspark
+
 findspark.init()
 from datetime import datetime, timedelta
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType, DecimalType, FloatType
@@ -6,6 +7,8 @@ from pyspark.sql import SparkSession
 import jieba
 
 '''read csv file'''
+
+
 def read_csv():
     spark = SparkSession.builder.getOrCreate()
 
