@@ -41,7 +41,7 @@ if __name__ == '__main__':
     sc = spark.sparkContext
 
     # 读取数据: day	county	state	confirm	death
-    inputRDD = sc.textFile("input/data.txt") \
+    inputRDD = sc.textFile("input/data.csv") \
         .filter(lambda x: "day" not in x) \
         .filter(lambda x: len(x) > 0)
 

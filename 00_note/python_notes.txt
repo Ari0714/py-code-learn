@@ -28,7 +28,12 @@ pip install sqlalchemy=1.0.4 -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install clickhouse_sqlalchemy -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 
+
 pip install apache-airflow==2.2.5 -i  https://pypi.tuna.tsinghua.edu.cn/simple
+
+
+
+pip install koalas -i  https://pypi.tuna.tsinghua.edu.cn/simple
 
 
 升级pip
