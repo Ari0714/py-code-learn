@@ -9,7 +9,7 @@ default_args = {
     # 是否开启任务依赖
     'depends_on_past': True,
     # 邮箱
-    'email': ['1127914080@qq.com'],
+    'email': ['1187334030@qq.com'],
     # 启动时间
     'start_date': datetime(2023, 1, 19),
     # 出错是否发邮件报警
@@ -30,7 +30,7 @@ t1 = BashOperator(
     # 任务 id
     task_id='dwd',
     # 任务命令 使用Spark的wordcount
-    bash_command='ssh hadoop102 "/opt/module/spark-3.2-yarn/bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn /opt/module/spark-3.2-yarn/examples/jars/spark-examples*.jar 10 "',
+    bash_command='ssh tcvm "/opt/spark-2.4.8-bin-hadoop2.7/bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn /opt/spark-2.4.8-bin-hadoop2.7/examples/jars/spark-examples*.jar 10 "',
     # 重试次数
     retries=1,
     # 把任务添加进图中
@@ -38,13 +38,13 @@ t1 = BashOperator(
 
 t2 = BashOperator(
     task_id='dws',
-    bash_command='ssh hadoop102 "/opt/module/spark-3.2-yarn/bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn /opt/module/spark-3.2-yarn/examples/jars/spark-examples*.jar 10 "',
+    bash_command='ssh tcvm "/opt/spark-2.4.8-bin-hadoop2.7/bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn /opt/spark-2.4.8-bin-hadoop2.7/examples/jars/spark-examples*.jar 10 "',
     retries=1,
     dag=dag)
 
 t3 = BashOperator(
     task_id='ads',
-    bash_command='ssh hadoop102 "/opt/module/spark-3.2-yarn/bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn /opt/module/spark-3.2-yarn/examples/jars/spark-examples*.jar 10 "',
+    bash_command='ssh tcvm "/opt/spark-2.4.8-bin-hadoop2.7/bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn /opt/spark-2.4.8-bin-hadoop2.7/examples/jars/spark-examples*.jar 10 "',
     retries=1,
     dag=dag)
 
