@@ -3,7 +3,28 @@
 --------------------------------------------------------------install-------------------------------------------------------------
 
 --- tutorial
-https://blog.csdn.net/weixin_45417821/article/details/128696999
+https://www.cnblogs.com/chencoolandclear/p/16600659.html
+
+--- start stop
+cd /home/dev/anaconda3/bin
+nohup airflow webserver -D -p 8090
+nohup airflow scheduler -D
 
 
----
+airflow users create \
+--username admin \
+--firstname Ari \
+--lastname chen \
+--role Admin \
+--email 1187334030@qq.com
+
+
+http://hdp:8090/home。 admin/111111
+
+
+--- change mysql
+set global explicit_defaults_for_timestamp =1;
+
+
+
+--------------------------------------------------------------usage-------------------------------------------------------------
