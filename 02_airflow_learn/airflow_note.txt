@@ -7,22 +7,25 @@ https://www.cnblogs.com/chencoolandclear/p/16600659.html
 
 --- start stop
 cd /home/dev/anaconda3/bin
+- start webserver
 nohup airflow webserver -D -p 8090
-nohup airflow scheduler -D
+- start scheduler
+nohup2 airflow scheduler -D
 
 
 airflow users create \
 --username admin \
 --firstname Ari \
---lastname chen \
+--lastname Chen \
 --role Admin \
 --email 1187334030@qq.com
 
 
-http://hdp:8090/home。 admin/111111
+http://hdp:8090/home。 admin/cj111111
 
 
 --- change mysql
+sql_alchemy_conn = mysql://root:cj111111@hdp:3306/airflow  （no use localhost）
 set global explicit_defaults_for_timestamp =1;
 
 
