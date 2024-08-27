@@ -11,7 +11,7 @@ if __name__ == '__main__':
     conf = SparkConf().setAppName('collaborativeFiltering').setMaster("local[*]")
     spark = SparkSession.builder.config(conf=conf).getOrCreate()
 
-    data_path = "input/ratings.csv"
+    data_path = "00_input/ratings.csv"
     model_path = "output/model_param"
     train_flag = True
     epoch = 10
@@ -20,7 +20,7 @@ if __name__ == '__main__':
     ratingsInputDF = spark.read \
         .format("csv") \
         .option("header", "true") \
-        .load("input/ratings.csv")
+        .load("00_input/ratings.csv")
     ratingsInputDF.show()
     # 创建临时表
     ratingsInputDF.createTempView("ratings_info")

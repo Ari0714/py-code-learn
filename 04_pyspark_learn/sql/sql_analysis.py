@@ -41,7 +41,7 @@ if __name__ == '__main__':
     sc = spark.sparkContext
 
     # 读取数据: day	county	state	confirm	death
-    inputRDD = sc.textFile("input/data.csv") \
+    inputRDD = sc.textFile("00_input/data.csv") \
         .filter(lambda x: "day" not in x) \
         .filter(lambda x: len(x) > 0)
 
@@ -62,7 +62,7 @@ if __name__ == '__main__':
         .option("sep", ",") \
         .schema(schema) \
         .option("header", "false") \
-        .load("input/doctors.txt")
+        .load("00_input/doctors.txt")
 
 
     # 转化为dataFrame

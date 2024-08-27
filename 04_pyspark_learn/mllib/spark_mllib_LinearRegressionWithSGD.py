@@ -23,7 +23,7 @@ if __name__ == '__main__':
         .format("csv") \
         .option("sep", "\t") \
         .option("header", "true") \
-        .load("hdfs://hdp:8020/input/part-00000")
+        .load("hdfs://hdp:8020/00_input/part-00000")
     inputDF.createOrReplaceTempView("house_info")
     inputDF.show()
 

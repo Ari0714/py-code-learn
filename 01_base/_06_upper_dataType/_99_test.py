@@ -9,8 +9,8 @@ users = {
 }
 
 for i in range(3):
-    user = input('please input user:')
-    pwd = input('please input pwd:')
+    user = input('please 00_input user:')
+    pwd = input('please 00_input pwd:')
     if (user in users and pwd == users[user]['password'] and users[user]['status']):
         print('login success')
         break

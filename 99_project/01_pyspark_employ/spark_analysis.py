@@ -13,7 +13,7 @@ if __name__ == '__main__':
         .format("csv") \
         .option("sep", "\t") \
         .option("header", "true") \
-        .load("input/data.csv")
+        .load("00_input/data.csv")
     inputDF.show()
     # 创建临时表
     inputDF.createTempView("employ_info")

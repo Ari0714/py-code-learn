@@ -1,5 +1,5 @@
 
-# name = input("请输入您的姓名：")
+# name = 00_input("请输入您的姓名：")
 # print("name:", name)
 
 # 2、advanced usage

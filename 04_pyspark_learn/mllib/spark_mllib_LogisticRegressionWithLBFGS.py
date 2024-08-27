@@ -21,7 +21,7 @@ if __name__ == '__main__':
     spark = SparkSession.builder.getOrCreate()
     sc = spark.sparkContext
 
-    inputRDD = sc.textFile("input/heart.txt") \
+    inputRDD = sc.textFile("00_input/heart.txt") \
         .filter(lambda x: "age" not in x)
 
     parseData = inputRDD.map(lambda x: f1(x))

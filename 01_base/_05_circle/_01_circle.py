@@ -62,7 +62,7 @@ print(result)
 print('break', '*' * 20)
 # while True:
 #     print(111)
-#     name = input('请输入你的名字：')
+#     name = 00_input('请输入你的名字：')
 #     if name == 'mia':
 #         print('mia欢迎回家')
 #         break

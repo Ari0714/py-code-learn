@@ -18,7 +18,7 @@ if __name__ == '__main__':
     spark = SparkSession.builder.getOrCreate()
     sc = spark.sparkContext
 
-    df = sc.textFile("input/Iris.csv")\
+    df = sc.textFile("00_input/Iris.csv")\
         .filter(lambda x: not str(x).__contains__('Id'))\
         .map(lambda line: line.split(','))\
         .map(lambda p: Row(**f(p))).toDF()
