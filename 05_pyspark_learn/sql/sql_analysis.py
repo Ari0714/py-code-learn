@@ -17,11 +17,11 @@ def f1(x):
 def f2(x):
     return str(datetime.strptime(x, '%Y-%m-%d').date() + timedelta(days=-1))
 
-# dataframe => rdd
+# dataframe => 02_hbase
 def df2rdd(inputDF):
     inputDF.select("province","specialty").rdd.map(tuple).foreach(lambda x:print(x))
 
-# rdd => dataframe
+# 02_hbase => dataframe
 def rdd2df(rdd):
     schema = StructType([StructField('day', StringType()),
                          StructField('county', StringType()),
