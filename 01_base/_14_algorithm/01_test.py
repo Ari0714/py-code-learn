@@ -71,5 +71,7 @@ def uniqueOccurrences(self, arr: list) -> bool:
             return False
     return True
 
+# print(uniqueOccurrences('1', [-17,-21,9,9,22,22,22,-21,-16,-21,-16,-9,-16,-21,22,-21,-17,-21,-16,-17,22]))
 
-print(uniqueOccurrences('1', [-17,-21,9,9,22,22,22,-21,-16,-21,-16,-9,-16,-21,22,-21,-17,-21,-16,-17,22]))
+print('msg'.upper())
+print('Msg'.lower())

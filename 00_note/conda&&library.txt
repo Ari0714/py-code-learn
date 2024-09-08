@@ -12,6 +12,15 @@ conda activate sr_test
 - quit
 conda deactivate
 
+- configura
+(airflow) [atguigu@hadoop102 software]$  sudo mkdir ~/.pip
+(airflow) [atguigu@hadoop102 software]$  sudo vim  ~/.pip/pip.conf
+#添加以下内容
+[global]
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+[install]
+trusted-host = https://pypi.tuna.tsinghua.edu.cn
+
 
 
 ----- install superset

@@ -22,6 +22,7 @@ print(int(t2))
 
 
 # float
+print('\n'+("*"*20))
 print("float*"*20)
 t2 = 10.234
 t3 = 14.56
@@ -33,14 +34,17 @@ print(math.floor(t2 * t3))
 print(math.ceil(t2 * t3))
 
 # str
-print("str*"*20)
+print('\n'+("*"*20))
 s1 = '123456123456'
 s2 = '123abc'
+print(s1.count('1'))
+print('966999999999996'.replace('6','9',3))   #digital represent replace num, 1 -> replace_first
 s3 = '''
 123
 abc
 '''
 print(s3)
+print(s3.strip())
 print(s1 + s2)
 print('#$%' * 3)
 # str index
@@ -60,6 +64,7 @@ print(s1.index('12',3)) # start index3 find
 print(s1.rindex('12',3)) #
 
 # letter to digital, versa
+print('\n'+("*"*20))
 print(chr(65))
 print(chr(97))
 print(ord('A'))

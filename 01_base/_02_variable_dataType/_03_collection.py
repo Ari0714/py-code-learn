@@ -10,7 +10,11 @@ li1 = [0,3,6,4,5]
 # li1.append(5)
 # print(li1)
 # print(sorted(li1,reverse=False))
-li1.sort(key=lambda x:x == 0,reverse=False)    # not sort put last position, bool sort base on [1,0]
+# li1.sort(key=lambda x:x == 0,reverse=False)    # not sort put last position, bool sort base on [1,0]
+# print(li1)
+li2 = sorted(li1)  # sorted return new. sort not
+print(li2)
+li1.sort()
 print(li1)
 
 # 3、map
