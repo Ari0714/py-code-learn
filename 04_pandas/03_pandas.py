@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 
 if __name__ == '__main__':
-    scores = np.random.randint(40, 100, (10, 5))
+    scores = np.random.randint(40, 100, (10, 5))  #range, (row,cloumn)
     print(scores)
 
     score_df = pd.DataFrame(scores)

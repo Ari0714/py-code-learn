@@ -4,6 +4,10 @@ import numpy as np
 import pandas as pd
 
 if __name__ == '__main__':
+
+    se0 = pd.Series(['book','picture'])
+    print(se0)
+
     se = pd.Series(np.arange(10))
     print(se)
     print(type(se))

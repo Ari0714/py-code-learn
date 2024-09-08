@@ -15,8 +15,14 @@ print(isinstance(a, str))
 
 # int
 print("int*"*20)
-t1 = 10
+t1 = 0.5
+print(int(t1))
+t2 = 1.5
+print(int(t2))
+
+
 # float
+print("float*"*20)
 t2 = 10.234
 t3 = 14.56
 t3 = t3+10
@@ -52,3 +58,18 @@ print(s1.rfind('12'))  #
 print(s1.index('12'))  # return first 1, no error if not find
 print(s1.index('12',3)) # start index3 find
 print(s1.rindex('12',3)) #
+
+# letter to digital, versa
+print(chr(65))
+print(chr(97))
+print(ord('A'))
+print(ord('a'))
+
+# == is: ==compare value, is compare disk position
+print(65 == 65)
+print(65555 is 65555)
+print('65' == '65')
+print('65' is '65')
+
+print([1,2,3,4] is [1,2,3,4])  # 输出 True
+print([1,2,3,4] == [1,2,3,4])  # 输出 True
