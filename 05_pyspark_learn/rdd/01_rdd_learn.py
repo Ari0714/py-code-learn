@@ -1,4 +1,6 @@
 import findspark
+from pyspark.sql.types import DataType
+
 findspark.init()
 from datetime import datetime, timedelta
 from pyspark.sql import SparkSession, DataFrame

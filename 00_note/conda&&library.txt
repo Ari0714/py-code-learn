@@ -126,8 +126,11 @@ http://localhost:8888/tree
 
 -----python安装包
 pip install findspark -i https://pypi.tuna.tsinghua.edu.cn/simple
-pip install pyspark==2.4.3 -i https://pypi.tuna.tsinghua.edu.cn/simple（pip install pypandoc==1.5 -i https://pypi.tuna.tsinghua.edu.cn/simple）
-引用col：安装pyspark-stubs
+pip install pyspark==2.4.3 -i https://pypi.tuna.tsinghua.edu.cn/simple（
+pip install pypandoc==1.5 -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install pyspark-stubs==2.4.0.post5 -i https://pypi.tuna.tsinghua.edu.cn/simple  -- show hit
+）
+引用col：安装
 pip install pyecharts==1.9.1 -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install matplotlib -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install pandas -i https://pypi.tuna.tsinghua.edu.cn/simple
