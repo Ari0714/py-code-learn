@@ -1,15 +1,17 @@
 
 --------------------------------------------------------------install-------------------------------------------------------------
 
+
+
 --- tutorial
 https://www.cnblogs.com/chencoolandclear/p/16600659.html
 
 --- start stop
 cd /home/dev/anaconda3/bin
 - start webserver
-nohup airflow webserver -p 8090 > webserver.log &
+nohup airflow webserver -p 8090 -D - > webserver.log &
 - start scheduler
-nohup airflow scheduler  > executor.log &
+nohup airflow scheduler -D  > executor.log &
 
 
 airflow users create \

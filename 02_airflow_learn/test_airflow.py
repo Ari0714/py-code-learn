@@ -1,17 +1,19 @@
 #!/usr/bin/python
+
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
+from airflow.utils.dates import days_ago
 
 default_args = {
-    # 用户 test_owner DAG下的所有者
-    'owner': 'luanhao',
+    # 用户
+    'owner': 'Ari',
     # 是否开启任务依赖
     'depends_on_past': True,
     # 邮箱
     'email': ['1187334030@qq.com'],
     # 启动时间
-    'start_date': datetime(2023, 1, 19),
+    'start_date': days_ago(1),
     # 出错是否发邮件报警
     'email_on_failure': False,
     # 重试是否发邮件报警
@@ -23,14 +25,14 @@ default_args = {
 }
 
 # 声明任务图
-# test代表任务名称（可以修改其他名称,这里我们用wordcount）
-dag = DAG('wordcount', default_args=default_args, schedule_interval=timedelta(days=1))
+dag = DAG('test', default_args=default_args, schedule_interval=timedelta(days=1))
+
 # 创建单个任务
 t1 = BashOperator(
-    # 任务 id
+    # 任务id
     task_id='dwd',
-    # 任务命令 使用Spark的wordcount
-    bash_command='ssh tcvm "/opt/spark-2.4.8-bin-hadoop2.7/bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn /opt/spark-2.4.8-bin-hadoop2.7/examples/jars/spark-examples*.jar 10 "',
+    # 任务命令
+    bash_command='echo "hello Ari"',
     # 重试次数
     retries=1,
     # 把任务添加进图中
@@ -38,16 +40,17 @@ t1 = BashOperator(
 
 t2 = BashOperator(
     task_id='dws',
-    bash_command='ssh tcvm "/opt/spark-2.4.8-bin-hadoop2.7/bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn /opt/spark-2.4.8-bin-hadoop2.7/examples/jars/spark-examples*.jar 10 "',
+    bash_command='echo "hello Ari"',
     retries=1,
     dag=dag)
 
 t3 = BashOperator(
     task_id='ads',
-    bash_command='ssh tcvm "/opt/spark-2.4.8-bin-hadoop2.7/bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn /opt/spark-2.4.8-bin-hadoop2.7/examples/jars/spark-examples*.jar 10 "',
+    bash_command='echo "hello Ari"',
     retries=1,
     dag=dag)
 
 # 设置任务依赖
-t2.set_upstream(t1)
-t3.set_upstream(t2)
+t1 >> t2 >> t3
+# t2.set_upstream(t1)
+# t3.set_upstream(t2)
