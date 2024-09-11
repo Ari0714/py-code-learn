@@ -33,6 +33,20 @@ dict_sort = sorted(dict.items(),key=lambda i:i[1])
 print(dict_sort[0][0])
 print(len(dict))
 
+# 4、set
+print('\n'+"*"*20)
+ss = {}
+s = set()
+s.add(1)
+s.add(2)
+s.add(3)
+s2 = set()
+s2.add(1)
+s2.add(2)
+s2.add(3)
+s2.add(4)
+print(s2 >= s)
+
 # 2、 -> float
 # s = '324.6'  # 有没有小数点都可以
 # print(float(s))
