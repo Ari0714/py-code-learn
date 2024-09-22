@@ -8,6 +8,8 @@ list3 = list() # 类型转换：把参数转换为列表
 print(list3)
 list3 = list('12345678') # 类型转换：str-->list
 print(list3)
+print(list3[::-1])
+print(list3.reverse())
 
 # 列表的索引
 print(list3[5])
@@ -57,10 +59,9 @@ list3.pop(3)
 print(list3)
 # 根据元素删除
 list3.remove('7')
+list3.pop(0)
 print(list3)
 list3.append('hello')
-print(list3)
-list3.remove('hello')
 print(list3)
 # 清空列表
 list3.clear()

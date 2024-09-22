@@ -19,6 +19,10 @@ t1 = 0.5
 print(int(t1))
 t2 = 1.5
 print(int(t2))
+print(10/3)
+print(10//3)
+print(11%3)  #get rest,opposite above
+
 
 # float
 print('\n' + ("*" * 20))

@@ -12,7 +12,10 @@
 #     print()
 
 # 2、for
-for i in range(10):
-    for j in range(i):
-      print('%d x %d = %d' % (i, j+1, (i) * (j+1)), end=' ')
-    print()
+# for i in range(10):
+#     for j in range(i):
+#       print('%d x %d = %d' % (i, j+1, (i) * (j+1)), end=' ')
+#     print()
+
+for i in range(3):
+    print(i)
