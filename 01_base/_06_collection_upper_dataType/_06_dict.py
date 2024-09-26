@@ -49,3 +49,11 @@ d.update({'age':18})
 print('update',d)
 d.clear()
 print(d)
+
+# sort
+d2 = {'c':3,'a':1,'b':2}
+print(list(d2.items())[0][0])
+d2_sort = sorted(d2.items(),key=lambda x:x[1],reverse=True)
+print(type(d2_sort))
+print(d2_sort)
+print([[x[0],x[1]] for x in d2_sort])

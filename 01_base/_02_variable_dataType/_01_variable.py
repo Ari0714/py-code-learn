@@ -41,6 +41,8 @@ print(math.ceil(t2 * t3))
 print('\n' + ("*" * 20))
 s1 = '123456123456'
 s2 = '123abc'
+s3 = s2
+print(s3)
 print(s1.count('1'))
 print('966999999999996'.replace('6', '9', 3))  # digital represent replace num, 1 -> replace_first
 s3 = '''
@@ -75,10 +77,10 @@ print(ord('A'))
 print(ord('a'))
 
 # == is: ==compare value, is compare disk position
-print(65 == 65)
-print(65555 is 65555)
-print('65' == '65')
-print('65' is '65')
+print(65 == 65)   # 输出 True
+print(65555 is 65555)   # 输出 True
+print('65' == '65')   # 输出 True
+print('65' is '65')   # 输出 True
 
-print([1, 2, 3, 4] is [1, 2, 3, 4])  # 输出 True
+print([1, 2, 3, 4] is [1, 2, 3, 4])  # 输出 False
 print([1, 2, 3, 4] == [1, 2, 3, 4])  # 输出 True

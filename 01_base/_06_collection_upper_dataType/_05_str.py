@@ -1,4 +1,9 @@
 
+s0 = 'abc'
+for i in range(len(s0)):
+    print(s0[0:i+1])
+print(s0[0:1])
+
 # s1 = 'hello world'
 #
 # # 序列的通用操作

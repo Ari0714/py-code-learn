@@ -4,11 +4,13 @@ for i in range(2,0,-1):
 
 # 2、list
 print('\n'+"*"*20)
-li1 = [0,3,6,4,5]
+li1 = [0,3,6,4,5,7,5]
 print(max(li1))
 # remove
 li1.pop(0)
-li1.remove(5)
+print(li1)
+li1.remove(5)  #remove first count from left
+print(li1)
 li1.clear()
 # li1.append(6)
 # li1.append(5)
