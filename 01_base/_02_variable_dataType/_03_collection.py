@@ -1,15 +1,15 @@
 # 1、 range
-for i in range(2,0,-1):
+for i in range(2, 0, -1):
     print(i)
 
 # 2、list
-print('\n'+"*"*20)
-li1 = [0,3,6,4,5,7,5]
+print('\n' + "*" * 20)
+li1 = [0, 3, 6, 4, 5, 7, 5]
 print(max(li1))
 # remove
 li1.pop(0)
 print(li1)
-li1.remove(5)  #remove first count from left
+li1.remove(5)  # remove first count from left
 print(li1)
 li1.clear()
 # li1.append(6)
@@ -24,23 +24,23 @@ li1.sort()
 print(li1)
 
 # 3、map
-print("*"*20)
-dict = {'a':1,'b':2}
+print("*" * 20)
+dict = {'a': 1, 'b': 2}
 dict['c'] = 3
 print(dict)
 print(dict.get('c') is not None)
-for key,value in dict.items():
-    print(key,value)
+for key, value in dict.items():
+    print(key, value)
 
-dict = {'b':2,'a':1,}
+dict = {'b': 2, 'a': 1, }
 print(dict)
 print(type(list(dict.items())[0]))
-dict_sort = sorted(dict.items(),key=lambda i:i[1])
+dict_sort = sorted(dict.items(), key=lambda i: i[1])
 print(dict_sort[0][0])
 print(len(dict))
 
 # 4、set
-print('\n'+"*"*20)
+print('\n' + "*" * 20)
 ss = {}
 s = set()
 s.add(1)

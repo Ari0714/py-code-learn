@@ -1,4 +1,6 @@
 # 列表的创建
+print(list(range(3)))
+print(list(range(1,3)))
 list1 = []  # 空列表
 print(list1)
 print(type(list1))
@@ -7,14 +9,22 @@ print(list2)
 list3 = list() # 类型转换：把参数转换为列表
 print(list3)
 list3 = list('12345678') # 类型转换：str-->list
-print(list3)
+# print(list3)
 print(list3[::-1])
-print(list3.reverse())
+# print(list3.reverse())   # None, no use anymore
+print(list3)
+print(list3.count('1'))
+print(1 not in [1,2,3])
+print(list3.index('2'))     # no find
 
+
+print('\n'+'*'*20)
 # 列表的索引
 print(list3[5])
 
 # 列表的切片
+print('\n'+'*'*20)
+print(list3[0:5:1])
 print(list3[2:6:2])
 
 # 列表的加法和乘法
@@ -46,7 +56,7 @@ for i in range(len(list2)):
 print('-'*30)
 # 列表的常用方法method  变量.方法名()
 # 添加元素
-list3.append('666')
+list3.append('666')  # error, li2 retuen None: li2 = li.append('123')
 print(list3)
 # 添加列表
 list3.extend([1, 2, 3])
@@ -70,3 +80,18 @@ print(list3)
 # 计算若干个人的平均年龄
 age = [10,20,30,40,23,45,78,43]
 print(sum(age) / len(age))
+
+
+# sort
+print('\n'+'*'*20)
+sort_li1 = [6, 2, 3, 4, 5]
+sort_li1.sort()
+print(sort_li1)
+
+# get common have
+print('\n'+'*'*20)
+set1 = set()
+A = [1, 2, 3, 4, 5]
+B = [4, 5, 6, 7, 8]
+print(set(A).intersection(set(B))) # {4, 5}
+print([x for x in A if x in B])

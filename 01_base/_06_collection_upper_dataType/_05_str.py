@@ -4,18 +4,27 @@ for i in range(len(s0)):
     print(s0[0:i+1])
 print(s0[0:1])
 
-# s1 = 'hello world'
-#
-# # 序列的通用操作
-# print(s1+' mia')
-# print(s1*3)
-# print(len(s1))
-# print(max(s1),min(s1))
-# # del s1
-# # print(s1)
-# print('s' in s1)
-# print('abcd'<'abce')
-# print('cd'<'abcd')
+# 序列的通用操作
+s1 = 'hello world'
+print(s1+' mia')
+print(s1.split(' ')[1])
+print(s1[1])
+print(s1[::-1])
+print(reversed(s1))   # return object, no use
+print(''.join(reversed(s1)))  # list -> str
+print(s1*3)
+print(len(s1))
+print(max(s1),min(s1))
+print('a##'.isalpha())
+print('1'.isdigit())
+print('1234'.startswith('1'))
+
+print('\n'+'*'*20)
+# del s1
+# print(s1)
+print('s' in s1)
+print('abcd'<'abce')
+print('cd'<'abcd')
 #
 # # 字符串的遍历
 # for i in s1:
@@ -31,15 +40,28 @@ print(s0[0:1])
 # print(str((1,)),type(str(1,)))  #tuple-->str
 #
 # # 常用方法
-# print(s1.islower())
-# print(s1.isupper())
-# print(s1.count('o'))
-# print(s1.strip())
-# print(s1.split(' ')) # 分隔字符串
-# print(s1.find('a'))
-# print('#$'.join(['111','222','333']))
-#
+print(s1.lower())
+print(s1.upper())
+print(s1.islower())
+print(s1.isupper())
+print(s1.count('o'))
+print(s1.strip())
+print(s1.split(' ')) # 分隔字符串
+print(s1.find('a'))
+print('#$'.join(['111','222','333']))
+
+print('\n'+'*'*20)
+s2 = '123456123456'
+print(s2.find('12'))  # return first 1, no error and return -1 if not find
+print(s2.find('12', 3))  # start index3 find
+print(s2.rfind('12'))  #
+# print(s2.index('125'))  # return first 1, error if not find
+print(s2.index('12', 3))  # start index3 find
+print(s2.rindex('12', 3))  #
+
+
 # # 字符串的统计
+print('\n'+'*'*20)
 # s = 00_input('请输入一篇文章：')
 # # 字母的个数、数字的个数、符号的个数
 # a,b,c = 0,0,0
@@ -61,3 +83,31 @@ s = list(s)
 print(s)
 s[0] = 'a'
 print(s)
+
+# letter to digital, versa
+print('\n' + ("*" * 20))
+print(chr(65))
+print(chr(97))
+print(ord('A'))  # 97
+print(ord('a'))  # 65
+
+# print alpha char between a-x
+res1 = []
+for i in range(ord("A"),ord("Z")+1):
+    res1.append(chr(i))
+print(res1)
+
+# remove & replace
+print('\n' + ("*" * 20))
+str_r1 = 'abca'
+str_r2 = str_r1.replace('c','d')
+# print(str_r2)
+str_r3 = str_r1.replace('a','r')   # all
+print(str_r3)
+# str_r3 = str_r1.removeprefix('a')
+# print(str_r3)
+# str_r4 = str_r1.removesuffix('a')
+# print(str_r4)
+li_p1 = list('123')
+li_p1.pop(2)   #print exact figure
+print(li_p1)

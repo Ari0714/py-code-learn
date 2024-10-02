@@ -21,7 +21,7 @@ t2 = 1.5
 print(int(t2))
 print(10/3)
 print(10//3)
-print(11%3)  #get rest,opposite above
+print(11%3)  #get rest,opposite above #mod
 
 
 # float
@@ -62,19 +62,9 @@ print(s1[::2])
 print('reverse str:', s1[-1:-10:-1])  # str outrange not report error
 print('reverse str:', s1[::-1])  # str outrange not report error
 
-print(s1.find('12'))  # return first 1, no error and return -1 if not find
-print(s1.find('12', 3))  # start index3 find
-print(s1.rfind('12'))  #
-print(s1.index('12'))  # return first 1, no error if not find
-print(s1.index('12', 3))  # start index3 find
-print(s1.rindex('12', 3))  #
 
-# letter to digital, versa
-print('\n' + ("*" * 20))
-print(chr(65))
-print(chr(97))
-print(ord('A'))
-print(ord('a'))
+
+
 
 # == is: ==compare value, is compare disk position
 print(65 == 65)   # 输出 True
