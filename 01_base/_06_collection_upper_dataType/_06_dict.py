@@ -13,6 +13,7 @@ print(type(d))
 # print(d,type(d))
 # 新增键值对
 d['height'] = 170
+d['HEIGHT'] = 170
 print(d)
 # 获取键值对
 print(d['name'])
@@ -25,6 +26,7 @@ print(d)
 print('name' in d)
 
 # 字典的遍历
+print('\n'+'*'*20)
 for i in d:
     print(i,d[i])
 print('-'*30)
@@ -50,10 +52,29 @@ print('update',d)
 d.clear()
 print(d)
 
+# transform
+print('\n'+'*'*20)
+d3 = {'c':3,'a':1,'b':2}
+print(list(d3))  # default only  key
+print(list(d3.items()))  # default only  key
+
+
 # sort
+print('\n'+'*'*20)
 d2 = {'c':3,'a':1,'b':2}
 print(list(d2.items())[0][0])
 d2_sort = sorted(d2.items(),key=lambda x:x[1],reverse=True)
 print(type(d2_sort))
 print(d2_sort)
 print([[x[0],x[1]] for x in d2_sort])
+
+
+# accumulate
+print('\n'+'*'*20)
+dict = {}
+li2 = ['a','b','b','c']
+for i in li2:
+    dict[i] = dict.get(i,0) + 1
+for item in dict.items():
+    print(item)
+

@@ -1,5 +1,6 @@
 
 # range(start, end, step)
+print(list(range(0))) # => []
 print(list(range(10)))  # end
 print(list(range(2,10)))  # start,end
 print(list(range(2,10,3))) # start,end,step

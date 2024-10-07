@@ -36,15 +36,17 @@ print(s)
 s.add(1)
 print(s)
 
-# 交集 并集
+# intersection unall subtract
 s2 = {5,6,7,8,9}
 print(s2)
-print(s & s2)
-print(s | s2)
+print(s & s2)  # intersection
+print(s | s2) # union   return is set, no replica
+print(s - s2) # subtract
 
 # 列表去重
+print('\n'+'*'*20)
 score = [80,70,60,80,70,60,40]
-s = set(score)
+s = set(score)   # order has been destroy
 print(s)
 d = {}
 # 统计各个分数都有几个学生

@@ -19,10 +19,9 @@ t1 = 0.5
 print(int(t1))
 t2 = 1.5
 print(int(t2))
-print(10/3)
-print(10//3)
-
-print(11%3)  #get rest,opposite above #mod
+print(10/3)   # 3.33
+print(10//3)  # 3
+print(10%3)  # 1, get rest,opposite above #mod
 
 
 # float
@@ -40,12 +39,13 @@ print(math.ceil(t2 * t3))
 
 # str
 print('\n' + ("*" * 20))
+print(int(''))  # error, print(int('123c'))
 s1 = '123456123456'
 s2 = '123abc'
 s3 = s2
 print(s3)
 print(s1.count('1'))
-print('966999999999996'.replace('6', '9', 3))  # digital represent replace num, 1 -> replace_first
+print('966999999999996'.replace('6', '9', 3))  # digital represent replace num, 1 -> replace 1 unit, no replace_first
 s3 = '''
 123
 abc
@@ -56,15 +56,14 @@ print(s1 + s2)
 print('#$%' * 3)
 # str index
 print(s1[0])
-print(s1[-1])
+print(s1[-1])  # last number
+print([1,2,3,4,5][-3:-1])  # -> [3,4] , not contain
+print(s1[-3:])  # last 3 number
 print(s1[1:3])  # contain head not tail [)
 print(s1[1:6:2])
 print(s1[::2])
 print('reverse str:', s1[-1:-10:-1])  # str outrange not report error
 print('reverse str:', s1[::-1])  # str outrange not report error
-
-
-
 
 
 # == is: ==compare value, is compare disk position

@@ -1,4 +1,9 @@
 
+# if
+print(1==1)
+print(1==1==1)
+
+
 # 1、singe branch
 print('singe branch', '*' * 20)
 weather = '下雨'
@@ -6,10 +11,13 @@ if weather != '下雨':
     print('带伞出门')  # if语句的下级代码
 
 # if的语法
+print('\n'+'*'*20)
 if False:
     print(111)
 
+
 # 判断年龄age>18
+print('\n'+'*'*20)
 age = 19
 if age >= 18:
     print('可以进网吧')

@@ -86,10 +86,10 @@ print(s)
 
 # letter to digital, versa
 print('\n' + ("*" * 20))
-print(chr(65))
-print(chr(97))
-print(ord('A'))  # 97
-print(ord('a'))  # 65
+print(chr(65))   # A
+print(chr(97))   # a
+print(ord('A'))  # 65 - 90
+print(ord('a'))  # 97 - 122
 
 # print alpha char between a-x
 res1 = []

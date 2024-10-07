@@ -37,9 +37,13 @@ print('1' in [1, 2, 3, 4])
 print([3,2,3,4]<[2,1])
 
 # 内置函数  函数名()
-print(len(list3))  # 求元素个数
-print(max(list3))  # 求元素的最大值
-print(min(list3))  # 求元素的最小值
+print('\n'+'*'*20)
+list4 = [1,2,3,4]
+print(([][0:0]))  # sum(empty []) -> return 0
+print(len(list4))  # 求元素个数
+print(max(list4))  # 求元素的最大值
+print(min(list4))  # 求元素的最小值
+print(sum(list4) / len(list4))  # mean
 # del list3   # 删除变量
 # print(list3)
 print('-'*30)
