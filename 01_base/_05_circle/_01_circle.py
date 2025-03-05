@@ -59,7 +59,7 @@ print(result)
 
 
 # 3、break
-print('break', '*' * 20)
+print('\nbreak', '*' * 20)
 # while True:
 #     print(111)
 #     name = 00_input('请输入你的名字：')
@@ -69,11 +69,13 @@ print('break', '*' * 20)
 #     else:
 #         print('mia不在家，你一会儿再来吧')
 
-
-for i in range(10):
+# for else combine useage
+for i in range(4):
     if i>0 and i%3==0:
         print(i)
         break     #skip circle，only take one
+else:
+    print('for.... else')
 
 # 判断一个数字n是否是质数
 n = 8
@@ -99,7 +101,7 @@ else:
 
 
 # 4、continue
-print('continue', '*' * 20)
+print('\ncontinue', '*' * 20)
 for i in range(5):
     if i==2:
         continue    #stop run after, start new circle
@@ -128,10 +130,10 @@ for i in range(5):
 #     g *= 2  #当前格子应该放的麦粒数*2
 #
 # 人生的复利 (1+0.01)=1.01
-day = 0
-total = 1
-while day<365:
-    total = total*1.11
-    print(total)
-    day += 1
+# day = 0
+# total = 1
+# while day<365:
+#     total = total*1.11
+#     print(total)
+#     day += 1
 

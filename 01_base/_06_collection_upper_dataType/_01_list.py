@@ -15,7 +15,7 @@ print(list3[::-1])
 print(list3)
 print(list3.count('1'))
 print(1 not in [1,2,3])
-print(list3.index('2'))     # no find
+print(['2','2','4'].index('2'))     #no value report error; only str has find func, no value return -1
 
 
 print('\n'+'*'*20)
@@ -85,12 +85,13 @@ print(list3)
 age = [10,20,30,40,23,45,78,43]
 print(sum(age) / len(age))
 
-
 # sort
 print('\n'+'*'*20)
 sort_li1 = [6, 2, 3, 4, 5]
 sort_li1.sort()
 print(sort_li1)
+sort_li2 = sorted(sort_li1)
+print(sort_li2)
 
 # get common have
 print('\n'+'*'*20)
@@ -99,3 +100,13 @@ A = [1, 2, 3, 4, 5]
 B = [4, 5, 6, 7, 8]
 print(set(A).intersection(set(B))) # {4, 5}
 print([x for x in A if x in B])
+
+# enumerate
+print('\n'+'*'*20)
+aa = list(enumerate([1,2,3]))
+print(aa)  #[(0, 1), (1, 2), (2, 3)]
+
+# 2w list distinct
+print('\n'+'*'*20)
+li2 = [[1,2],[3,4],[1,2]]
+# print([x for x in li2 if ])

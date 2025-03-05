@@ -22,11 +22,12 @@ print(min({1,2,3,4}))
 
 
 # 集合的遍历
-print('-'*30)
+print('\n'+'*'*20)
 for i in s:
     print(i)
 
 # 常用的方法
+print('\n'+'*'*20)
 s.remove('a')
 print(s)
 s.update({2,3,4,5,6,7,6,5})
@@ -35,8 +36,14 @@ s.add(9)
 print(s)
 s.add(1)
 print(s)
+s2 = set()
+l1 = [1,2]
+l2 = [3,4,5]
+s2.update(l1,l2)
+print(s2)
 
 # intersection unall subtract
+print('\n'+'*'*20)
 s2 = {5,6,7,8,9}
 print(s2)
 print(s & s2)  # intersection

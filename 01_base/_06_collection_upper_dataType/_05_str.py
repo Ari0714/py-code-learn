@@ -1,4 +1,6 @@
 
+print('abc'[0:0])   # return ''
+
 s0 = 'abc'
 for i in range(len(s0)):
     print(s0[0:i+1])
@@ -40,8 +42,9 @@ print('cd'<'abcd')
 # print(str((1,)),type(str(1,)))  #tuple-->str
 #
 # # 常用方法
-print(s1.lower())
-print(s1.upper())
+print(s1.title())  # first word upper(), -> Hello World
+print(s1.lower())  # hello world
+print(s1.upper())  # HELLO WORLD
 print(s1.islower())
 print(s1.isupper())
 print(s1.count('o'))
@@ -100,9 +103,9 @@ print(res1)
 # remove & replace
 print('\n' + ("*" * 20))
 str_r1 = 'abca'
-str_r2 = str_r1.replace('c','d')
+str_r2 = str_r1.replace('c','d')  # all
 # print(str_r2)
-str_r3 = str_r1.replace('a','r')   # all
+str_r3 = str_r1.replace('a','r')
 print(str_r3)
 # str_r3 = str_r1.removeprefix('a')
 # print(str_r3)

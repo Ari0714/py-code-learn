@@ -1,6 +1,8 @@
 
 
 
+li = 'a good   example'.split(' ')
+print(li)
 
 nums = [0,0,0]
 min_num = min([x for x in nums if x > 0])

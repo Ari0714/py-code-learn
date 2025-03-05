@@ -13,15 +13,7 @@ a = '123abc'
 print(type(a))
 print(isinstance(a, str))
 
-# int
-print("int*" * 20)
-t1 = 0.5
-print(int(t1))
-t2 = 1.5
-print(int(t2))
-print(10/3)   # 3.33
-print(10//3)  # 3
-print(10%3)  # 1, get rest,opposite above #mod
+
 
 
 # float
