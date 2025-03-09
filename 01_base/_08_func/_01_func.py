@@ -45,6 +45,8 @@ result2 = total(*a)
 print(result2)
 
 
+
+
 def f(**kwargs): # 可变参数，接收字典
     for k,v in kwargs.items():
         print(k,v)
