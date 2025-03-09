@@ -36,13 +36,13 @@ def total(*args): # 可变参数
         result += i*i
     return result
 
-result = total(1,4,5,6,7,8,3)
+result3 = total(1,4,5,6,7,8,3)
 
-print(result)
-result = total(3,4,5)
+print(result3)
+result4 = total(3,4,5)
 a = [1,2,3,4,5]
-result = total(*a)
-print(result)
+result2 = total(*a)
+print(result2)
 
 
 def f(**kwargs): # 可变参数，接收字典
