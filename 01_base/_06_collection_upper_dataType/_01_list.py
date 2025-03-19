@@ -11,7 +11,6 @@ print(list3)
 list3 = list('12345678') # 类型转换：str-->list
 # print(list3)
 print(list3[::-1])
-# print(list3.reverse())   # None, no use anymore
 print(list3)
 print(list3.count('1'))
 print(1 not in [1,2,3])
