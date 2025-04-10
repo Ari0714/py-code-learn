@@ -11,3 +11,4 @@ def quick_sort(arr):
 
 if __name__ == '__main__':
     print(quick_sort([1, 9, 5, 6, 8]))
+    print(quick_sort([5, 2, 1, 12, 1, 5]))
