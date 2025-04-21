@@ -1,6 +1,4 @@
 
-
-
 li = 'a good   example'.split(' ')
 print(li)
 

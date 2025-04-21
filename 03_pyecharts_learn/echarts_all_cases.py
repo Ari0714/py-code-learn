@@ -152,7 +152,7 @@ def drawChart_4():
 
     c = (
         WordCloud()
-            .add("", data, word_size_range=[20, 100], shape=SymbolType.DIAMOND)
+            .add("", data, word_size_range=[20, 100], shape=SymbolType.DIAMOND)    # pic distinguish is small  -》 【10，200】
             .set_global_opts(title_opts=opts.TitleOpts(title="美国各州确诊Top10"))
             .render("output_html/result04.html")
     )
