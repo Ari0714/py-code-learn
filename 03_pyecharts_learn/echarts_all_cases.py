@@ -322,6 +322,31 @@ def drawChart_10():
     table.render("output_html/result10.html")
 
 
+# 11. 散点
+# 北京用电量随月份变化分析
+def drawChart_11():
+    root = "output/03/part-00000-2f6cb13c-1d91-4951-9528-e32a36884393-c000.json"
+    date = []
+    cases = []
+    with open(root, 'r', encoding='utf-8') as f:
+        while True:
+            line = f.readline()
+            if not line:  # 到 EOF，返回空字符串，则终止循环
+                break
+            js = json.loads(line)
+            date.append(str(js['month']))
+            cases.append(int(js['avg_load']))
+
+    d = (
+        Scatter()
+            .add_xaxis(date)
+            .add_yaxis("用电量", cases)
+            .set_series_opts(label_opts=opts.LabelOpts(is_show=False))
+            .set_global_opts(title_opts=opts.TitleOpts(title="北京用电量随月份变化分析"))
+            .render("output_html/result03.html")
+    )
+
+
 if __name__ == '__main__':
     # drawChart_1()
     # drawChart_2()
