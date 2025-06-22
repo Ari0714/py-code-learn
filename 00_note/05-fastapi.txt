@@ -9,7 +9,7 @@ https://blog.csdn.net/my_name_is_learn/article/details/109819127
 --- pip
 pip install fastapi -i https://pypi.tuna.tsinghua.edu.cn/simple
 version：0.83
-pip install uvicorn  -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install uvicorn  -i http://pypi.mirrors.ustc.edu.cn/simple/
 version: 0.16
 
 --- start

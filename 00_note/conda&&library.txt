@@ -125,11 +125,11 @@ http://localhost:8888/tree
 
 
 -----python安装包
-pip install findspark -i https://pypi.tuna.tsinghua.edu.cn/simple
-pip install pyspark==2.4.3 -i https://pypi.tuna.tsinghua.edu.cn/simple（
-pip install pypandoc==1.5 -i https://pypi.tuna.tsinghua.edu.cn/simple
-pip install pyspark-stubs==2.4.0.post5 -i https://pypi.tuna.tsinghua.edu.cn/simple  -- show hit
-）
+pip install findspark -i  https://mirrors.aliyun.com/pypi/simple/
+pip install pyspark==3.0.3 -i https://mirrors.aliyun.com/pypi/simple/
+pip install pypandoc==1.5 -i https://mirrors.aliyun.com/pypi/simple/
+pip install pyspark-stubs==3.0.0 -i https://mirrors.aliyun.com/pypi/simple/  -- show hit
+
 引用col：安装
 pip install pyecharts==1.9.1 -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install matplotlib -i https://pypi.tuna.tsinghua.edu.cn/simple
@@ -168,9 +168,9 @@ pip install jupyter -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 
 其他镜像
-阿里源：http://mirrors.aliyun.com/pypi/simple/
-科大源：http://pypi.mirrors.ustc.edu.cn/simple/
-清华源：http://mirrors.tuna.tsinghua.edu.cn/pypi/simple
+阿里源：https://mirrors.aliyun.com/pypi/simple/
+科大源：https://pypi.mirrors.ustc.edu.cn/simple/
+清华源：https://mirrors.tuna.tsinghua.edu.cn/pypi/simple
 官方源：https://pypi.python.org/
 
 
