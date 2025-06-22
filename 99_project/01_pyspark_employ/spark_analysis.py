@@ -3,6 +3,7 @@ findspark.init()
 from pyspark.sql import SparkSession, DataFrame
 from pyspark import SparkConf
 
+
 if __name__ == '__main__':
     conf = SparkConf()
     # conf.setMaster('spark://master:7077')
