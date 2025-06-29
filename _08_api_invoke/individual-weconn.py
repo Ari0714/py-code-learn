@@ -53,10 +53,15 @@ def get_daily_change_percent(symbol, apikey):
 apikey = "9b0740741cc74bb2ab03dd90b74e8061"  # 替换为你的 Twelve Data Key
 avg_sum = 0
 sends = time.strftime('%Y-%m-%d %H:%M', time.localtime())+"\n\n"
-for symbol in ["NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META"]:
+index = 0
+for symbol in ["NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META","QQQ"]:
     pct = get_daily_change_percent(symbol, apikey)
-    avg_sum += pct
-    print(f"📈 {symbol} 昨日涨跌幅：{pct}%")
-    sends += f"{symbol} 昨日涨跌幅：{pct}%\n"
-print(f"📈 昨日平均涨跌幅：{round(avg_sum/7,2)}%")
-sendMsg(sends+f"\n昨日平均涨跌幅：{round(avg_sum/7,2)}%")
+    if("QQQ" != symbol):
+        avg_sum += pct
+        print(f"{symbol} 昨日涨跌幅：{pct}%")
+        sends += f"{symbol} 昨日涨跌幅：{pct}%\n"
+    if ("QQQ" == symbol):
+        index = pct
+print(f"\nM7 昨日平均涨跌幅：{round(avg_sum/7,2)}%")
+print(f"QQQ 昨日涨跌幅 {index}%")
+sendMsg(sends+f"\nM7 昨日平均涨跌幅：{round(avg_sum/7,2)}% \nQQQ 昨日涨跌幅：{index}%")
