@@ -2,6 +2,7 @@
 import requests
 import pandas as pd
 import time
+import datetime
 
 def sendMsg(msg):
     webhook_url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=0c90c9da-8b10-40b1-9818-61d73758e683"
@@ -21,9 +22,10 @@ def get_vix_cboe_csv():
         print(f"CBOE CSV获取失败: {e}")
         return None
 
-print("CBOE最新VIXk: " + str(get_vix_cboe_csv()))
+if(datetime.datetime.now().weekday() < 5):
+    print("CBOE最新VIXk: " + str(get_vix_cboe_csv()))
 
-sends = time.strftime('%Y-%m-%d %H:%M', time.localtime())+"\n\n"
-sendMsg(f"{sends}CBOE最新VIX: {str(get_vix_cboe_csv())}")
+    sends = time.strftime('%Y-%m-%d %H:%M', time.localtime())+"\n\n"
+    sendMsg(f"{sends}CBOE最新VIX: {str(get_vix_cboe_csv())}")
 
 

@@ -1,6 +1,7 @@
 import yfinance as yf
 from datetime import datetime, timedelta
 import time
+import datetime
 
 # def get_stock_change(symbols=["AAPL", "TSLA"]):
 #     end_date = datetime.now()
@@ -48,20 +49,20 @@ def get_daily_change_percent(symbol, apikey):
         print(f"⚠️ 解析失败: {e}")
         return None
 
-
 # 示例调用
-apikey = "9b0740741cc74bb2ab03dd90b74e8061"  # 替换为你的 Twelve Data Key
-avg_sum = 0
-sends = time.strftime('%Y-%m-%d %H:%M', time.localtime())+"\n\n"
-index = 0
-for symbol in ["NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META","QQQ"]:
-    pct = get_daily_change_percent(symbol, apikey)
-    if("QQQ" != symbol):
-        avg_sum += pct
-        print(f"{symbol} 昨日涨跌幅：{pct}%")
-        sends += f"{symbol} 昨日涨跌幅：{pct}%\n"
-    if ("QQQ" == symbol):
-        index = pct
-print(f"\nM7 昨日平均涨跌幅：{round(avg_sum/7,2)}%")
-print(f"QQQ 昨日涨跌幅 {index}%")
-sendMsg(sends+f"\nM7 昨日平均涨跌幅：{round(avg_sum/7,2)}% \nQQQ 昨日涨跌幅：{index}%")
+if(datetime.datetime.now().weekday() < 5):
+    apikey = "9b0740741cc74bb2ab03dd90b74e8061"  # 替换为你的 Twelve Data Key
+    avg_sum = 0
+    sends = time.strftime('%Y-%m-%d %H:%M', time.localtime())+"\n\n"
+    index = 0
+    for symbol in ["NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META","QQQ"]:
+        pct = get_daily_change_percent(symbol, apikey)
+        if("QQQ" != symbol):
+            avg_sum += pct
+            print(f"{symbol} 昨日涨跌幅：{pct}%")
+            sends += f"{symbol} 昨日涨跌幅：{pct}%\n"
+        if ("QQQ" == symbol):
+            index = pct
+    print(f"\nM7 昨日平均涨跌幅：{round(avg_sum/7,2)}%")
+    print(f"QQQ 昨日涨跌幅 {index}%")
+    sendMsg(sends+f"\nM7 昨日平均涨跌幅：{round(avg_sum/7,2)}% \nQQQ 昨日涨跌幅：{index}%")
