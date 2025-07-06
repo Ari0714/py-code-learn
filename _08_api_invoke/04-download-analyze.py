@@ -1,11 +1,13 @@
-# import yfinance
-#
-# data = yfinance.download('QQQ')
-#
-# print(data)
 import time
 
 import requests
+import findspark
+
+findspark.init()
+from datetime import datetime, timedelta
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType, DecimalType, FloatType
+from pyspark.sql import SparkSession
+import json
 
 
 def get_daily_change_percent(symbol, apikey='9b0740741cc74bb2ab03dd90b74e8061'):
@@ -32,13 +34,6 @@ def get_daily_change_percent(symbol, apikey='9b0740741cc74bb2ab03dd90b74e8061'):
 def get_data_insert(indexx):
     data = get_daily_change_percent(indexx)
     print(data)
-
-    import findspark
-    findspark.init()
-    from datetime import datetime, timedelta
-    from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType, DecimalType, FloatType
-    from pyspark.sql import SparkSession
-    import json
 
     spark = SparkSession.builder.getOrCreate()
     sc = spark.sparkContext
