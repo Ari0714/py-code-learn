@@ -3,27 +3,6 @@ from datetime import datetime, timedelta
 import time
 import datetime
 
-# def get_stock_change(symbols=["AAPL", "TSLA"]):
-#     end_date = datetime.now()
-#     start_date = end_date - timedelta(days=7)  # 获取近7天数据确保覆盖交易日
-#
-#     try:
-#         data = yf.download(symbols, start=start_date, end=end_date, progress=False)
-#         changes = {}
-#         for symbol in symbols:
-#             close_prices = data['Close'][symbol]
-#             if len(close_prices) >= 2:
-#                 last_close = close_prices.iloc[-1]
-#                 prev_close = close_prices.iloc[-2]
-#                 changes[symbol] = (last_close - prev_close) / prev_close * 100
-#         return changes
-#     except Exception as e:
-#         print(f"获取数据失败: {e}")
-#         return None
-#
-# # 测试
-# changes = get_stock_change()
-# print(f"昨日涨跌幅: {changes}")
 
 import requests
 
