@@ -29,9 +29,6 @@ def get_daily_change_percent(symbol, apikey='9b0740741cc74bb2ab03dd90b74e8061'):
         return None
 
 
-
-
-
 def get_data_insert(indexx):
     data = get_daily_change_percent(indexx)
     print(data)
@@ -55,7 +52,7 @@ def get_data_insert(indexx):
                          StructField('close', StringType())
                          ])
 
-    df = spark.createDataFrame(inputRDD,schema)
+    df = spark.createDataFrame(inputRDD, schema)
     df.show()
     df.createOrReplaceTempView("history_data")
 
@@ -71,7 +68,6 @@ def get_data_insert(indexx):
                  ) t
                 """)
     legDF.createOrReplaceTempView("middle_table")
-
 
     resDF = spark.sql("""
             select 
@@ -109,6 +105,7 @@ def get_data_insert(indexx):
         password='cj111111',
     ).mode('overwrite').save()
 
+
 if __name__ == '__main__':
 
     # ["NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META","QQQ"]:
@@ -124,9 +121,3 @@ if __name__ == '__main__':
     for i in ["IBIT"]:
         get_data_insert(i)
         time.sleep(20)
-
-
-
-
-
-
