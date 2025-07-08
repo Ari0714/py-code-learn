@@ -93,7 +93,7 @@ def get_data_insert(indexx):
 
     # 保存到mysql
     legDF.repartition(1).write.format('jdbc').options(
-        url='jdbc:mysql://8.148.227.29:3306/us-stock?characterEncoding=utf-8&useSSL=false',
+        url='jdbc:mysql://8.148.227.29:3306/us-stock-202508?characterEncoding=utf-8&useSSL=false',
         driver='com.mysql.jdbc.Driver',  # the driver for MySQL
         user='root',
         dbtable=str(indexx).lower(),
