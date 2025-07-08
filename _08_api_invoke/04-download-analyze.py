@@ -107,9 +107,9 @@ if __name__ == '__main__':
     # for i in ["NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META","QQQ"]:
     #     get_data_insert(i)
 
-    # ["PLTR", "MSTR", "TSM", "AVGO", "NFLX", "SMCI", "HOOD","COIN"]:
-    # for i in ["PLTR", "MSTR", "TSM", "AVGO", "NFLX", "SMCI", "HOOD","COIN"]:
-    #     get_data_insert(i)
+    # ["PLTR", "MSTR", "TSM", "AVGO", "NFLX", "SMCI", "HOOD", "COIN", "AMD","MU"]
+    # for i in ["PLTR", "MSTR", "TSM", "AVGO", "NFLX", "SMCI", "HOOD", "COIN", "AMD","MU"]:
+    # get_data_insert(i)
     #     time.sleep(20)
 
     # ["IBIT"]:
