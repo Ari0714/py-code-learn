@@ -37,24 +37,26 @@ def get_vix_cboe_csv():
 
         # 打开页面
         driver.get('https://quotes.sina.cn/global/hq/quotes.php?code=VIX&_refluxos=a10')  # 替换成你的实际网址
-        time.sleep(1)  # 等待页面渲染完成（或使用 WebDriverWait 更稳）
+        time.sleep(15)  # 等待页面渲染完成（或使用 WebDriverWait 更稳）
 
         # 获取渲染后的页面 HTML
         html = driver.page_source
 
         # 用 lxml 解析
         tree = etree.HTML(html)
-        value = tree.xpath('//div[@id="HQBox_Point_price"]/text()')[0]
+        value = tree.xpath('//div[@id="hqbox_detail_price"]/text()')[0]
+        value_change = tree.xpath('//span[@id="hqbox_detail_change"]/text()')[0]
+        value_percent = tree.xpath('//span[@id="hqbox_detail_percent"]/text()')[0]
         driver.quit()
 
-        return value  # 获取最新收盘价
+        return value + ', ' + value_change + ', ' + value_percent  # 获取最新收盘价
     except Exception as e:
         print(f"CBOE CSV获取失败: {e}")
         return None
 
 
 if (datetime.datetime.now().weekday() < 5):
-    print("CBOE最新VIX: " + str(get_vix_cboe_csv()))
+    print("VIX: " + str(get_vix_cboe_csv()))
 
     sends = time.strftime('%Y-%m-%d %H:%M', time.localtime()) + "\n\n"
-    sendMsg(f"{sends}CBOE最新VIX: {str(get_vix_cboe_csv())}")
+    sendMsg(f"{sends}VIX: {str(get_vix_cboe_csv())}")

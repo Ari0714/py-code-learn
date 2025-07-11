@@ -21,6 +21,6 @@ if(datetime.datetime.now().weekday() < 5):
     print(f"🕒 更新时间：{fg.last_update}")
 
     sends = time.strftime('%Y-%m-%d %H:%M', time.localtime())+"\n\n"
-    sendMsg(f"{sends}CNN最新GREED: {round(fg.value,2)}\n情绪等级：{fg.description}")
+    sendMsg(f"{sends}GREED: {round(fg.value,2)}\n情绪等级：{fg.description}")
 
 
