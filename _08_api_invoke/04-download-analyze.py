@@ -219,6 +219,6 @@ if __name__ == '__main__':
     #     time.sleep(20)
 
     # ["IBIT"]:
-    for i in ["IBIT"]:
+    for i in ["IBIT","CRCL"]:
         get_data_insert(i)
         time.sleep(20)
