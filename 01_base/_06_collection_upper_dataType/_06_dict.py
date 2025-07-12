@@ -31,6 +31,7 @@ for i in d:
     print(i,d[i])
 print('-'*30)
 print(d.items())
+print(type(d.items()))
 for k,v in d.items():
     print(k,v)
 for k in d.keys():
