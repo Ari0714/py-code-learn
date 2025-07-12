@@ -14,7 +14,7 @@ def sendMsg(msg):
     requests.post(webhook_url, json=data)
 
 
-if(datetime.datetime.now().weekday() < 5):
+if __name__ == '__main__':
     fg = get()
     print(f"📈 当前指数：{fg.value}")
     print(f"🧭 情绪等级：{fg.description}")  # extreme fear / fear / neutral / greed / extreme greed

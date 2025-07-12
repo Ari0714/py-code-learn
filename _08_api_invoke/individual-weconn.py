@@ -29,10 +29,9 @@ def get_daily_change_percent(symbol, apikey):
         return None
 
 # 示例调用
-if(datetime.datetime.now().weekday() < 5):
+if __name__ == '__main__':
     apikey = "9b0740741cc74bb2ab03dd90b74e8061"  # 替换为你的 Twelve Data Key
     sends = time.strftime('%Y-%m-%d %H:%M', time.localtime()) + "\n\n"
-    # sends = ""
 
     # index
     for symbol in ["SPY","QQQ"]:
@@ -49,7 +48,7 @@ if(datetime.datetime.now().weekday() < 5):
         pct = get_daily_change_percent(symbol, apikey)
         li1[symbol] = pct
         print(f"{symbol} 昨日涨跌幅：{pct}%")
-        time.sleep(4)
+        time.sleep(8)
     for key, value in sorted(li1.items(), key=lambda x: x[1]):
         avg_sum += value
         sends += f"{key} 昨日涨跌幅：{value}%\n"

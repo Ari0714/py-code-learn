@@ -55,7 +55,7 @@ def get_vix_cboe_csv():
         return None
 
 
-if (datetime.datetime.now().weekday() < 5):
+if __name__ == '__main__':
     print("VIX: " + str(get_vix_cboe_csv()))
 
     sends = time.strftime('%Y-%m-%d %H:%M', time.localtime()) + "\n\n"
