@@ -208,8 +208,8 @@ def get_data_insert(indexx):
 
 if __name__ == '__main__':
 
-    # ["QQQ","NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META"]:
-    # for i in ["QQQ","NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META"]:
+    # ["IBIT", "QQQ","NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META"]:
+    # for i in ["IBIT", "QQQ","NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META"]:
     #     get_data_insert(i)
     #     time.sleep(20)
 
@@ -218,7 +218,9 @@ if __name__ == '__main__':
     #     get_data_insert(i)
     #     time.sleep(20)
 
-    # ["IBIT"]:
-    for i in ["IBIT","CRCL"]:
+    # ["CRCL", "RGTI","IONQ","RKLB","ASTS","MP","SMR","QS","ENVX","CRDO","ROKU","RBLX"]
+    for i in ["IONQ","RKLB","ASTS","MP","SMR","QS","ENVX","CRDO","ROKU","RBLX"]:
         get_data_insert(i)
         time.sleep(20)
+
+

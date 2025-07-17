@@ -1,5 +1,6 @@
 import time
 import findspark
+
 findspark.init()
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType, DecimalType, FloatType
 from pyspark.sql import SparkSession
@@ -45,7 +46,7 @@ def getAllSymbol():
     apikey = "9b0740741cc74bb2ab03dd90b74e8061"  # 替换为你的 Twelve Data Key
 
     # index
-    for symbol in ["SPY", "QQQ"]:
+    for symbol in ["QQQ", "IBIT"]:
         pct = get_daily_change_percent(symbol, apikey)
         index_dict[symbol] = pct
 
@@ -67,7 +68,7 @@ def getAllSymbol():
         time.sleep(8)
 
     # small and extra
-    for symbol in ["IBIT", "CRCL"]:
+    for symbol in ["CRCL", "RGTI","IONQ","RKLB","ASTS","MP","SMR","QS","ENVX","CRDO","ROKU","RBLX"]:
         pct = get_daily_change_percent(symbol, apikey)
         index_dict[symbol] = pct
         print(f"{symbol} 昨日涨跌幅：{pct}%")
@@ -113,18 +114,24 @@ if __name__ == '__main__':
     sends = time.strftime('%Y-%m-%d %H:%M', time.localtime()) + "\n"
     cols = resDF.rdd.map(tuple).collect()
     for i in cols:
-        if(str(i[0]) in ["NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META"]):
-            sends += "\n"+str(i[0]) + ": " + str(i[1]) + " | " + str(i[2]) + " | " + str(i[3])
+        if (str(i[0]) in ["NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META"]):
+            sends += "\n" + str(i[0]) + ": " + str(i[1]) + " | " + str(i[2]) + " | " + str(i[3])
     for i in cols:
-        if(str(i[0]) in ["QQQ"]):
-            sends += "\n-"+str(i[0]) + ": " + str(i[1]) + " | " + str(i[2]) + " | " + str(i[3])
+        if (str(i[0]) in ["M7"]):
+            sends += "\n-" + str(i[0]) + ": " + str(i[1]) + " | " + str(i[2]) + " | " + str(i[3])
+    for i in cols:
+        if (str(i[0]) in ["QQQ"]):
+            sends += "\n-" + str(i[0]) + ": " + str(i[1]) + " | " + str(i[2]) + " | " + str(i[3])
+    for i in cols:
+        if (str(i[0]) in ["IBIT"]):
+            sends += "\n-" + str(i[0]) + ": " + str(i[1]) + " | " + str(i[2]) + " | " + str(i[3])
     sends += "\n"
     for i in cols:
-        if (str(i[0]) in ["PLTR", "MSTR", "TSM", "AVGO", "NFLX", "SMCI", "HOOD", "COIN", "AMD","MU"]):
+        if (str(i[0]) in ["PLTR", "MSTR", "TSM", "AVGO", "NFLX", "SMCI", "HOOD", "COIN", "AMD", "MU"]):
             sends += "\n" + str(i[0]) + ": " + str(i[1]) + " | " + str(i[2]) + " | " + str(i[3])
     sends += "\n"
     for i in cols:
-        if (str(i[0]) in ["IBIT", "CRCL"]):
+        if (str(i[0]) in ["CRCL", "RGTI","IONQ","RKLB","ASTS","MP","SMR","QS","ENVX","CRDO","ROKU","RBLX"]):
             sends += "\n" + str(i[0]) + ": " + str(i[1]) + " | " + str(i[2]) + " | " + str(i[3])
 
     sendMsg(sends)
