@@ -135,8 +135,11 @@ if __name__ == '__main__':
     sends += "\n"
 
     for i in cols:
-        if (str(i[0]) in ["IBIT", "MSTR", "CRCL", "HOOD", "COIN"]):
+        if (str(i[0]) in ["MSTR", "CRCL", "HOOD", "COIN"]):
             sends += "\n" + str(i[0]) + ": " + str(i[1]) + " | " + str(i[2]) + " | " + str(i[3])
+    for i in cols:
+        if (str(i[0]) in ["IBIT"]):
+            sends += "\n-" + str(i[0]) + ": " + str(i[1]) + " | " + str(i[2]) + " | " + str(i[3])
     sends += "\n"
 
     for i in cols:
