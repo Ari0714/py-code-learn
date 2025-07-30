@@ -211,16 +211,25 @@ if __name__ == '__main__':
     # ["IBIT", "QQQ","NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META"]:
     # for i in ["IBIT", "QQQ","NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META"]:
     #     get_data_insert(i)
-    #     time.sleep(20)
+    #     time.sleep(15)
 
     # ["PLTR", "MSTR", "TSM", "AVGO", "NFLX", "SMCI", "HOOD", "COIN", "AMD","MU"]
     # for i in ["PLTR", "MSTR", "TSM", "AVGO", "NFLX", "SMCI", "HOOD", "COIN", "AMD","MU"]:
     #     get_data_insert(i)
-    #     time.sleep(20)
+    #     time.sleep(15)
 
-    # ["CRCL", "RGTI","IONQ","RKLB","ASTS","MP","SMR","QS","ENVX","CRDO","ROKU","RBLX"]
-    for i in ["IONQ","RKLB","ASTS","MP","SMR","QS","ENVX","CRDO","ROKU","RBLX"]:
+    # ["CRCL", "RGTI","IONQ","RKLB","ASTS","MP","SMR","CRDO","ROKU","RBLX"]
+    # for i in ["IONQ","RKLB","ASTS","MP","SMR","ROKU","RBLX","CCJ"]:
+    #     get_data_insert(i)
+    #     time.sleep(15)
+
+    # ai_infra small
+    for i in ["CRDO","IREN","CRWV","APLD","NBIS"]:
         get_data_insert(i)
-        time.sleep(20)
+        time.sleep(15)
 
+    # electricity & nuclear
+    # for i in ["GEV","CEG","UUUU","CCJ","BWXT","LEU","SMR","OKLO"]:
+    #     get_data_insert(i)
+    #     time.sleep(15)
 
