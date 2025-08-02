@@ -210,7 +210,7 @@ if __name__ == '__main__':
         time.sleep(15)
 
     # s
-    for i in ["RBLX", "ROKU","SOUN","RBRK"]:
+    for i in ["RBLX", "ROKU","FIX","SOUN","RBRK"]:
         get_data_insert(i)
         time.sleep(15)
 
@@ -235,7 +235,7 @@ if __name__ == '__main__':
         time.sleep(15)
 
     # electricity & nuclear
-    for i in ["GEV","CEG","UUUU","CCJ","BWXT","LEU","SMR","OKLO","NNE"]:
+    for i in ["GEV","CEG","UUUU","CCJ","BWXT","LEU","SMR","OKLO","NNE","VST","VRT"]:
         get_data_insert(i)
         time.sleep(15)
 
@@ -258,3 +258,7 @@ if __name__ == '__main__':
     for i in ["SOFI","SEZL","AFRM","XYZ"]:
         get_data_insert(i)
         time.sleep(15)
+
+    # for i in []:
+    #     get_data_insert(i)
+    #     time.sleep(15)
