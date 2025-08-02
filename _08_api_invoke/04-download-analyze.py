@@ -12,7 +12,7 @@ import json
 
 def get_daily_change_percent(symbol, apikey='9b0740741cc74bb2ab03dd90b74e8061'):
     # url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&outputsize=365&apikey={apikey}"
-    url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&start_date=2024-07-05&end_date=2025-07-05&apikey={apikey}&outputsize=5000"
+    url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&start_date=2024-08-02&end_date=2025-08-02&apikey={apikey}&outputsize=5000"
 
     resp = requests.get(url).json()
     try:
@@ -192,44 +192,69 @@ def get_data_insert(indexx):
         url='jdbc:mysql://8.148.227.29:3306/us-stock?characterEncoding=utf-8&useSSL=false',
         driver='com.mysql.jdbc.Driver',  # the driver for MySQL
         user='root',
-        dbtable='analysis_tab_202507',
+        dbtable='analysis_tab_202508',
         password='cj111111',
     ).mode('append').save()
-
-    # 保存到mysql
-    # legDF.repartition(1).write.format('jdbc').options(
-    #     url='jdbc:mysql://8.148.227.29:3306/us-stock?characterEncoding=utf-8&useSSL=false',
-    #     driver='com.mysql.jdbc.Driver',  # the driver for MySQL
-    #     user='root',
-    #     dbtable=str(indexx).lower()+'-202507',
-    #     password='cj111111',
-    # ).mode('overwrite').save()
 
 
 if __name__ == '__main__':
 
-    # ["IBIT", "QQQ","NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META"]:
-    # for i in ["IBIT", "QQQ","NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
+    # index & m7
+    for i in ["QQQ","NVDA","META","MSFT","GOOG","AMZN","AAPL","TSLA"]:
+        get_data_insert(i)
+        time.sleep(15)
 
-    # ["PLTR", "MSTR", "TSM", "AVGO", "NFLX", "SMCI", "HOOD", "COIN", "AMD","MU"]
-    # for i in ["PLTR", "MSTR", "TSM", "AVGO", "NFLX", "SMCI", "HOOD", "COIN", "AMD","MU"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
+    # m
+    for i in ["PLTR","AMD","SMCI","AVGO","TSM","ORCL","MU","NFLX"]:
+        get_data_insert(i)
+        time.sleep(15)
 
-    # ["CRCL", "RGTI","IONQ","RKLB","ASTS","MP","SMR","CRDO","ROKU","RBLX"]
-    # for i in ["IONQ","RKLB","ASTS","MP","SMR","ROKU","RBLX","CCJ"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
+    # s
+    for i in ["RBLX", "ROKU","SOUN","RBRK"]:
+        get_data_insert(i)
+        time.sleep(15)
+
+    # coin
+    for i in ["IBIT","HOOD","COIN","CRCL","MSTR"]:
+        get_data_insert(i)
+        time.sleep(15)
 
     # ai_infra small
-    for i in ["CRDO","IREN","CRWV","APLD","NBIS"]:
+    for i in ["CRDO","CRWV","IREN","NBIS"]:
+        get_data_insert(i)
+        time.sleep(15)
+
+    # semi
+    for i in ["MRVL","TER","AEHR"]:
+        get_data_insert(i)
+        time.sleep(15)
+
+    # data center
+    for i in ["APLD","EQIX","GLXY","DLR"]:
         get_data_insert(i)
         time.sleep(15)
 
     # electricity & nuclear
-    # for i in ["GEV","CEG","UUUU","CCJ","BWXT","LEU","SMR","OKLO"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
+    for i in ["GEV","CEG","UUUU","CCJ","BWXT","LEU","SMR","OKLO","NNE"]:
+        get_data_insert(i)
+        time.sleep(15)
 
+    # space
+    for i in ["RKLB","ASTS","PL"]:
+        get_data_insert(i)
+        time.sleep(15)
+
+    # quantum
+    for i in ["RGTI","IONQ","QUBT"]:
+        get_data_insert(i)
+        time.sleep(15)
+
+    # rare earth
+    for i in ["MP"]:
+        get_data_insert(i)
+        time.sleep(15)
+
+    # finance
+    for i in ["SOFI","SEZL","AFRM","XYZ"]:
+        get_data_insert(i)
+        time.sleep(15)

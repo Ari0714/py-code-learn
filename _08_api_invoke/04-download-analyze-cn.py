@@ -171,7 +171,7 @@ def get_insert(input_data, tab):
         url='jdbc:mysql://8.148.227.29:3306/us-stock?characterEncoding=utf-8&useSSL=false',
         driver='com.mysql.jdbc.Driver',  # the driver for MySQL
         user='root',
-        dbtable='analysis_tab_cn_202507',
+        dbtable='analysis_tab_cn_202508',
         password='cj111111',
     ).mode('append').save()
 
@@ -186,5 +186,5 @@ def get_insert(input_data, tab):
 
 
 if __name__ == '__main__':
-    get_insert("input/518880-history.csv", 'inner518880')
-    get_insert("input/159941-history.csv", 'inner159941')
+    get_insert("input/159941历史数据.csv", 'inner159941')
+    get_insert("input/518880历史数据.csv", 'inner518880')
