@@ -200,65 +200,70 @@ def get_data_insert(indexx):
 if __name__ == '__main__':
 
     # index & m7
-    for i in ["QQQ","NVDA","META","MSFT","GOOG","AMZN","AAPL","TSLA"]:
-        get_data_insert(i)
-        time.sleep(15)
-
-    # m
-    for i in ["PLTR","AMD","SMCI","AVGO","TSM","ORCL","MU","NFLX"]:
-        get_data_insert(i)
-        time.sleep(15)
-
-    # s
-    for i in ["RBLX", "ROKU","FIX","SOUN","RBRK"]:
-        get_data_insert(i)
-        time.sleep(15)
-
-    # coin
-    for i in ["IBIT","HOOD","COIN","CRCL","MSTR"]:
-        get_data_insert(i)
-        time.sleep(15)
-
-    # ai_infra small
-    for i in ["CRDO","CRWV","IREN","NBIS"]:
-        get_data_insert(i)
-        time.sleep(15)
-
-    # semi
-    for i in ["MRVL","TER","AEHR"]:
-        get_data_insert(i)
-        time.sleep(15)
-
-    # data center
-    for i in ["APLD","EQIX","GLXY","DLR"]:
-        get_data_insert(i)
-        time.sleep(15)
-
-    # electricity & nuclear
-    for i in ["GEV","CEG","UUUU","CCJ","BWXT","LEU","SMR","OKLO","NNE","VST","VRT"]:
-        get_data_insert(i)
-        time.sleep(15)
-
-    # space
-    for i in ["RKLB","ASTS","PL"]:
-        get_data_insert(i)
-        time.sleep(15)
-
-    # quantum
-    for i in ["RGTI","IONQ","QUBT"]:
-        get_data_insert(i)
-        time.sleep(15)
-
-    # rare earth
-    for i in ["MP"]:
-        get_data_insert(i)
-        time.sleep(15)
-
-    # finance
-    for i in ["SOFI","SEZL","AFRM","XYZ"]:
-        get_data_insert(i)
-        time.sleep(15)
-
-    # for i in []:
+    # for i in ["QQQ","NVDA","META","MSFT","GOOG","AMZN","AAPL","TSLA"]:
     #     get_data_insert(i)
     #     time.sleep(15)
+    #
+    # # m
+    # for i in ["PLTR","AMD","SMCI","AVGO","TSM","ORCL","MU","NFLX"]:
+    #     get_data_insert(i)
+    #     time.sleep(15)
+    #
+    # # s
+    # for i in ["RBLX","SPOT","FIX","APP","SOUN","RBRK"]:
+    #     get_data_insert(i)
+    #     time.sleep(15)
+    #
+    # # coin
+    # for i in ["HOOD","COIN","CRCL","MSTR"]:
+    #     get_data_insert(i)
+    #     time.sleep(15)
+    #
+    # # ai_infra small
+    # for i in ["CRDO","CRWV","IREN"]:
+    #     get_data_insert(i)
+    #     time.sleep(15)
+    #
+    # # semi
+    # for i in ["MRVL","TER","AEHR"]:
+    #     get_data_insert(i)
+    #     time.sleep(15)
+    #
+    # # data center
+    # for i in ["APLD","EQIX","GLXY","DLR"]:
+    #     get_data_insert(i)
+    #     time.sleep(15)
+    #
+    # # electricity & nuclear
+    # for i in ["GEV","CEG","CCJ","BWXT","LEU","SMR","OKLO","VST","VRT"]:
+    #     get_data_insert(i)
+    #     time.sleep(15)
+    #
+    # # space
+    # for i in ["RKLB","JOBY","ASTS"]:
+    #     get_data_insert(i)
+    #     time.sleep(15)
+    #
+    # # quantum
+    # for i in ["RGTI","IONQ"]:
+    #     get_data_insert(i)
+    #     time.sleep(15)
+    #
+    # # rare earth
+    # for i in ["MP"]:
+    #     get_data_insert(i)
+    #     time.sleep(15)
+    #
+    # # finance
+    # for i in ["SOFI","SEZL","AFRM","XYZ"]:
+    #     get_data_insert(i)
+    #     time.sleep(15)
+
+    # # medical
+    # for i in ["HIMS","CRSP"]:
+    #     get_data_insert(i)
+    #     time.sleep(15)
+
+    for i in [""]:
+        get_data_insert(i)
+        time.sleep(15)
