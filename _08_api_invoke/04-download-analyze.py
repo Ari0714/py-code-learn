@@ -205,12 +205,12 @@ if __name__ == '__main__':
     #     time.sleep(15)
     #
     # # m
-    # for i in ["PLTR","AMD","SMCI","AVGO","TSM","ORCL","MU","NFLX"]:
+    # for i in ["PLTR","AMD","AVGO","TSM","ORCL","MU","NFLX"]:
     #     get_data_insert(i)
     #     time.sleep(15)
     #
     # # s
-    # for i in ["RBLX","SPOT","FIX","APP","SOUN","RBRK"]:
+    # for i in ["DUOL","RBLX","SPOT","FIX","APP","SOUN","RBRK"]:
     #     get_data_insert(i)
     #     time.sleep(15)
     #
@@ -220,7 +220,7 @@ if __name__ == '__main__':
     #     time.sleep(15)
     #
     # # ai_infra small
-    # for i in ["CRDO","CRWV","IREN"]:
+    # for i in ["SMCI","CRDO","CRWV","IREN","NBIS","TGEN"]:
     #     get_data_insert(i)
     #     time.sleep(15)
     #
@@ -264,6 +264,6 @@ if __name__ == '__main__':
     #     get_data_insert(i)
     #     time.sleep(15)
 
-    for i in [""]:
+    for i in ["TGEN"]:
         get_data_insert(i)
         time.sleep(15)
