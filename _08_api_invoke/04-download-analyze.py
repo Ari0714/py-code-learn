@@ -215,17 +215,17 @@ if __name__ == '__main__':
     #     time.sleep(15)
     #
     # # coin
-    # for i in ["HOOD","COIN","CRCL","MSTR"]:
+    # for i in ["HOOD","COIN","CRCL","BMNR","MSTR"]:
     #     get_data_insert(i)
     #     time.sleep(15)
     #
     # # ai_infra small
-    # for i in ["SMCI","CRDO","CRWV","IREN","NBIS","TGEN"]:
+    # for i in ["SMCI","CRWV","IREN","NBIS","TGEN"]:
     #     get_data_insert(i)
     #     time.sleep(15)
     #
     # # semi
-    # for i in ["MRVL","TER","AEHR"]:
+    # for i in ["CRDO","ALAB","CLS","MRVL","TER","AEHR"]:
     #     get_data_insert(i)
     #     time.sleep(15)
     #
@@ -235,7 +235,7 @@ if __name__ == '__main__':
     #     time.sleep(15)
     #
     # # electricity & nuclear
-    # for i in ["GEV","CEG","CCJ","BWXT","LEU","SMR","OKLO","VST","VRT"]:
+    # for i in ["GEV","CEG","CCJ","BWXT","LEU","SMR","OKLO","VST","VRT","TGEN","BE"]:
     #     get_data_insert(i)
     #     time.sleep(15)
     #
@@ -255,7 +255,7 @@ if __name__ == '__main__':
     #     time.sleep(15)
     #
     # # finance
-    # for i in ["SOFI","SEZL","AFRM","XYZ"]:
+    # for i in ["OPFI","SOFI","SEZL","PGY","UPST","AFRM","XYZ"]:
     #     get_data_insert(i)
     #     time.sleep(15)
 
@@ -264,6 +264,6 @@ if __name__ == '__main__':
     #     get_data_insert(i)
     #     time.sleep(15)
 
-    for i in ["TGEN"]:
+    for i in ["BE"]:
         get_data_insert(i)
         time.sleep(15)
