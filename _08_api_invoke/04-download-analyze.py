@@ -220,7 +220,7 @@ if __name__ == '__main__':
     #     time.sleep(15)
     #
     # # ai_infra small
-    # for i in ["SMCI","CRWV","IREN","NBIS","TGEN"]:
+    # for i in ["CRWV","IREN","NBIS","TGEN"]:
     #     get_data_insert(i)
     #     time.sleep(15)
     #
