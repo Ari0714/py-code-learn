@@ -12,7 +12,7 @@ import json
 
 def get_daily_change_percent(symbol, apikey='9b0740741cc74bb2ab03dd90b74e8061'):
     # url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&outputsize=365&apikey={apikey}"
-    url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&start_date=2024-08-02&end_date=2025-08-02&apikey={apikey}&outputsize=5000"
+    url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&start_date=2024-09-03&end_date=2025-09-03&apikey={apikey}&outputsize=5000"
 
     resp = requests.get(url).json()
     try:
@@ -181,7 +181,8 @@ def get_data_insert(indexx):
             sum(if(ratio <= -11.7,1,0)) as `-11.7`,
             sum(if(ratio <= -11.8,1,0)) as `-11.8`,
             sum(if(ratio <= -11.9,1,0)) as `-11.9`,
-            sum(if(ratio <= -12.0,1,0)) as `-12.0`
+            sum(if(ratio <= -12.0,1,0)) as `-12.0`,
+            CURRENT_TIMESTAMP() as ts
             from middle_table
             group by indexx
                 """)
@@ -192,7 +193,7 @@ def get_data_insert(indexx):
         url='jdbc:mysql://8.148.227.29:3306/us-stock?characterEncoding=utf-8&useSSL=false',
         driver='com.mysql.jdbc.Driver',  # the driver for MySQL
         user='root',
-        dbtable='analysis_tab_202508',
+        dbtable='analysis_tab_202509',
         password='cj111111',
     ).mode('append').save()
 
@@ -200,70 +201,61 @@ def get_data_insert(indexx):
 if __name__ == '__main__':
 
     # index & m7
-    # for i in ["QQQ","NVDA","META","MSFT","GOOG","AMZN","AAPL","TSLA"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # m
-    # for i in ["PLTR","AMD","AVGO","TSM","ORCL","MU","NFLX"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # s
-    # for i in ["DUOL","RBLX","SPOT","FIX","APP","SOUN","RBRK"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # coin
-    # for i in ["HOOD","COIN","CRCL","BMNR","MSTR"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # ai_infra small
-    # for i in ["CRWV","IREN","NBIS","TGEN"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # semi
-    # for i in ["CRDO","ALAB","CLS","MRVL","TER","AEHR"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # data center
-    # for i in ["APLD","EQIX","GLXY","DLR"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # electricity & nuclear
-    # for i in ["GEV","CEG","CCJ","BWXT","LEU","SMR","OKLO","VST","VRT","TGEN","BE"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # space
-    # for i in ["RKLB","JOBY","ASTS"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # quantum
-    # for i in ["RGTI","IONQ"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # rare earth
-    # for i in ["MP"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # finance
-    # for i in ["OPFI","SOFI","SEZL","PGY","UPST","AFRM","XYZ"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-
-    # # medical
-    # for i in ["HIMS","CRSP"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-
-    for i in ["BE"]:
+    for i in ["QQQ","NVDA","META","MSFT","GOOG","AMZN","AAPL","TSLA"]:
         get_data_insert(i)
         time.sleep(15)
+
+    # coin
+    for i in ["HOOD","COIN","CRCL","BMNR","MSTR"]:
+        get_data_insert(i)
+        time.sleep(15)
+
+    # semi
+    for i in ["AVGO","ORCL","AMD","CRDO","CLS","ALAB","TSM","MRVL"]:
+        get_data_insert(i)
+        time.sleep(15)
+
+    # aa
+    for i in ["META","PLTR","APP"]:
+        get_data_insert(i)
+        time.sleep(15)
+
+    # af
+    for i in ["APLD","IREN","CORZ","CRWV","NBIS"]:
+        get_data_insert(i)
+        time.sleep(15)
+
+    # electricity & nuclear
+    for i in ["GEV","CEG","CCJ","BWXT","LEU","OKLO","VST","VRT","TGEN","FIX","AGX","BE"]:
+        get_data_insert(i)
+        time.sleep(15)
+
+    # space
+    for i in ["RKLB","ASTS","JOBY","RCAT"]:
+        get_data_insert(i)
+        time.sleep(15)
+
+    # finance
+    for i in ["SOFI","SEZL","PGY","OPFI","UPST","AFRM"]:
+        get_data_insert(i)
+        time.sleep(15)
+
+    # medical
+    for i in ["HIMS","CRSP","TEM","UNH"]:
+        get_data_insert(i)
+        time.sleep(15)
+
+    # quantum
+    for i in ["RGTI","IONQ"]:
+        get_data_insert(i)
+        time.sleep(15)
+
+    # s
+    for i in ["RDDT","SERV","RBLX","SOUN","RBRK","SMCI","MP"]:
+        get_data_insert(i)
+        time.sleep(15)
+
+
+    # for i in ["BE"]:
+    #     get_data_insert(i)
+    #     time.sleep(15)
