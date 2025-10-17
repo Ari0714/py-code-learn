@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 import time
 import datetime
 
-
 import requests
 
 def sendMsg(msg):

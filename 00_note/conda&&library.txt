@@ -151,7 +151,6 @@ pip install clickhouse_sqlalchemy -i https://pypi.tuna.tsinghua.edu.cn/simple
 --- superset
 pip install apache-superset -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-
 pip install koalas -i  https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install wxPython -i  http://mirrors.aliyun.com/pypi/simple/
@@ -172,6 +171,6 @@ pip install jupyter -i https://pypi.tuna.tsinghua.edu.cn/simple
 科大源：https://pypi.mirrors.ustc.edu.cn/simple/
 清华源：https://mirrors.tuna.tsinghua.edu.cn/pypi/simple
 官方源：https://pypi.python.org/
-
+https://pypi.tuna.tsinghua.edu.cn/simple
 
 
