@@ -22,3 +22,6 @@ print((1+3)**5)
 # test
 print('\n---test---')
 print((1+0.55)**11)
+
+
+print((1+0.3)**5)

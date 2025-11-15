@@ -18,6 +18,8 @@ def read_csv():
                          StructField('comment', StringType()),
                          ])
 
+    spark.udf.register()
+
     # read file
     inputDF = spark.read \
         .format("csv") \

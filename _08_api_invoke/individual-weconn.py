@@ -31,6 +31,7 @@ def get_daily_change_percent(symbol, apikey):
     resp = requests.get(url).json()
     try:
         # print(resp['values'])
+        print(resp)
         latest = float(resp['values'][0]['close'])
         prev = float(resp['values'][1]['close'])
         change_pct = ((latest - prev) / prev) * 100
