@@ -29,13 +29,14 @@ if __name__ == '__main__':
     # symbol = "TSLA"
     interval = "1day"  # 或者 "5min", "1h", "1wk" 等
     time_period = 14  # RSI的时间周期
-    start_date = "2024-07-22"
-    end_date = "2025-07-22"
+    start_date = "2024-11-22"
+    end_date = "2025-11-22"
 
-    for symbol in ["ARKK","QQQ", "IBIT",
-                   "NVDA", "AAPL", "TSLA", "MSFT", "GOOG", "AMZN", "META",
-                   "PLTR", "MSTR", "TSM", "AVGO", "NFLX", "SMCI", "HOOD", "COIN", "AMD", "MU",
-                   "CRCL", "RGTI","IONQ","RKLB","ASTS","MP","SMR","QS","ENVX","CRDO","ROKU","RBLX"]:
+    for symbol in ["QQQ", "NBIS", "IREN", "CIFR", "WULF",
+                   "NVDA", "TSLA", "GOOG",
+                   "PLTR", "TSM", "AVGO", "HOOD", "AMD",
+                   "RKLB","ASTS","OMDS",
+                   "BE","EOSE"]:
         # API请求URL
         url = f"https://api.twelvedata.com/rsi"
         params = {
@@ -62,24 +63,24 @@ if __name__ == '__main__':
             df.show()
             df.createOrReplaceTempView("rsi_realtime")
             resDF = spark.sql(f"""
-                        select max(rsi) max_rsi, 
+                        select '{symbol}' symbol,
+                                max(rsi) max_rsi, 
                                 min(rsi) min_rsi, 
                                 avg(rsi) avg_rsi, 
-                                sum(if(`datetime`='2025-07-21',rsi,0)) cur_value, 
+                                sum(if(`datetime`='2025-11-21',rsi,0)) cur_value, 
                                 percentile_approx(rsi, 0.85) rsi_p8,
-                                percentile_approx(rsi, 0.2) rsi_p2,
-                                '{symbol}' symbol
+                                percentile_approx(rsi, 0.2) rsi_p2
                         from rsi_realtime
                         """)
             resDF.show()
 
             # 保存到mysql
             resDF.repartition(1).write.format('jdbc').options(
-                url='jdbc:mysql://8.148.227.29:3306/us-stock?characterEncoding=utf-8&useSSL=false',
+                url='jdbc:mysql://hdp:3306/us-stock?characterEncoding=utf-8&useSSL=false',
                 driver='com.mysql.jdbc.Driver',  # the driver for MySQL
                 user='root',
-                dbtable=f'rsi_20241210_85',
-                password='cj111111',
+                dbtable=f'rsi_20251122_85',
+                password='111111',
             ).mode('append').save()
 
             # data = response.json()
@@ -90,7 +91,7 @@ if __name__ == '__main__':
         else:
             print(f"Error: {response.status_code} - {response.text}")
 
-        time.sleep(3)
+        time.sleep(10)
 
 
 
