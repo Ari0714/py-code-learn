@@ -12,7 +12,7 @@ import json
 
 def get_daily_change_percent(symbol, apikey='9b0740741cc74bb2ab03dd90b74e8061'):
     # url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&outputsize=365&apikey={apikey}"
-    url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&start_date=2025-10-15&end_date=2025-11-15&apikey={apikey}&outputsize=5000"
+    url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&start_date=2024-11-22&end_date=2025-11-22&apikey={apikey}&outputsize=5000"
 
     resp = requests.get(url).json()
     try:
@@ -33,7 +33,7 @@ def get_daily_change_percent(symbol, apikey='9b0740741cc74bb2ab03dd90b74e8061'):
 
 def get_data_insert(indexx):
     data = get_daily_change_percent(indexx)
-    print(data)
+    # print(data)
 
     spark = SparkSession.builder.getOrCreate()
     sc = spark.sparkContext
@@ -53,21 +53,22 @@ def get_data_insert(indexx):
     df.show()
     df.createOrReplaceTempView("history_data")
 
-    spark.sql(f"select min(datetime) min, max(datetime) max, count(*) cnt from history_data").show()
+    # spark.sql(f"select min(datetime) min, max(datetime) max, count(*) cnt from history_data").show()
 
-    legDF = spark.sql(f"""
-                select *, round((close - open) * volume) / 10000 as liquity from (  
-                    select  '{indexx}' indexx, 
-                            *
-                    from history_data
-                 ) t
-                order by datetime
-                """)
-    legDF.show()
-    legDF.createOrReplaceTempView("middle_table")
+    # legDF = spark.sql(f"""
+    #             select *, round((close - open) * volume) / 10000 as liquity from (
+    #                 select  '{indexx}' indexx,
+    #                         *
+    #                 from history_data
+    #              ) t
+    #             order by datetime
+    #             """)
+    # legDF.show()
+    # legDF.createOrReplaceTempView("middle_table")
 
     # 保存
-    legDF.repartition(1).write.mode(saveMode="Overwrite").csv("output/01")
+    resDF = spark.sql("select datetime as date, open, close, volume from history_data")
+    resDF.repartition(1).write.mode(saveMode="Overwrite").option("header","true").csv(f"output/price/2025/{indexx}")
 
 
     # 保存到mysql
@@ -82,8 +83,23 @@ def get_data_insert(indexx):
 
 if __name__ == '__main__':
 
-    for i in ["IREN"]:
-        get_data_insert(i)
+    # for i in ["VOO", "QQQ",
+    #           "IREN", "NBIS", "CRWV", "CIFR", "WULF",
+    #           "RKLB", "ONDS",
+    #           "NVDA", "GOOG", "TSLA",
+    #           "AMD", "TSM", "AVGO",
+    #           "BE", "EOSE",
+    #           "HOOD","PLTR",
+    #           "IBIT"]:
+
+    for i in [
+              "mp"]:
+        print(f"==========={i}===========")
+        try:
+            get_data_insert(i)
+        except:
+            pass
+
         time.sleep(15)
 
     # index & m7

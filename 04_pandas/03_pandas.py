@@ -49,7 +49,7 @@ if __name__ == '__main__':
 
     '''df visualization'''
     print("*" * 20)
-    v1 = pd.DataFrame(np.random.randn(20,5),index=pd.date_range('5/20/2023',periods=20),columns=list('abcde'))
+    v1 = pd.DataFrame(np.random.randn(20,5),index=pd.date_range('5/20/2024',periods=20),columns=list('abcde'))
     print(v1)
     # v1.plot()
     # plt.show()

@@ -32,11 +32,13 @@ if __name__ == '__main__':
     start_date = "2024-11-22"
     end_date = "2025-11-22"
 
-    for symbol in ["QQQ", "NBIS", "IREN", "CIFR", "WULF",
-                   "NVDA", "TSLA", "GOOG",
-                   "PLTR", "TSM", "AVGO", "HOOD", "AMD",
-                   "RKLB","ASTS","OMDS",
-                   "BE","EOSE"]:
+    for symbol in ["VOO"]:
+    # for symbol in ["QQQ", "NBIS", "IREN", "CIFR", "WULF"
+    #                # "NVDA", "TSLA", "GOOG",
+    #                # "PLTR", "TSM", "AVGO", "HOOD", "AMD",
+    #                # "RKLB","ASTS","OMDS",
+    #                # "BE","EOSE"
+    #                ]:
         # API请求URL
         url = f"https://api.twelvedata.com/rsi"
         params = {
@@ -75,19 +77,19 @@ if __name__ == '__main__':
             resDF.show()
 
             # 保存到mysql
-            resDF.repartition(1).write.format('jdbc').options(
-                url='jdbc:mysql://hdp:3306/us-stock?characterEncoding=utf-8&useSSL=false',
-                driver='com.mysql.jdbc.Driver',  # the driver for MySQL
-                user='root',
-                dbtable=f'rsi_20251122_85',
-                password='111111',
-            ).mode('append').save()
+            # resDF.repartition(1).write.format('jdbc').options(
+            #     url='jdbc:mysql://hdp:3306/us-stock?characterEncoding=utf-8&useSSL=false',
+            #     driver='com.mysql.jdbc.Driver',  # the driver for MySQL
+            #     user='root',
+            #     dbtable=f'rsi_20251122_85',
+            #     password='111111',
+            # ).mode('append').save()
 
             # data = response.json()
             # rsi_data = pd.DataFrame(data['values'])
             # rsi_data['datetime'] = pd.to_datetime(rsi_data['datetime'])
             # print(rsi_data[['datetime', 'rsi']])
-            # rsi_data[['datetime', 'rsi']].to_csv(f"output/rsi-{symbol}.csv")
+            rsi_data[['datetime', 'rsi']].to_csv(f"output/rsi/rsi-{symbol}.csv")
         else:
             print(f"Error: {response.status_code} - {response.text}")
 
