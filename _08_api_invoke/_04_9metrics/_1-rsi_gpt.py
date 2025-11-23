@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
+import glob
 
 def compute_rsi(close, period=14):
     delta = close.diff()
@@ -138,47 +139,47 @@ def plot_divergence(df, bullish, bearish):
 
 # ------------------- 使用示例 -------------------
 #2025
-voo5 = "VOO/part-00000-e30c0abf-de14-4a7b-ac06-bbbded6c5c4f-c000.csv"
-qqq5 = "QQQ/part-00000-172e26f4-06a1-4cb4-8f09-25bf18021637-c000.csv"
+voo5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
+qqq5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
 
-iren5 = "IREN/part-00000-0571651a-cd11-44f0-9fb4-98b9a773fab1-c000.csv"  #lookback 5 - 13
-nbis5 = "nbis/part-00000-4ad7dc75-8b5b-4230-b817-3a6fa4f055f6-c000.csv"
-cifr5 = "cifr/part-00000-9caee7f6-139e-4699-a210-58313d297c35-c000.csv"
-crwv5 = "CRWV/part-00000-0b241676-908b-4fd8-9173-8afff31938ae-c000.csv"
-wulf5 = "WULF/part-00000-edb18631-9c03-4ad0-88af-1825b21676b4-c000.csv"
+iren5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]  #lookback 5 - 13
+nbis5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
+cifr5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
+crwv5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
+wulf5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
 
-rklb5 = "RKLB/part-00000-de87ed7d-9ec1-4009-8123-20ffe4435f4f-c000.csv"
-asts5 = "asts/part-00000-f7b36663-b385-4282-944b-8cbf12c9dd9d-c000.csv"
-onds5 = "ONDS/part-00000-c40db715-98f1-48f9-bb09-570998337230-c000.csv"
+rklb5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
+asts5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
+onds5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
 
-nvda5 = "NVDA/part-00000-b53bb5b6-5936-4f17-9be2-9151ab1f3401-c000.csv"
-goog5 = "GOOG/part-00000-ed20b314-cbb3-42d3-aef8-f3627638000f-c000.csv"
-tsla5 = "TSLA/part-00000-1a302064-22fc-415c-b6c4-11a21209def0-c000.csv"
-# aapl5 = "AAPL/part-00000-1afbef6f-7b9f-46a8-9264-1f387b0a7548-c000.csv"
-# meta5 = "META/part-00000-e1bd06d2-1c83-4bf9-8047-f9b4c6cbb870-c000.csv"
+nvda5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
+goog5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
+tsla5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
+# aapl5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
+# meta5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
 
-amd5 = "AMD/part-00000-ab93d9be-aef3-4fdd-83f2-7041b83cd1ba-c000.csv"
-tsm5 = "TSM/part-00000-36673135-e88c-4985-9dc0-10721154f351-c000.csv"
-avgo5 = "AVGO/part-00000-57ef284d-a0a1-48a9-a10e-d4eaa9be35cc-c000.csv"
+amd5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
+tsm5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
+avgo5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
 
-be5 = "BE/part-00000-1d7bc461-b333-4c4f-8ab8-026323b50b70-c000.csv"
-eose5 = "EOSE/part-00000-b4c76fb8-214c-4aa7-b192-661697d052b1-c000.csv"
-oklo5 = "oklo/part-00000-4e718edc-9408-420a-981f-a1848d031382-c000.csv"
-mp5 = "mp/part-00000-11eda821-fbf6-49db-a01a-cdf0ec9ad455-c000.csv"
+be5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
+eose5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
+oklo5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
+mp5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
 
-hood5 = "HOOD/part-00000-d7300028-1aaa-4676-b0f9-cd767bb91778-c000.csv"
-pltr5 = "PLTR/part-00000-2097cb97-db62-4a9f-a8d3-52c2e94552b6-c000.csv"
+hood5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
+pltr5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
 
-ibit5 = "IBIT/part-00000-a21e1da2-66c3-467f-b088-97250ee63828-c000.csv"
+ibit5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
 
-sndk5 = "SNDK/part-00000-702568f6-1309-4bad-9767-591c08617dec-c000.csv"
+sndk5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
 
-app5 = "app/part-00000-69e853a3-756a-47e0-9533-a674250f06d9-c000.csv"
+app5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
 
-crdo5 = "crdo/part-00000-4fb0bb26-812e-47a3-9fde-3fcafeeaa611-c000.csv"
+crdo5 = glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0]
 
 
-df = pd.read_csv(f'../output/price/2025/{iren5}')
+df = pd.read_csv(iren5)
 bullish, bearish, df = find_divergence(df)
 plot_divergence(df, bullish, bearish)
 
