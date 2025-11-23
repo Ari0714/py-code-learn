@@ -9,16 +9,6 @@ import matplotlib.pyplot as plt
 import mplcursors
 import glob
 
-# --------------------------
-# 1) 合成 high/low（只用 open/close）
-# --------------------------
-def add_synthetic_high_low(df, pct=0.002):
-    df = df.copy()
-    base_high = df[["open", "close"]].max(axis=1)
-    base_low  = df[["open", "close"]].min(axis=1)
-    df["high"] = base_high * (1 + pct)
-    df["low"]  = base_low  * (1 - pct)
-    return df
 
 # --------------------------
 # 2) 指标计算
@@ -40,11 +30,11 @@ def compute_cci(high_like, low_like, close, n=20):
     cci = (tp - ma) / (0.015 * (md + 1e-9))
     return cci.fillna(0)
 
-def compute_mfi(close, volume, n=14):
+def compute_mfi(close, volume,high_like,low_like, n=14):
     if volume.isna().all():
         return pd.Series(np.nan, index=close.index)
-    high_like = close.rolling(n, min_periods=1).max()
-    low_like  = close.rolling(n, min_periods=1).min()
+    # high_like = close.rolling(n, min_periods=1).max()
+    # low_like  = close.rolling(n, min_periods=1).min()
     tp = (high_like + low_like + close) / 3.0
     raw = tp * volume
     positive = []
@@ -72,7 +62,7 @@ def compute_bollinger_pctb(close, n=20, k=2):
 
 def compute_kd(high_like, low_like, close, k_period=14, d_period=3):
     highest = high_like.rolling(k_period, min_periods=1).max()
-    lowest  = low_like.rolling(k_period, min_periods=1).min()
+    lowest = low_like.rolling(k_period, min_periods=1).min()
     k = 100 * (close - lowest) / (highest - lowest + 1e-9)
     d = k.rolling(d_period, min_periods=1).mean()
     return k.fillna(50), d.fillna(50)
@@ -124,13 +114,12 @@ def detect_kd_divergence(close,k):
 def multi_indicator_signals(df):
     df = df.copy().reset_index(drop=True)
     df['date'] = pd.to_datetime(df['date'])
-    df = add_synthetic_high_low(df, pct=0.002)
     close = df['close'].astype(float)
 
     df['rsi'] = compute_rsi(close)
     df['k'], df['d'] = compute_kd(df['high'], df['low'], close)
     df['cci'] = compute_cci(df['high'], df['low'], close)
-    df['mfi'] = compute_mfi(close, df['volume'])
+    df['mfi'] = compute_mfi(close, df['volume'],df['high'], df['low'])
     df['pctb'], df['bb_upper'], df['bb_lower'] = compute_bollinger_pctb(close)
 
     lows, highs = find_swings_no_lookahead(close)
@@ -272,12 +261,11 @@ if __name__ == "__main__":
     })
 
     # df = pd.read_csv(glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0])
-    # df = pd.read_csv(glob.glob("../output/price/2025/iren/part-00000-*-c000.csv")[0])
+    df = pd.read_csv(glob.glob("../output/price/2025/iren/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2024/iren/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2023/iren/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2022/iren/part-00000-*-c000.csv")[0])
-    df = pd.read_csv(glob.glob("../output/price/2025/amd/part-00000-*-c000.csv")[0])
-    # df = pd.read_csv(glob.glob("../output/price/2022/amd/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/amd/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2025/nbis/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2025/cifr/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2025/wulf/part-00000-*-c000.csv")[0])

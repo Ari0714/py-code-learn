@@ -1,3 +1,5 @@
+import glob
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -119,14 +121,25 @@ def plot_mfi_divergence(df, bullish, bearish):
 # ===================================================
 # 使用方法
 # ===================================================
-df = pd.read_csv("../output/price/2025/IREN/part-00000-0571651a-cd11-44f0-9fb4-98b9a773fab1-c000.csv")  # 必须含 columns: date, close
-# df = pd.read_csv("output/price/2024/iren/part-00000-5fd6f3a8-d1a0-447d-a180-dd283881b273-c000.csv")
-# df = pd.read_csv("output/price/2023/iren/part-00000-be9200bb-ba07-4c24-92ca-5b746bfa4e83-c000.csv")
+# df = pd.read_csv(glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0])
+df = pd.read_csv(glob.glob("../output/price/2025/iren/part-00000-*-c000.csv")[0])
+# df = pd.read_csv(glob.glob("../output/price/2024/iren/part-00000-*-c000.csv")[0])
+# df = pd.read_csv(glob.glob("../output/price/2023/iren/part-00000-*-c000.csv")[0])
+# df = pd.read_csv(glob.glob("../output/price/2022/iren/part-00000-*-c000.csv")[0])
+# df = pd.read_csv(glob.glob("../output/price/2025/amd/part-00000-*-c000.csv")[0])
+# df = pd.read_csv(glob.glob("../output/price/2025/nbis/part-00000-*-c000.csv")[0])
+# df = pd.read_csv(glob.glob("../output/price/2025/cifr/part-00000-*-c000.csv")[0])
+# df = pd.read_csv(glob.glob("../output/price/2025/wulf/part-00000-*-c000.csv")[0])
+# df = pd.read_csv(glob.glob("../output/price/2025/onds/part-00000-*-c000.csv")[0])
+# df = pd.read_csv(glob.glob("../output/price/2024/onds/part-00000-*-c000.csv")[0])
+# df = pd.read_csv(glob.glob("../output/price/2025/oklo/part-00000-*-c000.csv")[0])
+# df = pd.read_csv(glob.glob("../output/price/2025/avgo/part-00000-*-c000.csv")[0])
+# df = pd.read_csv(glob.glob("../output/price/2024/avgo/part-00000-*-c000.csv")[0])
+# df = pd.read_csv(glob.glob("../output/price/2023/avgo/part-00000-*-c000.csv")[0])
+# df = pd.read_csv(glob.glob("../output/price/2025/tsla/part-00000-*-c000.csv")[0])
+# df = pd.read_csv(glob.glob("../output/price/2025/nvda/part-00000-*-c000.csv")[0])
+# df = pd.read_csv(glob.glob("../output/price/2022/amd/part-00000-*-c000.csv")[0])
 
-# df = pd.read_csv("output/price/2025/cifr/part-00000-9caee7f6-139e-4699-a210-58313d297c35-c000.csv") # 必须含 columns: date, close
-# df = pd.read_csv("output/price/2025/amd/part-00000-ab93d9be-aef3-4fdd-83f2-7041b83cd1ba-c000.csv")
-# df = pd.read_csv("output/price/2025/onds/part-00000-c40db715-98f1-48f9-bb09-570998337230-c000.csv")
-# df = pd.read_csv("output/price/2025/sndk/part-00000-702568f6-1309-4bad-9767-591c08617dec-c000.csv")
 
 # df = pd.read_csv("your_data.csv")
 df["date"] = pd.to_datetime(df["date"])

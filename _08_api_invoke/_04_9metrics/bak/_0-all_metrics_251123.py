@@ -25,8 +25,8 @@ def compute_macd(close, short=12, long=26, signal=9):
 
 def compute_stochastic(high_like, low_like, close, k_period=14, d_period=3):
     # We only have close; emulate high/low via rolling max/min on close
-    highest = high_like
-    lowest = low_like
+    highest = close.rolling(k_period, min_periods=1).max()
+    lowest = close.rolling(k_period, min_periods=1).min()
     k = 100 * (close - lowest) / (highest - lowest + 1e-9)
     d = k.rolling(d_period, min_periods=1).mean()
     return k.fillna(50), d.fillna(50)
@@ -145,10 +145,14 @@ def multi_indicator_signals(df):
     df['date'] = pd.to_datetime(df['date'])
     close = df['close'].astype(float)
 
+    # compute emulated high/low for indicators that need them (we only have close)
+    high_like = close.rolling(3, min_periods=1).max()
+    low_like = close.rolling(3, min_periods=1).min()
+
     df['rsi'] = compute_rsi(close)
     df['diff'], df['dea'], df['macd_hist'] = compute_macd(close)
-    df['k'], df['d'] = compute_stochastic(df['high'], df['low'], close)
-    df['cci'] = compute_cci(df['high'], df['low'], close)
+    df['k'], df['d'] = compute_stochastic(high_like, low_like, close)
+    df['cci'] = compute_cci(high_like, low_like, close)
     df['mfi'] = compute_mfi(close, df['volume'] if 'volume' in df.columns else pd.Series(np.nan, index=df.index))
     df['pctb'], df['bb_upper'], df['bb_lower'] = compute_bollinger_pctb(close)
 

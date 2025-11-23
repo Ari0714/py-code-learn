@@ -121,7 +121,7 @@ def plot_pctb_with_signals(df, signals_df=None):
 if __name__ == "__main__":
 
     # df = pd.read_csv(glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0])
-    # df = pd.read_csv(glob.glob("../output/price/2025/iren/part-00000-*-c000.csv")[0])
+    df = pd.read_csv(glob.glob("../output/price/2025/iren/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2024/iren/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2023/iren/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2022/iren/part-00000-*-c000.csv")[0])

@@ -90,7 +90,7 @@ if __name__ == '__main__':
     #           "iren", "nbis", "crwv", "cifr", "wulf",
     #           "rklb", "asts", "onds",
     #           "nvda", "goog", "tsla",
-    #           "amd", "tsm", "avgo", "crdo",
+    #           "amd", "tsm", "avgo", "crdo", "sndk",
     #           "be", "eose", "oklo",
     #           "hood","pltr","app"
     #           "ibit"]:
@@ -101,7 +101,7 @@ if __name__ == '__main__':
               "rklb", "asts", "onds",
               "nvda", "goog", "tsla",
               "amd", "tsm", "avgo",
-              "be", "eose", "oklo", "crdo",
+              "be", "eose", "oklo", "crdo", "sndk",
               "hood","pltr","app",
               "ibit"]:
         print(f"==========={i}===========")
