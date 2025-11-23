@@ -25,8 +25,8 @@ def compute_macd(close, short=12, long=26, signal=9):
 
 def compute_stochastic(high_like, low_like, close, k_period=14, d_period=3):
     # We only have close; emulate high/low via rolling max/min on close
-    highest = high_like
-    lowest = low_like
+    highest = high_like.rolling(k_period, min_periods=1).max()
+    lowest = low_like.rolling(k_period, min_periods=1).min()
     k = 100 * (close - lowest) / (highest - lowest + 1e-9)
     d = k.rolling(d_period, min_periods=1).mean()
     return k.fillna(50), d.fillna(50)
