@@ -178,7 +178,7 @@ app5 = "app/part-00000-69e853a3-756a-47e0-9533-a674250f06d9-c000.csv"
 crdo5 = "crdo/part-00000-4fb0bb26-812e-47a3-9fde-3fcafeeaa611-c000.csv"
 
 
-df = pd.read_csv(f'output/price/2025/{mp5}')
+df = pd.read_csv(f'../output/price/2025/{iren5}')
 bullish, bearish, df = find_divergence(df)
 plot_divergence(df, bullish, bearish)
 

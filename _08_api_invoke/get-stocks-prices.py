@@ -12,7 +12,7 @@ import json
 
 def get_daily_change_percent(symbol, apikey='9b0740741cc74bb2ab03dd90b74e8061'):
     # url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&outputsize=365&apikey={apikey}"
-    url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&start_date=2024-11-22&end_date=2025-11-22&apikey={apikey}&outputsize=5000"
+    url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&start_date=2020-11-22&end_date=2021-11-22&apikey={apikey}&outputsize=5000"
 
     resp = requests.get(url).json()
     try:
@@ -45,6 +45,8 @@ def get_data_insert(indexx):
 
     schema = StructType([StructField('datetime', StringType()),
                          StructField('open', StringType()),
+                         StructField('high', StringType()),
+                         StructField('low', StringType()),
                          StructField('close', StringType()),
                          StructField('volume', StringType())
                          ])
@@ -67,8 +69,8 @@ def get_data_insert(indexx):
     # legDF.createOrReplaceTempView("middle_table")
 
     # 保存
-    resDF = spark.sql("select datetime as date, open, close, volume from history_data")
-    resDF.repartition(1).write.mode(saveMode="Overwrite").option("header","true").csv(f"output/price/2025/{indexx}")
+    resDF = spark.sql("select datetime as date, open, high, low, close, volume from history_data")
+    resDF.repartition(1).write.mode(saveMode="Overwrite").option("header","true").csv(f"output/price/2021/{indexx}")
 
 
     # 保存到mysql
@@ -83,81 +85,29 @@ def get_data_insert(indexx):
 
 if __name__ == '__main__':
 
-    # for i in ["VOO", "QQQ",
-    #           "IREN", "NBIS", "CRWV", "CIFR", "WULF",
-    #           "RKLB", "ONDS",
-    #           "NVDA", "GOOG", "TSLA",
-    #           "AMD", "TSM", "AVGO",
-    #           "BE", "EOSE",
-    #           "HOOD","PLTR",
-    #           "IBIT"]:
+    # for i in [
+    #           "voo", "qqq",
+    #           "iren", "nbis", "crwv", "cifr", "wulf",
+    #           "rklb", "asts", "onds",
+    #           "nvda", "goog", "tsla",
+    #           "amd", "tsm", "avgo", "crdo",
+    #           "be", "eose", "oklo",
+    #           "hood","pltr","app"
+    #           "ibit"]:
 
     for i in [
-              "mp"]:
+              "voo", "qqq",
+              "iren", "nbis", "crwv", "cifr", "wulf",
+              "rklb", "asts", "onds",
+              "nvda", "goog", "tsla",
+              "amd", "tsm", "avgo",
+              "be", "eose", "oklo", "crdo",
+              "hood","pltr","app",
+              "ibit"]:
         print(f"==========={i}===========")
         try:
             get_data_insert(i)
         except:
             pass
 
-        time.sleep(15)
-
-    # index & m7
-    # for i in ["QQQ","NVDA","META","MSFT","GOOG","AMZN","AAPL","TSLA"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # coin
-    # for i in ["HOOD","COIN","CRCL","BMNR","MSTR"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # semi
-    # for i in ["AVGO","ORCL","AMD","CRDO","CLS","ALAB","TSM","MRVL"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # aa
-    # for i in ["META","PLTR","APP"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # af
-    # for i in ["APLD","IREN","CORZ","CRWV","NBIS"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # electricity & nuclear
-    # for i in ["GEV","CEG","CCJ","BWXT","LEU","OKLO","VST","VRT","TGEN","FIX","AGX","BE"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # space
-    # for i in ["RKLB","ASTS","JOBY","RCAT"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # finance
-    # for i in ["SOFI","SEZL","PGY","OPFI","UPST","AFRM"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # medical
-    # for i in ["HIMS","CRSP","TEM","UNH"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-    #
-    # # quantum
-    # for i in ["RGTI","IONQ"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-
-    # s
-    # for i in ["RDDT","SERV","RBLX","SOUN","RBRK","SMCI","MP"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
-
-
-    # for i in ["BE"]:
-    #     get_data_insert(i)
-    #     time.sleep(15)
+        time.sleep(10)

@@ -91,7 +91,7 @@ def plot_cci_divergence(df, bullish, bearish):
 # ===================================================
 # 使用方法
 # ===================================================
-# df = pd.read_csv("output/price/2025/iren/part-00000-0571651a-cd11-44f0-9fb4-98b9a773fab1-c000.csv")  # 必须含 columns: date, close
+df = pd.read_csv("../output/price/2025/IREN/part-00000-0571651a-cd11-44f0-9fb4-98b9a773fab1-c000.csv")  # 必须含 columns: date, close
 # df = pd.read_csv("output/price/2024/iren/part-00000-5fd6f3a8-d1a0-447d-a180-dd283881b273-c000.csv")
 # df = pd.read_csv("output/price/2023/iren/part-00000-be9200bb-ba07-4c24-92ca-5b746bfa4e83-c000.csv")
 
@@ -101,7 +101,7 @@ def plot_cci_divergence(df, bullish, bearish):
 # df = pd.read_csv("output/price/2025/nbis/part-00000-4ad7dc75-8b5b-4230-b817-3a6fa4f055f6-c000.csv")
 # df = pd.read_csv("output/price/2025/hood/part-00000-d7300028-1aaa-4676-b0f9-cd767bb91778-c000.csv")
 # df = pd.read_csv("output/price/2025/qqq/part-00000-172e26f4-06a1-4cb4-8f09-25bf18021637-c000.csv")
-df = pd.read_csv("output/price/2025/sndk/part-00000-702568f6-1309-4bad-9767-591c08617dec-c000.csv")
+# df = pd.read_csv("output/price/2025/sndk/part-00000-702568f6-1309-4bad-9767-591c08617dec-c000.csv")
 # df = pd.read_csv("output/price/2025/app/part-00000-69e853a3-756a-47e0-9533-a674250f06d9-c000.csv")
 # df = pd.read_csv("output/price/2025/crdo/part-00000-4fb0bb26-812e-47a3-9fde-3fcafeeaa611-c000.csv")
 

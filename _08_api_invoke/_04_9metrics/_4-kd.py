@@ -103,11 +103,11 @@ def plot_kd_divergence(df, bullish, bearish):
 
 # df = pd.read_csv("output/price/2025/cifr/part-00000-9caee7f6-139e-4699-a210-58313d297c35-c000.csv") # 必须含 columns: date, close
 # df = pd.read_csv("output/price/2025/amd/part-00000-ab93d9be-aef3-4fdd-83f2-7041b83cd1ba-c000.csv")
-# df = pd.read_csv("output/price/2025/onds/part-00000-c40db715-98f1-48f9-bb09-570998337230-c000.csv")
+df = pd.read_csv("../output/price/2025/ONDS/part-00000-c40db715-98f1-48f9-bb09-570998337230-c000.csv")
 # df = pd.read_csv("output/price/2025/nbis/part-00000-4ad7dc75-8b5b-4230-b817-3a6fa4f055f6-c000.csv")
 # df = pd.read_csv("output/price/2025/hood/part-00000-d7300028-1aaa-4676-b0f9-cd767bb91778-c000.csv")
 # df = pd.read_csv("output/price/2025/qqq/part-00000-172e26f4-06a1-4cb4-8f09-25bf18021637-c000.csv")
-df = pd.read_csv("output/price/2025/sndk/part-00000-702568f6-1309-4bad-9767-591c08617dec-c000.csv")
+# df = pd.read_csv("output/price/2025/sndk/part-00000-702568f6-1309-4bad-9767-591c08617dec-c000.csv")
 # df = pd.read_csv("output/price/2025/app/part-00000-69e853a3-756a-47e0-9533-a674250f06d9-c000.csv")
 # df = pd.read_csv("output/price/2025/crdo/part-00000-4fb0bb26-812e-47a3-9fde-3fcafeeaa611-c000.csv")
 
