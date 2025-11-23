@@ -183,7 +183,7 @@ app5 = glob.glob("../output/price/2025/app/part-00000-*-c000.csv")[0]
 
 crdo5 = glob.glob("../output/price/2025/crdo/part-00000-*-c000.csv")[0]
 
-df = pd.read_csv(iren5)
+df = pd.read_csv(oklo5)
 bullish, bearish, df = find_divergence(df)
 plot_divergence(df, bullish, bearish)
 

@@ -12,7 +12,7 @@ import json
 
 def get_daily_change_percent(symbol, apikey='9b0740741cc74bb2ab03dd90b74e8061'):
     # url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&outputsize=365&apikey={apikey}"
-    url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&start_date=2020-11-22&end_date=2021-11-22&apikey={apikey}&outputsize=5000"
+    url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&start_date=2024-11-22&end_date=2025-11-22&apikey={apikey}&outputsize=5000"
 
     resp = requests.get(url).json()
     try:
@@ -70,7 +70,7 @@ def get_data_insert(indexx):
 
     # 保存
     resDF = spark.sql("select datetime as date, open, high, low, close, volume from history_data")
-    resDF.repartition(1).write.mode(saveMode="Overwrite").option("header","true").csv(f"output/price/2021/{indexx}")
+    resDF.repartition(1).write.mode(saveMode="Overwrite").option("header","true").csv(f"output/price/2025/{indexx}")
 
 
     # 保存到mysql
@@ -89,21 +89,14 @@ if __name__ == '__main__':
     #           "voo", "qqq",
     #           "iren", "nbis", "crwv", "cifr", "wulf",
     #           "rklb", "asts", "onds",
-    #           "nvda", "goog", "tsla",
+    #           "nvda", "goog", "tsla", "aapl", "meta",
     #           "amd", "tsm", "avgo", "crdo", "sndk",
     #           "be", "eose", "oklo",
     #           "hood","pltr","app"
     #           "ibit"]:
 
     for i in [
-              "voo", "qqq",
-              "iren", "nbis", "crwv", "cifr", "wulf",
-              "rklb", "asts", "onds",
-              "nvda", "goog", "tsla",
-              "amd", "tsm", "avgo",
-              "be", "eose", "oklo", "crdo", "sndk",
-              "hood","pltr","app",
-              "ibit"]:
+              "aapl","meta","sndk"]:
         print(f"==========={i}===========")
         try:
             get_data_insert(i)
