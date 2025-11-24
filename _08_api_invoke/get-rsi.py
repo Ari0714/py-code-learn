@@ -1,7 +1,5 @@
-# 示例：通过Python发送机器人消息
 import findspark
 findspark.init()
-import requests
 import pandas as pd
 import time
 from fear_and_greed import get
@@ -10,8 +8,6 @@ import requests
 from datetime import datetime, timedelta
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType, DecimalType, FloatType
 from pyspark.sql import SparkSession
-
-
 
 
 if __name__ == '__main__':
