@@ -13,15 +13,23 @@ import glob
 # --------------------------
 # 2) 指标计算
 # --------------------------
-def compute_rsi(close, period=14):
+# def compute_rsi(close, period=14):
+#     delta = close.diff()
+#     up = delta.clip(lower=0)
+#     down = -delta.clip(upper=0)
+#     ma_up = up.ewm(alpha=1/period, adjust=False).mean()
+#     ma_down = down.ewm(alpha=1/period, adjust=False).mean()
+#     rs = ma_up / (ma_down.replace(0, np.nan))
+#     rsi = 100 - 100/(1+rs)
+#     return rsi.fillna(50)
+
+def compute_rsi(close, n=14):
     delta = close.diff()
     up = delta.clip(lower=0)
     down = -delta.clip(upper=0)
-    ma_up = up.ewm(alpha=1/period, adjust=False).mean()
-    ma_down = down.ewm(alpha=1/period, adjust=False).mean()
-    rs = ma_up / (ma_down.replace(0, np.nan))
-    rsi = 100 - 100/(1+rs)
-    return rsi.fillna(50)
+    ma_up = up.rolling(n).mean()
+    ma_down = down.rolling(n).mean()
+    return 100 - 100 / (1 + ma_up / (ma_down + 1e-9))
 
 def compute_cci(high_like, low_like, close, n=20):
     tp = (high_like + low_like + close) / 3.0
@@ -170,7 +178,7 @@ def plot_main_only(df, signals, signal_table, strong):
     def draw_scatter(inds,color,marker,label=None,size=80):
         if len(inds)==0: return None
         sc=ax.scatter(df['date'].iloc[inds],df['close'].iloc[inds],color=color,marker=marker,
-                      s=size,label=label,zorder=5,edgecolors='black',linewidths=0.4)
+                      s=size,label=label,zorder=2,edgecolors='black',linewidths=0.4)
         sc._df_index=df.index.to_numpy()[inds]
         return sc
 
@@ -261,12 +269,12 @@ if __name__ == "__main__":
     })
 
     # df = pd.read_csv(glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0])
-    # df = pd.read_csv(glob.glob("../output/price/2025/iren/part-00000-*-c000.csv")[0])
+    df = pd.read_csv(glob.glob("../output/price/2025/iren/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2024/iren/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2023/iren/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2022/iren/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2025/amd/part-00000-*-c000.csv")[0])
-    df = pd.read_csv(glob.glob("../output/price/2025/nbis/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/nbis/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2025/cifr/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2025/wulf/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2025/onds/part-00000-*-c000.csv")[0])

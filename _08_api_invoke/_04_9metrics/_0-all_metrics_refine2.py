@@ -17,6 +17,13 @@ def add_synthetic_high_low(df, pct=0.002):
     df["low"] = base_low * (1 - pct)
     return df
 
+# def add_synthetic_high_low(df, pct=0.002):
+#     # df = df.copy()
+#     # base_high = df[["open", "close"]].max(axis=1)
+#     # base_low = df[["open", "close"]].min(axis=1)
+#     # df["high"] = base_high * (1 + pct)
+#     # df["low"] = base_low * (1 - pct)
+#     return df
 
 # =========================================
 # 2. 各指标计算
@@ -125,53 +132,68 @@ def plot_signals(df, signals):
     meta = []   # 用来存储 hover 信息
 
     for idx, sig_type, names in signals:
-        color = "green" if sig_type == "bottom" else "red"
 
-        scatter = ax.scatter(
+        # =============== Strong 信号（ >=2 指标 ) ==================
+        strong = len(names) >= 2
+
+        if strong:
+            if sig_type == "bottom":
+                color = "green"  # 金色星星（Strong Bull）
+                marker = "*"
+                size = 220
+            else:
+                color = "red"  # 绿色星星（Strong Bear）
+                marker = "*"
+                size = 220
+        else:
+            # =============== 普通信号圆点 ==================
+            if sig_type == "bottom":
+                color = "green"
+            else:
+                color = "red"
+            marker = "o"
+            size = 120
+
+        scat = ax.scatter(
             df["date"].iloc[idx],
             df["close"].iloc[idx],
-            color=color, s=120, marker="o"
+            color=color,
+            s=size,
+            marker=marker
         )
 
-        points.append(scatter)
-
-        # 星号标识（>=2）
-        stars = "*" * len(names) if len(names) >= 2 else ""
-
-        meta.append({
+        scat._meta = {
             "idx": idx,
             "type": sig_type,
             "names": names,
-            "stars": stars
-        })
+            "strong": strong,
+        }
 
-        # 将索引存入 scatter 对象
-        scatter._signal_meta = meta[-1]
+        points.append(scat)
 
-    # Hover
+    # Hover 展示
     cursor = mplcursors.cursor(points, hover=True)
 
     @cursor.connect("add")
     def on_hover(sel):
-        m = sel.artist._signal_meta
+        m = sel.artist._meta
         i = m["idx"]
-
         row = df.iloc[i]
 
         text = (
             f"{row['date'].strftime('%Y-%m-%d')}\n"
             f"Type: {m['type'].capitalize()}\n"
-            f"Triggers: {', '.join(m['names'])} {m['stars']}\n\n"
+            f"Strong: {m['strong']}\n"
+            f"Triggers: {', '.join(m['names'])}\n\n"
             f"RSI={row['rsi']:.2f}\n"
             f"%B={row['pctB']:.2f}\n"
             f"K={row['K']:.2f} / D={row['D']:.2f}\n"
             f"CCI={row['cci']:.2f}\n"
             f"MFI={row['mfi']:.2f}"
         )
-
         sel.annotation.set(text=text, fontsize=9)
 
-    ax.set_title("Unified Reversal Detection (RSI / %B / KD / CCI / MFI)")
+    ax.set_title("Multi-Indicator Reversal Detection + Strong Signals ★")
     ax.grid(True)
     plt.show()
 
@@ -180,8 +202,44 @@ def plot_signals(df, signals):
 # 使用示例
 # =========================================
 if __name__ == "__main__":
+    # df = pd.read_csv(glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/iren/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2024/iren/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2023/iren/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2022/iren/part-00000-*-c000.csv")[0])
+    df = pd.read_csv(glob.glob("../output/price/2025/nbis/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/cifr/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/wulf/part-00000-*-c000.csv")[0])
 
-    df = pd.read_csv(glob.glob("../output/price/2025/sndk/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/oklo/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/be/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/eose/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2024/eose/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/mp/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/sndk/part-00000-*-c000.csv")[0])
+
+    # df = pd.read_csv(glob.glob("../output/price/2025/amd/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/avgo/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2024/avgo/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2023/avgo/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/crdo/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2024/crdo/part-00000-*-c000.csv")[0])
+
+    # df = pd.read_csv(glob.glob("../output/price/2025/nvda/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/tsla/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/aapl/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/meta/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/goog/part-00000-*-c000.csv")[0])
+
+    # df = pd.read_csv(glob.glob("../output/price/2025/rklb/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/asts/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/onds/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2024/onds/part-00000-*-c000.csv")[0])
+
+    # df = pd.read_csv(glob.glob("../output/price/2025/hood/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/pltr/part-00000-*-c000.csv")[0])
+
+    # df = pd.read_csv(glob.glob("../output/price/2025/ibit/part-00000-*-c000.csv")[0])
 
     signals, df_calc = detect_all_signals(df)
     plot_signals(df_calc, signals)

@@ -92,7 +92,7 @@ if __name__ == '__main__':
     #           "nvda", "goog", "tsla", "aapl", "meta",
     #           "amd", "tsm", "avgo", "crdo", "sndk",
     #           "be", "eose", "oklo",
-    #           "hood","pltr","app"
+    #           "hood","pltr","app",
     #           "ibit"]:
 
     for i in [
