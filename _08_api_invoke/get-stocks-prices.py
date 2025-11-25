@@ -8,11 +8,14 @@ from datetime import datetime, timedelta
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType, DecimalType, FloatType
 from pyspark.sql import SparkSession
 import json
+from datetime import datetime, date, timedelta
 
 
-def get_daily_change_percent(symbol, apikey='9b0740741cc74bb2ab03dd90b74e8061'):
+def get_daily_change_percent(symbol, start_date, end_date):
+
+    apikey = '9b0740741cc74bb2ab03dd90b74e8061'
     # url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&outputsize=365&apikey={apikey}"
-    url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&start_date=2024-11-22&end_date=2025-11-22&apikey={apikey}&outputsize=5000"
+    url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=1day&start_date={start_date}&end_date={end_date}&apikey={apikey}&outputsize=5000"
 
     resp = requests.get(url).json()
     try:
@@ -31,8 +34,8 @@ def get_daily_change_percent(symbol, apikey='9b0740741cc74bb2ab03dd90b74e8061'):
         return None
 
 
-def get_data_insert(indexx):
-    data = get_daily_change_percent(indexx)
+def get_data_insert(symbol, start_date, end_date):
+    data = get_daily_change_percent(symbol, start_date, end_date)
     # print(data)
 
     spark = SparkSession.builder.getOrCreate()
@@ -70,8 +73,7 @@ def get_data_insert(indexx):
 
     # 保存
     resDF = spark.sql("select datetime as date, open, high, low, close, volume from history_data")
-    resDF.repartition(1).write.mode(saveMode="Overwrite").option("header","true").csv(f"output/price/2025/{indexx}")
-
+    resDF.repartition(1).write.mode(saveMode="Overwrite").option("header","true").csv(f"output/price/2025/{end_date}/{symbol}")
 
     # 保存到mysql
     # resDF.repartition(1).write.format('jdbc').options(
@@ -85,21 +87,27 @@ def get_data_insert(indexx):
 
 if __name__ == '__main__':
 
-    # for i in [
-    #           "voo", "qqq",
-    #           "iren", "nbis", "crwv", "cifr", "wulf",
-    #           "rklb", "asts", "onds",
-    #           "nvda", "goog", "tsla", "aapl", "meta",
-    #           "amd", "tsm", "avgo", "crdo", "sndk",
-    #           "be", "eose", "oklo",
-    #           "hood","pltr","app",
-    #           "ibit"]:
+    # start_date = "2024-11-22"
+    # end_date = "2025-11-22"
+    # 获取今日日期, 计算去年今日
+    end_date = date.today()
+    start_date = date(end_date.year - 1, end_date.month, end_date.day)
 
     for i in [
-              "aapl","meta","sndk"]:
-        print(f"==========={i}===========")
+              "voo", "qqq",
+              "iren", "nbis", "crwv", "cifr", "wulf",
+              "rklb", "asts", "onds",
+              "nvda", "goog", "tsla", "aapl", "meta",
+              "amd", "tsm", "avgo", "crdo", "sndk",
+              "be", "eose", "oklo",
+              "hood","pltr","app",
+              "ibit"]:
+
+    # for i in [
+    #           "aapl"]:
+        print(f"\n==========={i}===========")
         try:
-            get_data_insert(i)
+            get_data_insert(i,start_date,end_date)
         except:
             pass
 

@@ -105,7 +105,7 @@ def plot_kd_divergence(df, bullish, bearish):
 # df = pd.read_csv(glob.glob("../output/price/2023/iren/part-00000-*-c000.csv")[0])
 # df = pd.read_csv(glob.glob("../output/price/2022/iren/part-00000-*-c000.csv")[0])
 # df = pd.read_csv(glob.glob("../output/price/2025/amd/part-00000-*-c000.csv")[0])
-df = pd.read_csv(glob.glob("../output/price/2025/nbis/part-00000-*-c000.csv")[0])
+df = pd.read_csv(glob.glob("../output/price/2025/2025-11-24/nbis/part-00000-*-c000.csv")[0])
 # df = pd.read_csv(glob.glob("../output/price/2025/cifr/part-00000-*-c000.csv")[0])
 # df = pd.read_csv(glob.glob("../output/price/2025/wulf/part-00000-*-c000.csv")[0])
 # df = pd.read_csv(glob.glob("../output/price/2025/onds/part-00000-*-c000.csv")[0])

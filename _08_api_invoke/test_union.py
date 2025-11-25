@@ -6,8 +6,10 @@ from pyspark.sql.types import StructType, StructField, StringType, IntegerType, 
 from pyspark.sql import SparkSession
 import json
 import glob
+from datetime import datetime, date, timedelta
 
-def union_rsi(stock):
+def union_rsi(stock,end_date, year):
+
     # 直接读取
     spark = SparkSession.builder.getOrCreate()
     sc = spark.sparkContext
@@ -15,7 +17,7 @@ def union_rsi(stock):
         .format("csv") \
         .option("sep", ",") \
         .option("header", "true") \
-        .load(glob.glob(f"output/price/2025/{stock}/part-00000-*-c000.csv")[0])
+        .load(glob.glob(f"output/price/{year}/{end_date}/{stock}/part-00000-*-c000.csv")[0])
     inputDF.show()
     inputDF.createOrReplaceTempView('price')
 
@@ -24,7 +26,7 @@ def union_rsi(stock):
         .format("csv") \
         .option("sep", ",") \
         .option("header", "true") \
-        .load(f"output/rsi/rsi-{stock}.csv")
+        .load(f"output/rsi/{year}/{end_date}/rsi-{stock}.csv")
     inputDF.show()
     inputDF.createOrReplaceTempView('rsi')
 
@@ -33,24 +35,39 @@ def union_rsi(stock):
         .format("csv") \
         .option("sep", ",") \
         .option("header", "true") \
-        .load(f"output/macd/macd-{stock}.csv")
+        .load(f"output/macd/{year}/{end_date}/macd-{stock}.csv")
     inputDF.show()
     inputDF.createOrReplaceTempView('macd')
 
+    # 读取mfi
+    inputDF = spark.read \
+        .format("csv") \
+        .option("sep", ",") \
+        .option("header", "true") \
+        .load(f"output/mfi/{year}/{end_date}/mfi-{stock}.csv")
+    inputDF.show()
+    inputDF.createOrReplaceTempView('mfi')
+
     # union
     resDF = spark.sql("""
-        select a.date, a.open, a.high, a.low, a.close, a.volume, 
+        select a.date, a.open, a.high, a.low, a.close, a.volume,
                b.rsi,
-               c.macd, c.macd_signal, c.macd_hist
-        from price a join rsi b join macd c
-        where (a.date = b.datetime and a.date = c.datetime)
+               c.macd, c.macd_signal, c.macd_hist,
+               d.mfi
+        from price a join rsi b join macd c join mfi d
+        where (a.date = b.datetime and a.date = c.datetime and a.date = d.datetime)
         order by a.date
         """)
     resDF.show()
-    resDF.repartition(1).write.mode(saveMode="Overwrite").option("header", "true").csv(f"output/rsi_union/{stock}")
+    resDF.repartition(1).write.mode(saveMode="Overwrite").option("header", "true").csv(f"output/rsi_union/{year}/{end_date}/{stock}")
 
 
 if __name__ == '__main__':
+
+    # end_date = "2024-11-22"
+    # 获取今日日期, 计算去年今日
+    end_date = date.today()
+
     for i in [
               "voo", "qqq",
               "iren", "nbis", "crwv", "cifr", "wulf",
@@ -60,8 +77,11 @@ if __name__ == '__main__':
               "be", "eose", "oklo",
               "hood","pltr","app",
               "ibit"]:
-        print(f"==========={i}===========")
-        union_rsi(i)
+        print(f"\n==========={i}===========")
+        try:
+            union_rsi(i,end_date,2025)
+        except:
+            pass
 
 
 
