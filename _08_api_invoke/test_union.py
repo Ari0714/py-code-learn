@@ -27,7 +27,7 @@ def union_rsi(stock,end_date, year):
         .option("sep", ",") \
         .option("header", "true") \
         .load(f"output/rsi/{year}/{end_date}/rsi-{stock}.csv")
-    inputDF.show()
+    # inputDF.show()
     inputDF.createOrReplaceTempView('rsi')
 
     # 读取macd
@@ -36,7 +36,7 @@ def union_rsi(stock,end_date, year):
         .option("sep", ",") \
         .option("header", "true") \
         .load(f"output/macd/{year}/{end_date}/macd-{stock}.csv")
-    inputDF.show()
+    # inputDF.show()
     inputDF.createOrReplaceTempView('macd')
 
     # 读取mfi
@@ -45,17 +45,38 @@ def union_rsi(stock,end_date, year):
         .option("sep", ",") \
         .option("header", "true") \
         .load(f"output/mfi/{year}/{end_date}/mfi-{stock}.csv")
-    inputDF.show()
+    # inputDF.show()
     inputDF.createOrReplaceTempView('mfi')
+
+    # 读取kd
+    inputDF = spark.read \
+        .format("csv") \
+        .option("sep", ",") \
+        .option("header", "true") \
+        .load(f"output/kd/{year}/{end_date}/kd-{stock}.csv")
+    # inputDF.show()
+    inputDF.createOrReplaceTempView('kd')
+
+    # 读取cci
+    inputDF = spark.read \
+        .format("csv") \
+        .option("sep", ",") \
+        .option("header", "true") \
+        .load(f"output/cci/{year}/{end_date}/cci-{stock}.csv")
+    # inputDF.show()
+    inputDF.createOrReplaceTempView('cci')
 
     # union
     resDF = spark.sql("""
         select a.date, a.open, a.high, a.low, a.close, a.volume,
                b.rsi,
                c.macd, c.macd_signal, c.macd_hist,
-               d.mfi
-        from price a join rsi b join macd c join mfi d
-        where (a.date = b.datetime and a.date = c.datetime and a.date = d.datetime)
+               d.mfi,
+               e.fast_k, e.fast_d,
+               f.cci
+        from price a join rsi b join macd c join mfi d join kd e join cci f
+        where (a.date = b.datetime and a.date = c.datetime and a.date = d.datetime 
+               and a.date = e.datetime and a.date = f.datetime)
         order by a.date
         """)
     resDF.show()

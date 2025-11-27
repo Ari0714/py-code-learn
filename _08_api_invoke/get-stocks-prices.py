@@ -34,7 +34,7 @@ def get_daily_change_percent(symbol, start_date, end_date):
         return None
 
 
-def get_data_insert(symbol, start_date, end_date):
+def get_data_insert(symbol, start_date, end_date, year):
     data = get_daily_change_percent(symbol, start_date, end_date)
     # print(data)
 
@@ -73,7 +73,7 @@ def get_data_insert(symbol, start_date, end_date):
 
     # 保存
     resDF = spark.sql("select datetime as date, open, high, low, close, volume from history_data")
-    resDF.repartition(1).write.mode(saveMode="Overwrite").option("header","true").csv(f"output/price/2025/{end_date}/{symbol}")
+    resDF.repartition(1).write.mode(saveMode="Overwrite").option("header","true").csv(f"output/price/{year}/{end_date}/{symbol}")
 
     # 保存到mysql
     # resDF.repartition(1).write.format('jdbc').options(
@@ -107,7 +107,7 @@ if __name__ == '__main__':
     #           "aapl"]:
         print(f"\n==========={i}===========")
         try:
-            get_data_insert(i,start_date,end_date)
+            get_data_insert(i,start_date,end_date,"2025")
         except:
             pass
 

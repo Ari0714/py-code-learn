@@ -45,7 +45,7 @@ def get_rsi(symbol, start_date, end_date):
             rsi_data = pd.DataFrame(data['values'])
             return rsi_data
         else:
-            print("没有获取到 MACD 数据。")
+            print("没有获取到 rsi 数据。")
             return None
 
         # schema = StructType([StructField('datetime', StringType()),
@@ -85,12 +85,12 @@ def get_rsi(symbol, start_date, end_date):
     time.sleep(10)
 
 if __name__ == '__main__':
-
-    start_date = "2023-11-22"
-    end_date = "2024-11-22"
+    #
+    # start_date = "2023-11-22"
+    # end_date = "2024-11-22"
     # 获取今日日期, 计算去年今日
-    # end_date = date.today()
-    # start_date = date(end_date.year - 1, end_date.month, end_date.day)
+    end_date = date.today()
+    start_date = date(end_date.year - 1, end_date.month, end_date.day)
 
     for i in [
         "voo", "qqq",
@@ -111,9 +111,9 @@ if __name__ == '__main__':
         if rsi_data is not None:
             print(rsi_data.tail())  # 打印最后几行数据
 
-        createFilePath(f"output/rsi/2024/{end_date}/")
+        createFilePath(f"output/rsi/2025/{end_date}/")
         try:
-            rsi_data[['datetime', 'rsi']].to_csv(f"output/rsi/2024/{end_date}/rsi-{i}.csv")
+            rsi_data[['datetime', 'rsi']].to_csv(f"output/rsi/2025/{end_date}/rsi-{i}.csv")
         except:
             pass
 
