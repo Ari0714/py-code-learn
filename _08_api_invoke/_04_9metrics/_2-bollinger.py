@@ -12,12 +12,12 @@ def compute_bollinger_pctb(df, n=20, k=2):
     返回 df 拷贝，包含列: ma, std, upper, lower, pctb
     注意：rolling 默认是 past-only（不含未来），安全。
     """
-    df = df.copy().reset_index(drop=True)
-    df['ma'] = df['close'].rolling(window=n, min_periods=1).mean()  # past n
-    df['std'] = df['close'].rolling(window=n, min_periods=1).std(ddof=0)  # sample/std
-    df['upper'] = df['ma'] + k * df['std']
-    df['lower'] = df['ma'] - k * df['std']
-    # 防止除以零
+    # df = df.copy().reset_index(drop=True)
+    # df['ma'] = df['close'].rolling(window=n, min_periods=1).mean()  # past n
+    # df['std'] = df['close'].rolling(window=n, min_periods=1).std(ddof=0)  # sample/std
+    # df['upper'] = df['ma'] + k * df['std']
+    # df['lower'] = df['ma'] - k * df['std']
+    # # 防止除以零
     df['pctB'] = (df['close'] - df['lower']) / (df['upper'] - df['lower'] + 1e-12)
     return df
 
@@ -121,11 +121,8 @@ def plot_pctb_with_signals(df, signals_df=None):
 if __name__ == "__main__":
 
     # df = pd.read_csv(glob.glob("../output/price/2025/qqq/part-00000-*-c000.csv")[0])
-    # df = pd.read_csv(glob.glob("../output/price/2025/2025-11-26/iren/part-00000-*-c000.csv")[0])
-    # df = pd.read_csv(glob.glob("../output/price/2024/iren/part-00000-*-c000.csv")[0])
-    # df = pd.read_csv(glob.glob("../output/price/2023/iren/part-00000-*-c000.csv")[0])
-    # df = pd.read_csv(glob.glob("../output/price/2022/iren/part-00000-*-c000.csv")[0])
-    df = pd.read_csv(glob.glob("../output/price/2025/2025-11-27/nbis/part-00000-*-c000.csv")[0])
+    df = pd.read_csv(glob.glob("../output/rsi_union/2025/2025-11-27/iren/part-00000-*-c000.csv")[0])
+    # df = pd.read_csv(glob.glob("../output/price/2025/2025-11-27/nbis/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2025/cifr/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2025/wulf/part-00000-*-c000.csv")[0])
     # df = pd.read_csv(glob.glob("../output/price/2025/onds/part-00000-*-c000.csv")[0])

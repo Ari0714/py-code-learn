@@ -5,15 +5,15 @@ from datetime import datetime, date, timedelta
 from utils.util import createFilePath
 
 
-# 定义获取 bollinger 数据的函数
-def get_bollinger(symbol, start_date, end_date):
+# 定义获取 cci 数据的函数
+def get_cci(symbol, start_date, end_date):
 
     # {'name': 'STOCHF - Stochastic Fast', 'fast_k_period': 14, 'fast_d_period': 3, 'fast_dma_type': 'SMA'}
     api_key = "9b0740741cc74bb2ab03dd90b74e8061"  # 替换为你的 API 密钥
     interval = "1day"  # 时间间隔，常见的有 '1min', '5min', '15min', '1day', '1week' 等
 
     # Twelve Data API 请求URL
-    url = f"https://api.twelvedata.com/bbands?symbol={symbol}&interval={interval}&apikey={api_key}"
+    url = f"https://api.twelvedata.com/cci?symbol={symbol}&interval={interval}&apikey={api_key}"
     params = {
         "start_date": start_date,
         "end_date": end_date
@@ -27,17 +27,15 @@ def get_bollinger(symbol, start_date, end_date):
         print(data)
         if "values" in data:
             # 将数据转换为 DataFrame
-            bollinger = pd.DataFrame(data["values"])
+            cci = pd.DataFrame(data["values"])
 
             # 转换日期格式为 pandas datetime 格式
-            bollinger["datetime"] = pd.to_datetime(bollinger["datetime"])
-            bollinger["upper_band"] = bollinger["upper_band"].astype(float)
-            bollinger["middle_band"] = bollinger["middle_band"].astype(float)
-            bollinger["lower_band"] = bollinger["lower_band"].astype(float)
+            cci["datetime"] = pd.to_datetime(cci["datetime"])
+            cci["cci"] = cci["cci"].astype(float)
 
-            return bollinger
+            return cci
         else:
-            print("没有获取到 bollinger 数据。")
+            print("没有获取到 cci 数据。")
             return None
     else:
         print(f"请求失败，错误代码：{response.status_code}")
@@ -55,7 +53,7 @@ if __name__ == '__main__':
 
     for symbol in [
               "voo", "qqq",
-              "iren", "nbis", "crwv", "cifr", "wulf",
+              "iren", "nbis", "crwv", "cifr", "wulf","clsk",
               "rklb", "asts", "onds",
               "nvda", "goog", "tsla", "aapl", "meta",
               "amd", "tsm", "avgo", "crdo", "sndk",
@@ -63,18 +61,18 @@ if __name__ == '__main__':
               "hood","pltr","app",
               "ibit"]:
     # for symbol in [
-    #         "aapl"]:
+    #         "clsk"]:
 
         print(f"\n=========={symbol}============")
-        bollinger_data = get_bollinger(symbol,start_date,end_date)
+        cci_data = get_cci(symbol,start_date,end_date)
 
         # 如果获取到数据，展示结果
-        if bollinger_data is not None:
-            print(bollinger_data.tail())  # 打印最后几行数据
+        if cci_data is not None:
+            print(cci_data.tail())  # 打印最后几行数据
 
-        createFilePath(f"output/bollinger/2025/{end_date}/")
+        createFilePath(f"output/cci/2025/{end_date}/")
         try:
-            bollinger_data.to_csv(f"output/bollinger/2025/{end_date}/bollinger-{symbol}.csv")
+            cci_data.to_csv(f"output/cci/2025/{end_date}/cci-{symbol}.csv")
         except:
             pass
 

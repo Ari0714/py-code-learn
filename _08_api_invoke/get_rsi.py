@@ -85,25 +85,24 @@ def get_rsi(symbol, start_date, end_date):
     time.sleep(10)
 
 if __name__ == '__main__':
-    #
-    # start_date = "2023-11-22"
-    # end_date = "2024-11-22"
+
+    end_date = "2025-11-29"
+    end_date_obj = datetime.strptime(end_date, "%Y-%m-%d").date()
     # 获取今日日期, 计算去年今日
-    end_date = date.today()
-    start_date = date(end_date.year - 1, end_date.month, end_date.day)
+    # end_date = date.today()
+    start_date = date(end_date_obj.year - 1, end_date_obj.month, end_date_obj.day)
 
     for i in [
         "voo", "qqq",
-        "iren", "nbis", "crwv", "cifr", "wulf",
+        "iren", "nbis", "crwv", "cifr", "wulf", "clsk",
         "rklb", "asts", "onds",
         "nvda", "goog", "tsla", "aapl", "meta",
         "amd", "tsm", "avgo", "crdo", "sndk",
         "be", "eose", "oklo",
         "hood", "pltr", "app",
         "ibit"]:
-
     # for i in [
-    #         "voo"]:
+    #         "clsk"]:
         print(f"\n==========={i}===========")
         rsi_data = get_rsi(i,start_date,end_date)
 

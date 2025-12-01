@@ -321,17 +321,86 @@ def plot_price_cci(df):
     plt.show()
 
 
+import pandas as pd
+from pyecharts.charts import Line, Grid
+from pyecharts import options as opts
+
+def plot_price_bollinger(df, html_file="boll_reversal.html"):
+    df["date"] = pd.to_datetime(df["date"])
+    df["date_str"] = df["date"].dt.strftime("%Y-%m-%d")
+
+    # ----------- 判断布林带反转信号 -----------
+    df["bullish"] = 0
+    df["bearish"] = 0
+
+    for i in range(1, len(df)):
+        # 看涨反转
+        if df["close"].iloc[i - 1] < df["lower_band"].iloc[i - 1] and df["close"].iloc[i] > df["lower_band"].iloc[i]:
+            df.loc[i, "bullish"] = 1
+        # 看跌反转
+        if df["close"].iloc[i - 1] > df["upper_band"].iloc[i - 1] and df["close"].iloc[i] < df["upper_band"].iloc[i]:
+            df.loc[i, "bearish"] = 1
+
+    dates = df["date_str"].tolist()
+
+    # ----------- Close 折线 + 布林带 -----------
+    line = (
+        Line()
+        .add_xaxis(dates)
+        .add_yaxis("Close", df["close"].tolist(), is_smooth=False,
+                   linestyle_opts=opts.LineStyleOpts(width=2, color="#1f77b4"))
+        .add_yaxis("Upper", df["upper_band"].tolist(), is_smooth=False, is_symbol_show=False)
+        .add_yaxis("Middle", df["middle_band"].tolist(), is_smooth=False, is_symbol_show=False)
+        .add_yaxis("Lower", df["lower_band"].tolist(), is_smooth=False, is_symbol_show=False)
+        .set_global_opts(
+            title_opts=opts.TitleOpts(title="Bollinger Reversal (Close Line + Triangles)"),
+            tooltip_opts=opts.TooltipOpts(trigger="axis"),
+            datazoom_opts=[opts.DataZoomOpts(), opts.DataZoomOpts(type_="inside")],
+            legend_opts=opts.LegendOpts(pos_left="left")
+        )
+    )
+
+    # ----------- 三角信号坐标数据 -----------
+    bullish_y = [df["close"].iloc[i] if df["bullish"].iloc[i] else None for i in range(len(df))]
+    bearish_y = [df["close"].iloc[i] if df["bearish"].iloc[i] else None for i in range(len(df))]
+
+    line.add_yaxis(
+        "Bullish ▲",
+        bullish_y,
+        symbol="triangle",
+        symbol_size=13,
+        itemstyle_opts=opts.ItemStyleOpts(color="red"),
+        label_opts=opts.LabelOpts(is_show=False)
+    )
+
+    line.add_yaxis(
+        "Bearish ▼",
+        bearish_y,
+        symbol="triangle-down",
+        symbol_size=13,
+        itemstyle_opts=opts.ItemStyleOpts(color="green"),
+        label_opts=opts.LabelOpts(is_show=False)
+    )
+
+    # ----------- 输出 HTML -----------
+    grid = Grid(init_opts=opts.InitOpts(width="1400px", height="720px"))
+    grid.add(line, grid_opts=opts.GridOpts())
+    grid.render(html_file)
+    print(f"图表已生成：{html_file}")
+
+
+
 # 示例调用
-stock_anme = "amd"
-end_date = "2025-11-27"
+stock_name = "iren"
+end_date = "2025-11-29"
 # 获取今日日期, 计算去年今日
 # end_date = date.today()
-df = pd.read_csv(glob.glob(f"output/rsi_union/2025/{end_date}/{stock_anme}/part-00000-*-c000.csv")[0])
-plot_price_turning_points(df,f"macd_chart-{stock_anme}.html")
-# plot_price_rsi(df)   # 底部是真底，一定买，一年中；顶部多且密
+df = pd.read_csv(glob.glob(f"output/rsi_union/2025/{end_date}/{stock_name}/part-00000-*-c000.csv")[0])
+plot_price_turning_points(df,f"macd_chart-{stock_name}.html")
+plot_price_rsi(df)   # 底部是真底，一定买，一年中；顶部多且密
 plot_price_kd(df)  # 看底非常好，是rsi的波动放大版；顶部多且密
 # plot_price_macd(df)  # 看底非常好，比kd慢显现但是稳；
-
+# plot_price_bollinger(df)  #
 
 # plot_price_cci(df)   # amd买入卖出一样多，太密，作用不大
 # plot_price_mfi(df) # amd完全不准，iren也不准

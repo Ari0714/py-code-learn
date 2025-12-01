@@ -7,9 +7,47 @@ from pyspark.sql import SparkSession
 import json
 import glob
 from datetime import datetime, date, timedelta
+from utils.util import createFilePath
+import time
+import pandas as pd
+
+from get_bollinger import get_bollinger
+from get_cci import get_cci
+from get_kd import get_kd
+from get_macd import get_macd
+from get_mfi import get_mfi
+from get_rsi import get_rsi
+from get_stocksPrices import get_data_insert
+
+
+def get_all_data(stock_name,start_date,end_date,typee):
+    print(f"\n==========={typee} - {stock_name}===========")
+    get_data = pd.DataFrame([])
+    if typee == 'bollinger':
+        get_data = get_bollinger(stock_name, start_date, end_date)
+    elif typee == 'cci':
+        get_data = get_cci(stock_name, start_date, end_date)
+    elif typee == 'kd':
+        get_data = get_kd(stock_name, start_date, end_date)
+    elif typee == 'macd':
+        get_data = get_macd(stock_name, start_date, end_date)
+    elif typee == 'mfi':
+        get_data = get_mfi(stock_name, start_date, end_date)
+    elif typee == 'price':
+        get_data = get_data_insert(stock_name, start_date, end_date)
+    elif typee == 'rsi':
+        get_data = get_rsi(stock_name, start_date, end_date)
+
+    if get_data is not None:
+        print(get_data.tail())  # 打印最后几行数据
+    createFilePath(f"output/{typee}/{end_date.year}/{end_date}/")
+    try:
+        get_data.to_csv(f"output/{typee}/{end_date.year}/{end_date}/{typee}-{stock_name}.csv")
+    except:
+        pass
+
 
 def union_rsi(stock,end_date, year):
-
     # 直接读取
     spark = SparkSession.builder.getOrCreate()
     sc = spark.sparkContext
@@ -66,6 +104,16 @@ def union_rsi(stock,end_date, year):
     # inputDF.show()
     inputDF.createOrReplaceTempView('cci')
 
+    # 读取bollinger
+    inputDF = spark.read \
+        .format("csv") \
+        .option("sep", ",") \
+        .option("header", "true") \
+        .load(f"output/bollinger/{year}/{end_date}/bollinger-{stock}.csv")
+    # inputDF.show()
+    inputDF.createOrReplaceTempView('bollinger')
+
+
     # union
     resDF = spark.sql("""
         select a.date, a.open, a.high, a.low, a.close, a.volume,
@@ -73,10 +121,11 @@ def union_rsi(stock,end_date, year):
                c.macd, c.macd_signal, c.macd_hist,
                d.mfi,
                e.fast_k, e.fast_d,
-               f.cci
-        from price a join rsi b join macd c join mfi d join kd e join cci f
+               f.cci,
+               g.upper_band, g.middle_band, g.lower_band
+        from price a join rsi b join macd c join mfi d join kd e join cci f join bollinger g
         where (a.date = b.datetime and a.date = c.datetime and a.date = d.datetime 
-               and a.date = e.datetime and a.date = f.datetime)
+               and a.date = e.datetime and a.date = f.datetime and a.date = g.datetime)
         order by a.date
         """)
     resDF.show()
@@ -85,24 +134,32 @@ def union_rsi(stock,end_date, year):
 
 if __name__ == '__main__':
 
-    # end_date = "2024-11-22"
+    # end_date = datetime.strptime("2025-11-29", "%Y-%m-%d").date()
     # 获取今日日期, 计算去年今日
     end_date = date.today()
+    start_date = date(end_date.year - 1, end_date.month, end_date.day)
 
-    for i in [
+    for stock_name in [
               "voo", "qqq",
-              "iren", "nbis", "crwv", "cifr", "wulf",
+              "iren", "nbis", "crwv", "cifr", "wulf", "clsk",
               "rklb", "asts", "onds",
               "nvda", "goog", "tsla", "aapl", "meta",
               "amd", "tsm", "avgo", "crdo", "sndk",
-              "be", "eose", "oklo",
+              "be", "eose",
               "hood","pltr","app",
               "ibit"]:
-        print(f"\n==========={i}===========")
-        try:
-            union_rsi(i,end_date,2025)
-        except:
-            pass
+    # for stock_name in [
+    #     "rklb"]:
+
+        # 获取所有数据
+        for typee in ['bollinger','cci','kd','macd','mfi','rsi','price']:
+            get_all_data(stock_name,start_date,end_date,typee)
+            time.sleep(10)
+
+        # 合并
+        # union_rsi(stock_name,end_date,end_date.year)
+
+
 
 
 
