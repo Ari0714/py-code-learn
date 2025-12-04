@@ -100,7 +100,7 @@ def plot_price_macd(df):
     plt.show()
 
 
-from pyecharts.charts import Line, Bar, Grid
+from pyecharts.charts import Line, Bar, Grid, Scatter
 from pyecharts import options as opts
 import pandas as pd
 
@@ -389,18 +389,115 @@ def plot_price_bollinger(df, html_file="boll_reversal.html"):
     print(f"图表已生成：{html_file}")
 
 
+import pandas as pd
+from pyecharts.charts import Line
+from pyecharts import options as opts
+
+
+# 假设 df 已读取并包含 rsi, close, date 字段
+# df = pd.read_csv("xxx.csv")
+
+from pyecharts.charts import Line, Scatter
+from pyecharts import options as opts
+
+def rsi_divergence_no_repaint(df, tolerance=0.003, output="rsi_divergence_no_repaint.html"):
+    """
+    🔥 仅一个函数：检测无重绘背离 + 绘图 + 输出 HTML
+    :param df: 数据必须包含 date, close, rsi
+    :param tolerance: 允许误差（默认 0.3%）
+    :param output: 输出文件名
+    """
+    top_points = []
+    bottom_points = []
+
+    last_price_high_i = 0
+    last_price_low_i = 0
+
+    # ========= ★ 无重绘背离算法（逐根计算，永不回看改历史）★ =========
+    for i in range(1, len(df)):
+        cur_price = df["close"][i]
+        cur_rsi = df["rsi"][i]
+
+        # ---- 顶背离（看跌）----
+        if cur_price > df["close"][last_price_high_i] * (1 + tolerance) and cur_rsi < df["rsi"][last_price_high_i]:
+            top_points.append((df["date"][i], cur_rsi))
+            last_price_high_i = i
+        elif cur_price > df["close"][last_price_high_i]:   # 继续创新高（无背离）
+            last_price_high_i = i
+
+        # ---- 底背离（看涨）----
+        if cur_price < df["close"][last_price_low_i] * (1 - tolerance) and cur_rsi > df["rsi"][last_price_low_i]:
+            bottom_points.append((df["date"][i], cur_rsi))
+            last_price_low_i = i
+        elif cur_price < df["close"][last_price_low_i]:   # 继续创新低（无背离）
+            last_price_low_i = i
+
+    # ========= ★ 绘图 ★ =========
+    x = df["date"].tolist()
+    rsi = df["rsi"].tolist()
+
+    chart = (
+        Line()
+        .add_xaxis(x)
+        .add_yaxis("RSI", rsi, is_smooth=True, linestyle_opts=opts.LineStyleOpts(width=2))
+        .add_yaxis("", [30] * len(df), is_symbol_show=False,
+                   linestyle_opts=opts.LineStyleOpts(type_="dotted", width=1, color="#777"))
+        .add_yaxis("", [80] * len(df), is_symbol_show=False,
+                   linestyle_opts=opts.LineStyleOpts(type_="dotted", width=1, color="#777"))
+        .set_global_opts(
+            title_opts=opts.TitleOpts(title="RSI 无重绘背离"),
+            tooltip_opts=opts.TooltipOpts(trigger="axis"),
+            datazoom_opts=[opts.DataZoomOpts(), opts.DataZoomOpts(type_="inside")],
+            legend_opts=opts.LegendOpts(pos_left="left")
+        )
+    )
+
+    # 顶背离 ⭕ 红色倒三角
+    if top_points:
+        chart = chart.overlap(
+            Scatter()
+            .add_xaxis([p[0] for p in top_points])
+            .add_yaxis(
+                "Bearish Divergence",
+                [p[1] for p in top_points],
+                symbol="triangle", symbol_rotate=180, symbol_size=15,
+                itemstyle_opts=opts.ItemStyleOpts(color="red"),
+                label_opts=opts.LabelOpts(is_show=False)
+            )
+        )
+
+    # 底背离 ⭕ 绿色上三角
+    if bottom_points:
+        chart = chart.overlap(
+            Scatter()
+            .add_xaxis([p[0] for p in bottom_points])
+            .add_yaxis(
+                "Bullish Divergence",
+                [p[1] for p in bottom_points],
+                symbol="triangle", symbol_size=15,
+                itemstyle_opts=opts.ItemStyleOpts(color="green"),
+                label_opts=opts.LabelOpts(is_show=False)
+            )
+        )
+
+    chart.render(output)
+    print(f"✅ 已生成：{output}")
+
 
 # 示例调用
-stock_name = "iren"
-end_date = "2025-11-29"
+stock_name = "meta"
+end_date = "2025-12-03"
 # 获取今日日期, 计算去年今日
 # end_date = date.today()
 df = pd.read_csv(glob.glob(f"output/rsi_union/2025/{end_date}/{stock_name}/part-00000-*-c000.csv")[0])
-plot_price_turning_points(df,f"macd_chart-{stock_name}.html")
-plot_price_rsi(df)   # 底部是真底，一定买，一年中；顶部多且密
-plot_price_kd(df)  # 看底非常好，是rsi的波动放大版；顶部多且密
+# plot_price_turning_points(df,f"macd_chart-{stock_name}.html")
+# plot_price_rsi(df)   # 底部是真底，一定买，一年中；顶部多且密
+# plot_price_kd(df)  # 看底非常好，是rsi的波动放大版；顶部多且密
 # plot_price_macd(df)  # 看底非常好，比kd慢显现但是稳；
 # plot_price_bollinger(df)  #
 
 # plot_price_cci(df)   # amd买入卖出一样多，太密，作用不大
 # plot_price_mfi(df) # amd完全不准，iren也不准
+
+
+rsi_divergence_no_repaint(df)

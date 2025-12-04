@@ -38,72 +38,52 @@ def get_data_insert(symbol, start_date, end_date):
     data = get_daily_change_percent(symbol, start_date, end_date)
     # print(data)
 
-    spark = SparkSession.builder.getOrCreate()
-    sc = spark.sparkContext
+    if data != None:
+        spark = SparkSession.builder.getOrCreate()
+        sc = spark.sparkContext
 
-    inputRDD = sc.parallelize(data)
-    # inputRDD.foreach(lambda x:print(x))
+        inputRDD = sc.parallelize(data)
+        # inputRDD.foreach(lambda x:print(x))
 
-    # targetRDD = inputRDD.map(lambda x: (json.loads(json.dumps(x))['datetime'],json.loads(json.dumps(x))['close']))
+        # targetRDD = inputRDD.map(lambda x: (json.loads(json.dumps(x))['datetime'],json.loads(json.dumps(x))['close']))
 
-    schema = StructType([StructField('datetime', StringType()),
-                         StructField('open', StringType()),
-                         StructField('high', StringType()),
-                         StructField('low', StringType()),
-                         StructField('close', StringType()),
-                         StructField('volume', StringType())
-                         ])
+        schema = StructType([StructField('datetime', StringType()),
+                             StructField('open', StringType()),
+                             StructField('high', StringType()),
+                             StructField('low', StringType()),
+                             StructField('close', StringType()),
+                             StructField('volume', StringType())
+                             ])
 
-    df = spark.createDataFrame(inputRDD, schema)
-    df.show()
-    df.createOrReplaceTempView("history_data")
+        df = spark.createDataFrame(inputRDD, schema)
+        df.show()
+        df.createOrReplaceTempView("history_data")
 
-    # spark.sql(f"select min(datetime) min, max(datetime) max, count(*) cnt from history_data").show()
-
-    # legDF = spark.sql(f"""
-    #             select *, round((close - open) * volume) / 10000 as liquity from (
-    #                 select  '{indexx}' indexx,
-    #                         *
-    #                 from history_data
-    #              ) t
-    #             order by datetime
-    #             """)
-    # legDF.show()
-    # legDF.createOrReplaceTempView("middle_table")
-
-    # 保存
-    resDF = spark.sql("select datetime as date, open, high, low, close, volume from history_data")
-    resDF.repartition(1).write.mode(saveMode="Overwrite").option("header","true").csv(f"output/price/{end_date.year}/{end_date}/{symbol}")
-
-    # 保存到mysql
-    # resDF.repartition(1).write.format('jdbc').options(
-    #     url='jdbc:mysql://8.148.227.29:3306/us-stock?characterEncoding=utf-8&useSSL=false',
-    #     driver='com.mysql.jdbc.Driver',  # the driver for MySQL
-    #     user='root',
-    #     dbtable='analysis_tab_202509',
-    #     password='cj111111',
-    # ).mode('append').save()
+        # 保存
+        resDF = spark.sql("select datetime as date, open, high, low, close, volume from history_data")
+        resDF.repartition(1).write.mode(saveMode="Overwrite").option("header","true").csv(f"output/price/{end_date.year}/{end_date}/{symbol}")
+    else:
+        print("没有获取到 rsi 数据。")
 
 
 if __name__ == '__main__':
 
-    # start_date = "2024-11-22"
-    # end_date = "2025-11-22"
+    end_date = datetime.strptime("2025-12-3", "%Y-%m-%d").date()
     # 获取今日日期, 计算去年今日
-    end_date = date.today()
-    start_date = date(end_date.year - 1, end_date.month, end_date.day)
+    # end_date = date.today()
+    start_date = date(end_date.year - 10, end_date.month, end_date.day)
 
-    for i in [
-              "voo", "qqq",
-              "iren", "nbis", "crwv", "cifr", "wulf","clsk",
-              "rklb", "asts", "onds",
-              "nvda", "goog", "tsla", "aapl", "meta",
-              "amd", "tsm", "avgo", "crdo", "sndk",
-              "be", "eose", "oklo",
-              "hood","pltr","app",
-              "ibit"]:
     # for i in [
-    #           "clsk"]:
+    #           "voo", "qqq",
+    #           "iren", "nbis", "crwv", "cifr", "wulf","clsk",
+    #           "rklb", "asts", "onds",
+    #           "nvda", "goog", "tsla", "aapl", "meta",
+    #           "amd", "tsm", "avgo", "crdo", "sndk",
+    #           "be", "eose", "oklo",
+    #           "hood","pltr","app",
+    #           "ibit"]:
+    for i in [
+              "qqq"]:
         print(f"\n==========={i}===========")
         try:
             get_data_insert(i,start_date,end_date)
