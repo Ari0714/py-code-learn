@@ -394,7 +394,7 @@ def divergence_analysis(result_list):
     "voo", "qqq", "smh", "","",
     "nvda", "goog", "tsla", "aapl", "meta","","",
     "amd", "tsm", "avgo", "crdo", "sndk","","",
-    "iren", "nbis", "crwv", "cifr", "wulf", "clsk","","",
+    "iren", "cifr", "nbis", "wulf", "crwv", "clsk","","",
     "rklb", "asts", "onds","","",
     "be", "eose", "oklo", "te","","",
     "hood", "pltr", "app"]
@@ -470,7 +470,7 @@ if __name__ == '__main__':
         "voo", "qqq", "smh",
         "nvda", "goog", "tsla", "aapl", "meta",
         "amd", "tsm", "avgo", "crdo", "sndk",
-        "iren", "nbis", "crwv", "cifr", "wulf", "clsk",
+        "iren", "cifr", "nbis", "wulf", "crwv", "clsk",
         "rklb", "asts", "onds",
         "be", "eose", "oklo", "te",
         "hood", "pltr", "app"]:
