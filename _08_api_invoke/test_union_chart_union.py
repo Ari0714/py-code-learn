@@ -5,9 +5,18 @@ from pyecharts.charts import Line, Bar, Grid, Page, Scatter
 from pyecharts import options as opts
 from utils.util import createFilePath
 from datetime import datetime, date, timedelta
+from collections import defaultdict
+from openpyxl import load_workbook
+from openpyxl.styles import Border, Side
+from openpyxl.styles import PatternFill
 
 
+result_list = []  # 最终输出结果
 def plot_multi_indicators(df, html_file, stock_name):
+
+    # 计算最近14天的区间起始时间
+    recent_start_date = pd.to_datetime(df["date"]).iloc[-1] - pd.Timedelta(days=30)
+
     df["date"] = pd.to_datetime(df["date"])
     df["date_str"] = df["date"].dt.strftime("%Y-%m-%d")
 
@@ -93,10 +102,17 @@ def plot_multi_indicators(df, html_file, stock_name):
         cur_price = df["close"][i]
         cur_rsi = df["rsi"][i]
 
-        # ---- 顶背离（看跌）----
+        # ----  （看跌）----
         if cur_price > df["close"][last_price_high_i] * (1 + tolerance) and cur_rsi < df["rsi"][last_price_high_i]:
             top_points.append((df["date"][i], cur_rsi))
             last_price_high_i = i
+            # 如果日期在最近14天内
+            if df["date"][i] >= recent_start_date:
+                result_list.append({
+                    "date": str(df["date"][i]),
+                    "stock": stock_name,
+                    "status": "rsi↓"
+                })
         elif cur_price > df["close"][last_price_high_i]:  # 继续创新高（无背离）
             last_price_high_i = i
 
@@ -104,6 +120,13 @@ def plot_multi_indicators(df, html_file, stock_name):
         if cur_price < df["close"][last_price_low_i] * (1 - tolerance) and cur_rsi > df["rsi"][last_price_low_i]:
             bottom_points.append((df["date"][i], cur_rsi))
             last_price_low_i = i
+            # 如果日期在最近14天内
+            if df["date"][i] >= recent_start_date:
+                result_list.append({
+                    "date": str(df["date"][i]),
+                    "stock": stock_name,
+                    "status": "rsi↑"
+                })
         elif cur_price < df["close"][last_price_low_i]:  # 继续创新低（无背离）
             last_price_low_i = i
 
@@ -132,7 +155,7 @@ def plot_multi_indicators(df, html_file, stock_name):
         )
     )
 
-    # 顶背离 ⭕ 红色倒三角
+    #   ⭕ 红色倒三角
     if top_points:
         chart = chart_rsi_2.overlap(
             Scatter()
@@ -175,9 +198,22 @@ def plot_multi_indicators(df, html_file, stock_name):
         if k[i - 1] < d[i - 1] and k[i] > d[i] and k[i] < 20:  # 买点
             buy_x.append(x[i])
             buy_y.append(k[i])
+            # 如果日期在最近14天内
+            if df["date"][i] >= recent_start_date:
+                result_list.append({
+                    "date": str(df["date"][i]),
+                    "stock": stock_name,
+                    "status": "kd↑"
+                })
         if k[i - 1] > d[i - 1] and k[i] < d[i] and k[i] > 80:  # 卖点
             sell_x.append(x[i])
             sell_y.append(k[i])
+            if df["date"][i] >= recent_start_date:
+                result_list.append({
+                    "date": str(df["date"][i]),
+                    "stock": stock_name,
+                    "status": "kd↓"
+                })
 
     chart_kd = (
         Line()
@@ -233,6 +269,33 @@ def plot_multi_indicators(df, html_file, stock_name):
     # --------------------------------------------------------
     # MACD（MACD + SIGNAL + HIST）
     # --------------------------------------------------------
+    turn_buy = []  # 看涨（蓝色上三角）
+    turn_sell = []  # 看跌（红色下三角）
+    hist = df["macd_hist"].tolist()
+
+    for i in range(1, len(hist)):
+        # 负 → 正 （看涨）
+        if (hist[i] > hist[i - 1] ) and (hist[i-1] < hist[i - 2]) and (hist[i-2] < hist[i - 3])\
+                and (hist[i-3] < hist[i - 4]) and (hist[i-4] < hist[i - 5]) and (hist[i-5] < hist[i - 6]):
+            turn_buy.append((df["date"][i], df["macd_hist"][i]))
+            if df["date"][i] >= recent_start_date:
+                result_list.append({
+                    "date": str(df["date"][i]),
+                    "stock": stock_name,
+                    "status": "macd↑"
+                })
+
+        # 正 → 负 （看跌）
+        elif (hist[i] < hist[i - 1] ) and (hist[i-1] > hist[i - 2]) and (hist[i-2] > hist[i - 3])\
+                and (hist[i-3] > hist[i - 4]) and (hist[i-4] > hist[i - 5]) and (hist[i-5] > hist[i - 6]):
+            turn_sell.append((df["date"][i], df["macd_hist"][i]))
+            if df["date"][i] >= recent_start_date:
+                result_list.append({
+                    "date": str(df["date"][i]),
+                    "stock": stock_name,
+                    "status": "macd↓"
+                })
+
     chart_macd = (
         Line()
         .add_xaxis(x)
@@ -252,6 +315,35 @@ def plot_multi_indicators(df, html_file, stock_name):
             legend_opts=opts.LegendOpts(pos_left="left")
         )
     )
+
+    # ===== 覆盖转向信号（Scatter 三角形）=====
+    if turn_buy:
+        chart_macd = chart_macd.overlap(
+            Scatter()
+                .add_xaxis([p[0] for p in turn_buy])
+                .add_yaxis(
+                "MACD Turning Up",
+                [p[1] for p in turn_buy],
+                symbol="triangle",
+                symbol_size=14,
+                itemstyle_opts=opts.ItemStyleOpts(color="blue"),
+                label_opts=opts.LabelOpts(is_show=False),
+            )
+        )
+    if turn_sell:
+        chart_macd = chart_macd.overlap(
+            Scatter()
+                .add_xaxis([p[0] for p in turn_sell])
+                .add_yaxis(
+                "MACD Turning Down",
+                [p[1] for p in turn_sell],
+                symbol="triangle",
+                symbol_rotate=180,
+                symbol_size=14,
+                itemstyle_opts=opts.ItemStyleOpts(color="red"),
+                label_opts=opts.LabelOpts(is_show=False),
+            )
+        )
 
     # --------------------------------------------------------
     # CCI
@@ -295,30 +387,109 @@ def plot_multi_indicators(df, html_file, stock_name):
     print(f"HTML 图像已生成：{html_file}")
 
 
+def divergence_analysis(result_list):
+    tmp = defaultdict(list)
+    # stocks = set()
+    stocks = [
+    "voo", "qqq", "smh", "","",
+    "nvda", "goog", "tsla", "aapl", "meta","","",
+    "amd", "tsm", "avgo", "crdo", "sndk","","",
+    "iren", "nbis", "crwv", "cifr", "wulf", "clsk","","",
+    "rklb", "asts", "onds","","",
+    "be", "eose", "oklo", "te","","",
+    "hood", "pltr", "app"]
+    dates = set()
+
+    for item in result_list:
+        date = item['date'].split(" ")[0][5:]
+        stock = item['stock']
+        status = item['status']
+        tmp[(stock, date)].append(status)
+        # stocks.add(stock)
+        dates.add(date)
+
+    # 日期正序排列
+    dates = sorted(list(dates))
+
+    # 构建矩阵
+    matrix = []
+    for stock in (list(stocks)):
+        row = [stock]
+        for date in dates:
+            statuses = tmp.get((stock, date), [])
+            row.append("\n".join(statuses) if statuses else "")
+        matrix.append(row)
+
+    columns = ["stock"] + dates
+    df = pd.DataFrame(matrix, columns=columns)
+
+    # 输出Excel
+    file_path = "背离统计.xlsx"
+    df.to_excel(file_path, index=False)
+
+    # ====== 填充颜色样式 ======
+    # 看涨关键词 → 红框
+    bullish_keywords = ["↑"]
+    # 看跌关键词 → 绿框
+    bearish_keywords = ["↓"]
+    # 看跌关键词 & rsi
+    bearish_keywords_rsi = ["rsi↓"]
+    # 看涨关键词 & rsi
+    bullish_keywords_rsi = ["rsi↑"]
+
+    red_fill = PatternFill(start_color="FFC7CE", end_color="FFC7CE", fill_type="solid")
+    green_fill = PatternFill(start_color="C6EFCE", end_color="C6EFCE", fill_type="solid")
+    green_fill_dark = PatternFill(start_color="33A02C", end_color="33A02C", fill_type="solid")
+    red_fill_dark = PatternFill(start_color="D62728", end_color="D62728", fill_type="solid")
+
+
+    wb = load_workbook(file_path)
+    ws = wb.active
+
+    # 状态区：从第2行、第2列开始
+    for row in ws.iter_rows(min_row=2, min_col=2):
+        for cell in row:
+            value = str(cell.value) if cell.value else ""
+            if any(k in value for k in bullish_keywords):
+                cell.fill = red_fill
+            if any(k in value for k in bearish_keywords):
+                cell.fill = green_fill
+            if any(k in value for k in bearish_keywords_rsi):
+                cell.fill = green_fill_dark
+            if any(k in value for k in bullish_keywords_rsi):
+                cell.fill = red_fill_dark
+
+    wb.save(file_path)
+    print(f"Excel 生成成功：{file_path}")
+
+
 
 if __name__ == '__main__':
 
     for stock_name in [
         "voo", "qqq", "smh",
-        "iren", "nbis", "crwv", "cifr", "wulf", "clsk",
-        "rklb", "asts", "onds",
         "nvda", "goog", "tsla", "aapl", "meta",
         "amd", "tsm", "avgo", "crdo", "sndk",
-        "be", "eose",
-        "hood", "pltr", "app",
-        "ibit"]:
+        "iren", "nbis", "crwv", "cifr", "wulf", "clsk",
+        "rklb", "asts", "onds",
+        "be", "eose", "oklo", "te",
+        "hood", "pltr", "app"]:
     # for stock_name in [
     #     "smh"
     #     ]:
 
-        # end_date = datetime.strptime("2024-12-3", "%Y-%m-%d").date()
+        print(f"\n=========={stock_name}============")
+        # end_date = datetime.strptime("2025-12-5", "%Y-%m-%d").date()
         # 获取今日日期, 计算去年今日
         end_date = date.today()
         # stock_name = "cifr"
-        try:
-            df = pd.read_csv(glob.glob(f"output/rsi_union/{end_date.year}/{end_date}/{stock_name}/part-00000-*-c000.csv")[0])
+        # try:
+        df = pd.read_csv(glob.glob(f"output/rsi_union/{end_date.year}/{end_date}/{stock_name}/part-00000-*-c000.csv")[0])
 
-            createFilePath(f"output_html/{end_date}/")
-            plot_multi_indicators(df,f"output_html/{end_date}/{stock_name}_{end_date}.html",stock_name)
-        except:
-            pass
+        createFilePath(f"output_html/{end_date}/")
+        plot_multi_indicators(df,f"output_html/{end_date}/{stock_name}_{end_date}.html",stock_name)
+        # except:
+        #     pass
+
+    # ====== 数据整理 ======
+    divergence_analysis(result_list)

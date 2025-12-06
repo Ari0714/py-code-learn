@@ -141,16 +141,14 @@ if __name__ == '__main__':
 
     for stock_name in [
               "voo", "qqq", "smh",
-              "iren", "nbis", "crwv", "cifr", "wulf", "clsk",
-              "rklb", "asts", "onds",
               "nvda", "goog", "tsla", "aapl", "meta",
               "amd", "tsm", "avgo", "crdo", "sndk",
-              "be", "eose",
-              "hood","pltr","app",
-              "ibit"]:
+              "iren", "nbis", "crwv", "cifr", "wulf", "clsk",
+              "rklb", "asts", "onds",
+              "be", "eose", "oklo", "te",
+              "hood","pltr","app"]:
     # for stock_name in [
     #     "smh"]:
-
 
 
         # 获取所有数据
