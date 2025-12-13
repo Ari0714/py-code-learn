@@ -387,7 +387,7 @@ def plot_multi_indicators(df, html_file, stock_name):
     print(f"HTML 图像已生成：{html_file}")
 
 
-def divergence_analysis(result_list):
+def divergence_analysis(result_list, file_date):
     tmp = defaultdict(list)
     # stocks = set()
     stocks = [
@@ -424,7 +424,7 @@ def divergence_analysis(result_list):
     df = pd.DataFrame(matrix, columns=columns)
 
     # 输出Excel
-    file_path = "背离统计.xlsx"
+    file_path = f"背离统计-{file_date}.xlsx"
     df.to_excel(file_path, index=False)
 
     # ====== 填充颜色样式 ======
@@ -492,4 +492,4 @@ if __name__ == '__main__':
         #     pass
 
     # ====== 数据整理 ======
-    divergence_analysis(result_list)
+    divergence_analysis(result_list, date.today())
