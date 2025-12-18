@@ -13,7 +13,7 @@ from openpyxl.styles import PatternFill
 
 
 result_list = []  # 最终输出结果
-charts_date = 30
+charts_date = 31
 
 def plot_multi_indicators(df, html_file, stock_name):
 
@@ -104,6 +104,13 @@ def plot_multi_indicators(df, html_file, stock_name):
     for i in range(1, len(df)):
         cur_price = df["close"][i]
         cur_rsi = df["rsi"][i]
+
+        # if df["date"][i] == '2025-12-18':
+        #     result_list.append({
+        #         "date": "rsi",
+        #         "stock": stock_name,
+        #         "status": str(df["rsi"][i])
+        #     })
 
         # ----  （看跌）----
         if cur_price > df["close"][last_price_high_i] * (1 + tolerance) and cur_rsi < df["rsi"][last_price_high_i]:
@@ -394,14 +401,15 @@ def divergence_analysis(result_list, file_date):
     tmp = defaultdict(list)
     # stocks = set()
     stocks = [
-    "voo", "qqq", "smh", "","",
-    "nvda", "goog", "tsla", "aapl", "meta","","",
-    "amd", "tsm", "avgo", "crdo", "sndk","","",
-    "iren", "cifr", "nbis", "wulf", "crwv", "clsk","","",
-    "rklb", "asts", "onds","","",
-    "be", "eose", "oklo", "te","","",
-    "hood", "pltr", "app"]
+        "voo", "qqq", "smh", "","",
+        "nvda", "goog", "tsla", "aapl", "meta","","",
+        "amd", "tsm", "avgo", "crdo", "sndk","","",
+        "iren", "cifr", "nbis", "wulf", "crwv", "clsk","","",
+        "rklb", "asts", "onds","","",
+        "be", "eose", "oklo", "te","","",
+        "hood", "pltr", "app"]
     dates = set()
+    dates.add(str(file_date.month) + "-" + str(file_date.day-1))
 
     for item in result_list:
         date = item['date'].split(" ")[0][5:]
@@ -482,7 +490,7 @@ if __name__ == '__main__':
     #     ]:
 
         print(f"\n=========={stock_name}============")
-        # end_date = datetime.strptime("2021-12-31", "%Y-%m-%d").date()
+        # end_date = datetime.strptime("2025-12-17", "%Y-%m-%d").date()
         # 获取今日日期, 计算去年今日
         end_date = date.today()
         # stock_name = "cifr"

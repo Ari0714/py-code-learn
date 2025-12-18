@@ -161,15 +161,15 @@ if __name__ == '__main__':
 
 
         # 获取所有数据 # for typee in ['bollinger', 'cci', 'kd', 'macd', 'mfi', 'rsi', 'price']:
-        for typee in ['kd','macd','rsi','price']:
-            get_all_data(stock_name,start_date,end_date,typee)
-            time.sleep(10)
+        # for typee in ['kd','macd','rsi','price']:
+        #     get_all_data(stock_name,start_date,end_date,typee)
+        #     time.sleep(10)
 
         # 合并
-        # try:
-        #     union_rsi(stock_name,end_date,end_date.year)
-        # except:
-        #     pass
+        try:
+            union_rsi(stock_name,end_date,end_date.year)
+        except:
+            pass
 
 
 
