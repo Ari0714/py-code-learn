@@ -11,11 +11,14 @@ from openpyxl.styles import Border, Side
 from openpyxl.styles import PatternFill
 
 
+
 result_list = []  # 最终输出结果
+charts_date = 30
+
 def plot_multi_indicators(df, html_file, stock_name):
 
     # 计算最近14天的区间起始时间
-    recent_start_date = pd.to_datetime(df["date"]).iloc[-1] - pd.Timedelta(days=30)
+    recent_start_date = pd.to_datetime(df["date"]).iloc[-1] - pd.Timedelta(days=charts_date)
 
     df["date"] = pd.to_datetime(df["date"])
     df["date_str"] = df["date"].dt.strftime("%Y-%m-%d")
@@ -348,23 +351,23 @@ def plot_multi_indicators(df, html_file, stock_name):
     # --------------------------------------------------------
     # CCI
     # --------------------------------------------------------
-    chart_cci = (
-        Line()
-        .add_xaxis(x)
-        .add_yaxis("CCI", df["cci"].tolist(), is_smooth=True)
-        .add_yaxis("Zero", [0]*len(df), linestyle_opts=opts.LineStyleOpts(type_="dotted"))
-        .set_global_opts(
-            title_opts=opts.TitleOpts(
-                title="CCI",  # 标题文字
-                pos_top="85%",  # 距图表顶部 5%
-                pos_left="left",  # 居中
-                title_textstyle_opts=opts.TextStyleOpts(font_size=14, color="#333")
-            ),
-            tooltip_opts=opts.TooltipOpts(trigger="axis", axis_pointer_type="cross"),
-            datazoom_opts=[opts.DataZoomOpts(), opts.DataZoomOpts(type_="inside")],
-            legend_opts=opts.LegendOpts(pos_left="left")
-        )
-    )
+    # chart_cci = (
+    #     Line()
+    #     .add_xaxis(x)
+    #     .add_yaxis("CCI", df["cci"].tolist(), is_smooth=True)
+    #     .add_yaxis("Zero", [0]*len(df), linestyle_opts=opts.LineStyleOpts(type_="dotted"))
+    #     .set_global_opts(
+    #         title_opts=opts.TitleOpts(
+    #             title="CCI",  # 标题文字
+    #             pos_top="85%",  # 距图表顶部 5%
+    #             pos_left="left",  # 居中
+    #             title_textstyle_opts=opts.TextStyleOpts(font_size=14, color="#333")
+    #         ),
+    #         tooltip_opts=opts.TooltipOpts(trigger="axis", axis_pointer_type="cross"),
+    #         datazoom_opts=[opts.DataZoomOpts(), opts.DataZoomOpts(type_="inside")],
+    #         legend_opts=opts.LegendOpts(pos_left="left")
+    #     )
+    # )
 
     # --------------------------------------------------------
     # 统一排列输出
@@ -375,13 +378,13 @@ def plot_multi_indicators(df, html_file, stock_name):
     grid.add(chart_rsi_2, grid_opts=opts.GridOpts(pos_top="22%", pos_bottom="60%"))
     grid.add(chart_kd, grid_opts=opts.GridOpts(pos_top="42%", pos_bottom="40%"))
     grid.add(chart_macd, grid_opts=opts.GridOpts(pos_top="62%", pos_bottom="20%"))
-    grid.add(chart_cci, grid_opts=opts.GridOpts(pos_top="82%"))
+    # grid.add(chart_cci, grid_opts=opts.GridOpts(pos_top="82%"))
 
     chart_close.set_global_opts(title_opts=opts.TitleOpts(title="Close"))
     chart_rsi_2.set_global_opts(title_opts=opts.TitleOpts(title="RSI"))
     chart_macd.set_global_opts(title_opts=opts.TitleOpts(title="MACD"))
     chart_kd.set_global_opts(title_opts=opts.TitleOpts(title="KD"))
-    chart_cci.set_global_opts(title_opts=opts.TitleOpts(title="CCI"))
+    # chart_cci.set_global_opts(title_opts=opts.TitleOpts(title="CCI"))
 
     grid.render(html_file)
     print(f"HTML 图像已生成：{html_file}")
@@ -469,8 +472,8 @@ if __name__ == '__main__':
     for stock_name in [
         "voo", "qqq", "smh",
         "nvda", "goog", "tsla", "aapl", "meta",
-        "amd", "tsm", "avgo", "crdo", "sndk",
-        "iren", "cifr", "nbis", "wulf", "crwv", "clsk",
+        "amd", "tsm", "avgo", "crdo",
+        "iren", "cifr", "nbis", "wulf", "clsk",
         "rklb", "asts", "onds",
         "be", "eose", "oklo", "te",
         "hood", "pltr", "app"]:
@@ -479,17 +482,17 @@ if __name__ == '__main__':
     #     ]:
 
         print(f"\n=========={stock_name}============")
-        # end_date = datetime.strptime("2025-12-5", "%Y-%m-%d").date()
+        # end_date = datetime.strptime("2021-12-31", "%Y-%m-%d").date()
         # 获取今日日期, 计算去年今日
         end_date = date.today()
         # stock_name = "cifr"
-        # try:
-        df = pd.read_csv(glob.glob(f"output/rsi_union/{end_date.year}/{end_date}/{stock_name}/part-00000-*-c000.csv")[0])
+        try:
+            df = pd.read_csv(glob.glob(f"output/rsi_union/{end_date.year}/{end_date}/{stock_name}/part-00000-*-c000.csv")[0])
 
-        createFilePath(f"output_html/{end_date}/")
-        plot_multi_indicators(df,f"output_html/{end_date}/{stock_name}_{end_date}.html",stock_name)
-        # except:
-        #     pass
+            createFilePath(f"output_html/{end_date}/")
+            plot_multi_indicators(df,f"output_html/{end_date}/{stock_name}_{end_date}.html",stock_name)
+        except:
+            pass
 
     # ====== 数据整理 ======
-    divergence_analysis(result_list, date.today())
+    divergence_analysis(result_list, end_date)
