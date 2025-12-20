@@ -19,6 +19,7 @@ def plot_multi_indicators(df, html_file, stock_name):
 
     # 计算最近14天的区间起始时间
     recent_start_date = pd.to_datetime(df["date"]).iloc[-1] - pd.Timedelta(days=charts_date)
+    recent_date = pd.to_datetime(df["date"]).iloc[-1]
 
     df["date"] = pd.to_datetime(df["date"])
     df["date_str"] = df["date"].dt.strftime("%Y-%m-%d")
@@ -105,14 +106,14 @@ def plot_multi_indicators(df, html_file, stock_name):
         cur_price = df["close"][i]
         cur_rsi = df["rsi"][i]
 
-        # if df["date"][i] == '2025-12-18':
-        #     result_list.append({
-        #         "date": "rsi",
-        #         "stock": stock_name,
-        #         "status": str(df["rsi"][i])
-        #     })
+        if df["date"][i] == recent_date:
+            result_list.append({
+                "date": 'rsi',
+                "stock": stock_name,
+                "status": str(round(df["rsi"][i],1))
+            })
 
-        # ----  （看跌）----
+        # ----（看跌）----
         if cur_price > df["close"][last_price_high_i] * (1 + tolerance) and cur_rsi < df["rsi"][last_price_high_i]:
             top_points.append((df["date"][i], cur_rsi))
             last_price_high_i = i
@@ -409,6 +410,7 @@ def divergence_analysis(result_list, file_date):
         "be", "eose", "oklo", "te","","",
         "hood", "pltr", "app"]
     dates = set()
+    # 补充列如果没当日的标记
     dates.add(str(file_date.month) + "-" + str(file_date.day-1))
 
     for item in result_list:
@@ -480,8 +482,8 @@ if __name__ == '__main__':
     for stock_name in [
         "voo", "qqq", "smh",
         "nvda", "goog", "tsla", "aapl", "meta",
-        "amd", "tsm", "avgo", "crdo",
-        "iren", "cifr", "nbis", "wulf", "clsk",
+        "amd", "tsm", "avgo", "crdo", "sndk",
+        "iren", "cifr", "nbis", "wulf", "crwv", "clsk",
         "rklb", "asts", "onds",
         "be", "eose", "oklo", "te",
         "hood", "pltr", "app"]:
