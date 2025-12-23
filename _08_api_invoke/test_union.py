@@ -1,5 +1,5 @@
-
 import findspark
+
 findspark.init()
 from datetime import datetime, timedelta
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType, DecimalType, FloatType
@@ -20,7 +20,7 @@ from get_rsi import get_rsi
 from get_stocksPrices import get_data_insert
 
 
-def get_all_data(stock_name,start_date,end_date,typee):
+def get_all_data(stock_name, start_date, end_date, typee):
     print(f"\n==========={typee} - {stock_name}===========")
     get_data = pd.DataFrame([])
     if typee == 'bollinger':
@@ -47,7 +47,7 @@ def get_all_data(stock_name,start_date,end_date,typee):
         pass
 
 
-def union_rsi(stock,end_date, year):
+def union_rsi(stock, end_date, year):
     # 直接读取
     spark = SparkSession.builder.getOrCreate()
     sc = spark.sparkContext
@@ -113,7 +113,6 @@ def union_rsi(stock,end_date, year):
     # # inputDF.show()
     # inputDF.createOrReplaceTempView('bollinger')
 
-
     # union
     #      select a.date, a.open, a.high, a.low, a.close, a.volume,
     #            b.rsi,
@@ -137,10 +136,20 @@ def union_rsi(stock,end_date, year):
         order by a.date
         """)
     resDF.show()
-    resDF.repartition(1).write.mode(saveMode="Overwrite").option("header", "true").csv(f"output/rsi_union/{year}/{end_date}/{stock}")
+    resDF.repartition(1).write.mode(saveMode="Overwrite").option("header", "true").csv(
+        f"output/rsi_union/{year}/{end_date}/{stock}")
 
 
 if __name__ == '__main__':
+
+    stock_list = [
+        "voo", "qqq", "smh",
+        "nvda", "goog", "tsla", "aapl", "meta",
+        "amd", "tsm", "avgo", "crdo", "sndk",
+        "iren", "cifr", "nbis", "wulf", "crwv", "clsk",
+        "rklb", "asts", "onds",
+        "be", "eose", "oklo", "te",
+        "hood", "pltr", "app"]
 
     # end_date = datetime.strptime("2021-12-31", "%Y-%m-%d").date()
     # 获取今日日期, 计算去年今日
@@ -148,30 +157,20 @@ if __name__ == '__main__':
     start_date = date(end_date.year - 1, end_date.month, end_date.day)
 
     # 29 stocks
-    for stock_name in [
-              "voo", "qqq", "smh",
-              "nvda", "goog", "tsla", "aapl", "meta",
-              "amd", "tsm", "avgo", "crdo", "sndk",
-              "iren", "cifr", "nbis", "wulf", "crwv", "clsk",
-              "rklb", "asts", "onds",
-              "be", "eose", "oklo", "te",
-              "hood","pltr","app"]:
-    # for stock_name in [
-    #     "te"]:
-
-
+    for stock_name in stock_list:
+        # for stock_name in [
+        #     "te"]:
         # 获取所有数据 # for typee in ['bollinger', 'cci', 'kd', 'macd', 'mfi', 'rsi', 'price']:
-        for typee in ['kd','macd','rsi','price']:
-            get_all_data(stock_name,start_date,end_date,typee)
+        for typee in ['kd', 'macd', 'rsi', 'price']:
+            get_all_data(stock_name, start_date, end_date, typee)
             time.sleep(9)
 
+
+    for stock_name2 in stock_list:
+        # for stock_name in [
+        #     "te"]:
         # 合并
-        # try:
-        #     union_rsi(stock_name,end_date,end_date.year)
-        # except:
-        #     pass
-
-
-
-
-
+        try:
+            union_rsi(stock_name2, end_date, end_date.year)
+        except:
+            pass
