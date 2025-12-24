@@ -142,6 +142,7 @@ def union_rsi(stock, end_date, year):
 
 if __name__ == '__main__':
 
+    # 29 stocks
     stock_list = [
         "voo", "qqq", "smh",
         "nvda", "goog", "tsla", "aapl", "meta",
@@ -150,16 +151,15 @@ if __name__ == '__main__':
         "rklb", "asts", "onds",
         "be", "eose", "oklo", "te",
         "hood", "pltr", "app"]
+    # stock_list = [
+    #     "te"]
 
     # end_date = datetime.strptime("2021-12-31", "%Y-%m-%d").date()
     # 获取今日日期, 计算去年今日
     end_date = date.today()
     start_date = date(end_date.year - 1, end_date.month, end_date.day)
 
-    # 29 stocks
     for stock_name in stock_list:
-        # for stock_name in [
-        #     "te"]:
         # 获取所有数据 # for typee in ['bollinger', 'cci', 'kd', 'macd', 'mfi', 'rsi', 'price']:
         for typee in ['kd', 'macd', 'rsi', 'price']:
             get_all_data(stock_name, start_date, end_date, typee)
@@ -167,9 +167,6 @@ if __name__ == '__main__':
 
 
     for stock_name2 in stock_list:
-        # for stock_name in [
-        #     "te"]:
-        # 合并
         try:
             union_rsi(stock_name2, end_date, end_date.year)
         except:
