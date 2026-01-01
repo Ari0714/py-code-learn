@@ -146,7 +146,7 @@ if __name__ == '__main__':
     stock_list = [
         "voo", "qqq", "smh",
         "nvda", "goog", "tsla", "aapl", "meta",
-        "amd", "tsm", "avgo", "crdo", "sndk",
+        "amd", "tsm", "avgo", "crdo", "mu",
         "iren", "cifr", "nbis", "wulf", "crwv", "clsk",
         "rklb", "asts", "onds",
         "be", "eose", "oklo", "te",
