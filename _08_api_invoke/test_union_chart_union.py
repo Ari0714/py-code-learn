@@ -405,13 +405,13 @@ def divergence_analysis(result_list, file_date):
         "voo", "qqq", "smh", "","",
         "nvda", "goog", "tsla", "aapl", "meta","","",
         "amd", "tsm", "avgo", "crdo", "sndk","","",
-        "iren", "cifr", "nbis", "wulf", "crwv", "clsk","","",
+        "iren", "cifr", "nbis", "wulf", "clsk","","",
         "rklb", "asts", "onds","","",
-        "be", "eose", "oklo", "te","","",
+        "be", "te", "oklo", "eose","","",
         "hood", "pltr", "app"]
     dates = set()
     # 补充列如果没当日的标记
-    dates.add(str(file_date.month) + "-" + str(file_date.day-1))
+    dates.add(f'{file_date.month:02d}' + "-" + f'{file_date.day-1:02d}')
 
     for item in result_list:
         date = item['date'].split(" ")[0][5:]
