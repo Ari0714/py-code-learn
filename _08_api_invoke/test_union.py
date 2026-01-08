@@ -142,14 +142,14 @@ def union_rsi(stock, end_date, year):
 
 if __name__ == '__main__':
 
-    # 29 stocks
+    # 28 stocks
     stock_list = [
         "voo", "qqq", "smh",
         "nvda", "goog", "tsla", "aapl", "meta",
         "amd", "tsm", "avgo", "crdo", "mu",
-        "iren", "cifr", "nbis", "wulf", "crwv", "clsk",
+        "iren", "cifr", "nbis", "wulf", "clsk",
         "rklb", "asts", "onds",
-        "be", "eose", "oklo", "te",
+        "be", "te", "oklo", "eose",
         "hood", "pltr", "app"]
     # stock_list = [
     #     "te"]

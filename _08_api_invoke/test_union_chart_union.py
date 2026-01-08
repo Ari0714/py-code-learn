@@ -483,9 +483,9 @@ if __name__ == '__main__':
         "voo", "qqq", "smh",
         "nvda", "goog", "tsla", "aapl", "meta",
         "amd", "tsm", "avgo", "crdo", "mu",
-        "iren", "cifr", "nbis", "wulf", "crwv", "clsk",
+        "iren", "cifr", "nbis", "wulf", "clsk",
         "rklb", "asts", "onds",
-        "be", "eose", "oklo", "te",
+        "be", "te", "oklo", "eose",
         "hood", "pltr", "app"]:
     # for stock_name in [
     #     "smh"
