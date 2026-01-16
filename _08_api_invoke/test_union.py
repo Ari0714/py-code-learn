@@ -163,7 +163,7 @@ if __name__ == '__main__':
         # 获取所有数据 # for typee in ['bollinger', 'cci', 'kd', 'macd', 'mfi', 'rsi', 'price']:
         for typee in ['kd', 'macd', 'rsi', 'price']:
             get_all_data(stock_name, start_date, end_date, typee)
-            time.sleep(9)
+            time.sleep(10)
 
 
     for stock_name2 in stock_list:
