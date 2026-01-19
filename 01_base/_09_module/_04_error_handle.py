@@ -14,7 +14,7 @@ print(result)
 result = re.match(r'^code\d-\d-.+$','code5-2-random')
 print(result)
 # []区间，可选列表
-result = re.match(r'^abc{2,5}$','abcccccc')
+result = re.match(r'^02_airflow{2,5}$','abcccccc')
 print(result)
 # | 或者
 result = re.match(r'^a|b|c$','d')

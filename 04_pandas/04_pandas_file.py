@@ -32,7 +32,7 @@ if __name__ == '__main__':
     print(pd1.iloc[0:1])
     print(pd1.iloc[:,0:2])
     print(pd1.iloc[0:2, 0:2])
-    pd1.iloc[2, 2] = 'abc'
+    pd1.iloc[2, 2] = '02_airflow'
 
 
 

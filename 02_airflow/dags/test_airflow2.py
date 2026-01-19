@@ -1,9 +1,13 @@
 #!/usr/bin/python
 
+import sys
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
 from airflow.utils.dates import days_ago
+from abcc.plugins.metadata_plugin import pre_execute, post_execute
+
+
 
 default_args = {
     # 用户
@@ -13,7 +17,7 @@ default_args = {
     # 邮箱
     'email': ['1187334030@qq.com'],
     # 启动时间
-    'start_date': days_ago(1),
+    # 'start_date': days_ago(1),
     # 出错是否发邮件报警
     'email_on_failure': False,
     # 重试是否发邮件报警
@@ -25,7 +29,7 @@ default_args = {
 }
 
 # 声明任务图
-dag = DAG('test', default_args=default_args, schedule_interval=timedelta(days=1))
+dag = DAG('test_hook', default_args=default_args, schedule_interval=timedelta(days=1))
 
 # 创建单个任务
 t1 = BashOperator(
@@ -33,6 +37,8 @@ t1 = BashOperator(
     task_id='dwd',
     # 任务命令
     bash_command='echo "hello Ari"',
+    pre_execute=pre_execute,
+    post_execute=post_execute,
     # 重试次数
     retries=1,
     # 把任务添加进图中

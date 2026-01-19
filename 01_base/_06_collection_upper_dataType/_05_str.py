@@ -1,7 +1,7 @@
 
-print('abc'[0:0])   # return ''
+print('02_airflow'[0:0])   # return ''
 
-s0 = 'abc'
+s0 = '02_airflow'
 for i in range(len(s0)):
     print(s0[0:i+1])
 print(s0[0:1])

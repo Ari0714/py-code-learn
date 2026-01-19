@@ -2,7 +2,7 @@ import random
 
 # random
 print('\n'+'*'*20)
-print(random.choice('abc'))
+print(random.choice('02_airflow'))
 
 s2 = set()
 l1 = [1,2]

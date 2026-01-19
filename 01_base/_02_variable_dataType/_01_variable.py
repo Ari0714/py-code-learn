@@ -40,7 +40,7 @@ print(s1.count('1'))
 print('966999999999996'.replace('6', '9', 3))  # digital represent replace num, 1 -> replace 1 unit, no replace_first
 s3 = '''
 123
-abc
+02_airflow
 '''
 print(s3)
 print(s3.strip())
