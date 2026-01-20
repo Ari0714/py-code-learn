@@ -1,0 +1,39 @@
+
+
+import os
+from kafka import KafkaProducer
+from kafka.oauth import AbstractTokenProvider
+import requests
+import time
+
+# ========== JVM -D https.proxyHost ==========
+os.environ["HTTPS_PROXY"] = "http://proxy:8080"
+os.environ["HTTP_PROXY"]  = "http://proxy:8080"
+
+# ========== JVM -D javax.net.trustStore ==========
+os.environ["REQUESTS_CA_BUNDLE"] = "/etc/ssl/kafka-ca.pem"
+
+# ========== OAuth Token Provider ==========
+class OAuthTokenProvider(AbstractTokenProvider):
+    def __init__(self, token_url):
+        self.token_url = token_url
+        self.token = None
+        self.expiry = 0
+
+    def token(self):
+        if self.token and time.time() < self.expiry - 30:
+            return self.token
+
+        r = requests.post(self.token_url, timeout=5)
+        data = r.json()
+        self.token = data["access_token"]
+        self.expiry = time.time() + data["expires_in"]
+        return self.token
+
+producer = KafkaProducer(
+    bootstrap_servers="kafka:9093",
+    security_protocol="SASL_SSL",
+    sasl_mechanism="OAUTHBEARER",
+    sasl_oauth_token_provider=OAuthTokenProvider("https://xxx/token"),
+)
+

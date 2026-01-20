@@ -1,0 +1,33 @@
+
+
+
+airflow users create \
+    --username admin \
+    --firstname admin \
+    --lastname user \
+    --role admin \
+    --email admin@example.com
+
+
+
+------start
+
+# 先启动 scheduler（后台运行）
+airflow scheduler &
+
+# 再启动 webserver（默认端口 8080）
+airflow webserver --port 8084
+
+http://localhost:8080
+用户名：admin
+密码：111111
+
+
+
+----
+
+{"dag_id": "test_hook", "task_id": "dwd", "run_id": "manual__2026-01-19T09:39:08.521201+00:00", "try_number": 1, "state": "SUCCESS", "execution_date": "2026-01-19 09:39:08.521201+00:00", "hostname": "x1", "operator": "BashOperator", "queue": "default", "timestamp": "2026-01-19T09:39:12.600270"}
+
+
+
+

@@ -1,0 +1,8 @@
+
+
+
+
+pip install kafka-python==2.3.0 -i  https://pypi.tuna.tsinghua.edu.cn/simple
+
+
+
