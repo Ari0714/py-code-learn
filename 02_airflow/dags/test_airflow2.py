@@ -5,9 +5,9 @@ from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
 from airflow.utils.dates import days_ago
-from abcc.plugins.metadata_plugin import pre_execute, post_execute
 
-
+sys.path.append('/root/airflow2.2.5/abcc')
+from plugins.metadata_plugin import pre_execute, post_execute
 
 default_args = {
     # 用户
