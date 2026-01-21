@@ -17,7 +17,7 @@ default_args = {
     # 邮箱
     'email': ['1187334030@qq.com'],
     # 启动时间
-    # 'start_date': days_ago(1),
+    'start_date': days_ago(0),
     # 出错是否发邮件报警
     'email_on_failure': False,
     # 重试是否发邮件报警
