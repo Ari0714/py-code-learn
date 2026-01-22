@@ -92,6 +92,13 @@ with DAG(
         http_conn_id="remote_api",
         endpoint="/api/v1/job/status",
         method="GET",
+        data={
+            "job_id": "123456",
+            "env": "prod",
+        },
+        headers={
+            "Content-Type": "application/json",
+        },
         response_check=check_status,
         poke_interval=30,
         timeout=60 * 15,
