@@ -27,12 +27,7 @@ trusted-host = https://pypi.tuna.tsinghua.edu.cn
 conda create -n superset python=3.9.12
 
 
------ install airflow
-（python3.9.12, pip21.2.4）
-conda create -n airflow python=3.9.12
-python -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade pip==21.2.4
-pip install apache-airflow==2.2.5 -i  https://pypi.tuna.tsinghua.edu.cn/simple
-conda install mysqlclient
+
 
 
 
