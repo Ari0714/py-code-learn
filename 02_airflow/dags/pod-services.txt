@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: job-status
+  namespace: data
+spec:
+  type: ClusterIP
+  selector:
+    app: job-status
+  ports:
+    - port: 80
+      targetPort: 8080
