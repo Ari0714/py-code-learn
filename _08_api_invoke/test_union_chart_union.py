@@ -286,8 +286,9 @@ def plot_multi_indicators(df, html_file, stock_name):
 
     for i in range(1, len(hist)):
         # 负 → 正 （看涨）
-        if (hist[i] > hist[i - 1]) and (hist[i-1] < hist[i - 2]) and (hist[i-2] < hist[i - 3])\
-                and (hist[i-3] < hist[i - 4]) and (hist[i-4] < hist[i - 5]) and (hist[i-5] < hist[i - 6]):
+        if (hist[i] > hist[i - 1]) and (hist[i - 1] < hist[i - 2]) and (hist[i - 2] < hist[i - 3]):
+        # if (hist[i] > hist[i - 1]) and (hist[i-1] < hist[i - 2]) and (hist[i-2] < hist[i - 3])\
+        #         and (hist[i-3] < hist[i - 4]) and (hist[i-4] < hist[i - 5]) and (hist[i-5] < hist[i - 6]):
             turn_buy.append((df["date"][i], df["macd_hist"][i]))
             if df["date"][i] >= recent_start_date:
                 result_list.append({
@@ -297,8 +298,9 @@ def plot_multi_indicators(df, html_file, stock_name):
                 })
 
         # 正 → 负 （看跌）
-        elif (hist[i] < hist[i - 1]) and (hist[i-1] > hist[i - 2]) and (hist[i-2] > hist[i - 3])\
-                and (hist[i-3] > hist[i - 4]) and (hist[i-4] > hist[i - 5]) and (hist[i-5] > hist[i - 6]):
+        elif (hist[i] < hist[i - 1]) and (hist[i-1] > hist[i - 2]) and (hist[i-2] > hist[i - 3]):
+        # elif (hist[i] < hist[i - 1]) and (hist[i-1] > hist[i - 2]) and (hist[i-2] > hist[i - 3])\
+        #         and (hist[i-3] > hist[i - 4]) and (hist[i-4] > hist[i - 5]) and (hist[i-5] > hist[i - 6]):
             turn_sell.append((df["date"][i], df["macd_hist"][i]))
             if df["date"][i] >= recent_start_date:
                 result_list.append({
@@ -411,10 +413,10 @@ def divergence_analysis(result_list, file_date):
         "hood", "pltr", "app"]
     dates = set()
     # 补充列如果没当日的标记
-    dates.add(f'{file_date.month:02d}' + "-" + f'{file_date.day-1:02d}')
+    dates.add(f'{str(file_date.year)[-2:]}' + f'{file_date.month:02d}' + f'{file_date.day-1:02d}')
 
     for item in result_list:
-        date = item['date'].split(" ")[0][5:]
+        date = item['date'].split(" ")[0][2:].replace('-','')
         stock = item['stock']
         status = item['status']
         tmp[(stock, date)].append(status)
