@@ -298,7 +298,7 @@ def plot_multi_indicators(df, html_file, stock_name):
                 })
 
         # 正 → 负 （看跌）
-        elif (hist[i] < hist[i - 1]) and (hist[i-1] > hist[i - 2]) and (hist[i-2] > hist[i - 3]):
+        elif (hist[i] < hist[i - 1]) and (hist[i - 1] > hist[i - 2]) and (hist[i-2] > hist[i - 3]):
         # elif (hist[i] < hist[i - 1]) and (hist[i-1] > hist[i - 2]) and (hist[i-2] > hist[i - 3])\
         #         and (hist[i-3] > hist[i - 4]) and (hist[i-4] > hist[i - 5]) and (hist[i-5] > hist[i - 6]):
             turn_sell.append((df["date"][i], df["macd_hist"][i]))
