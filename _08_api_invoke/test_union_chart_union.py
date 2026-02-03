@@ -406,7 +406,7 @@ def divergence_analysis(result_list, file_date):
     stocks = [
         "voo", "qqq", "smh", "","",
         "nvda", "goog", "tsla", "aapl", "meta","","",
-        "amd", "tsm", "avgo", "crdo", "sndk","","",
+        "amd", "tsm", "avgo", "crdo", "mu","","",
         "iren", "cifr", "nbis", "wulf", "clsk","","",
         "rklb", "asts", "onds","","",
         "be", "te", "oklo", "eose","","",
