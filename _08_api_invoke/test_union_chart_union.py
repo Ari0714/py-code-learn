@@ -13,7 +13,7 @@ from openpyxl.styles import PatternFill
 
 
 result_list = []  # 最终输出结果
-charts_date = 180
+charts_date = 31
 
 def plot_multi_indicators(df, html_file, stock_name):
 
