@@ -407,7 +407,7 @@ def divergence_analysis(result_list, file_date):
         "amd", "tsm", "avgo", "crdo", "mu","","",
         "iren", "cifr", "nbis", "wulf", "clsk","","",
         "rklb", "asts", "onds","","",
-        "be", "te", "oklo", "eose","","",
+        "be", "te", "oklo", "uuuu", "eose","","",
         "hood", "pltr", "app"]
     dates = set()
     # 补充列如果没当日的标记
@@ -485,7 +485,7 @@ if __name__ == '__main__':
         "amd", "tsm", "avgo", "crdo", "mu",
         "iren", "cifr", "nbis", "wulf", "clsk",
         "rklb", "asts", "onds",
-        "be", "te", "oklo", "eose",
+        "be", "te", "oklo", "uuuu", "eose",
         "hood", "pltr", "app"]:
     # for stock_name in [
     #     "smh"
