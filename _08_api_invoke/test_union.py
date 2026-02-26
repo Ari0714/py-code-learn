@@ -146,10 +146,10 @@ if __name__ == '__main__':
     stock_list = [
         "voo", "qqq", "smh",
         "nvda", "goog", "tsla", "aapl", "meta",
-        "amd", "tsm", "avgo", "crdo", "mu",
+        "amd", "tsm", "avgo", "crdo", "mu", "lite",
         "iren", "cifr", "nbis", "wulf", "clsk",
         "rklb", "asts", "onds",
-        "be", "te", "oklo", "uuuu", "eose",
+        "be", "te", "oklo", "uuuu",
         "hood", "pltr", "app"]
     # stock_list = [
     #     "te"]
