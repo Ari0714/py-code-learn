@@ -1,0 +1,36 @@
+
+spark-sql \
+  --files /path/to/log4j2-no-console.properties \
+  --conf "spark.driver.extraJavaOptions=-Dlog4j2.configurationFile=log4j2-no-console.properties" \
+  --conf "spark.executor.extraJavaOptions=-Dlog4j2.configurationFile=log4j2-no-console.properties" \
+  --conf "spark.ui.showConsoleProgress=false"
+
+
+
+# 设置全局根日志级别（建议 WARN 以保持安静）
+rootLogger.level = WARN
+# 引用下面定义的 Appender（只保留 file）
+rootLogger.appenderRef.rolling.ref = RollingFile
+
+# ----- 定义文件输出 (RollingFile) -----
+appender.rolling.type = RollingFile
+appender.rolling.name = RollingFile
+appender.rolling.fileName = logs/spark-udf.log
+appender.rolling.filePattern = logs/spark-udf-%d{yyyy-MM-dd}-%i.log.gz
+appender.rolling.layout.type = PatternLayout
+appender.rolling.layout.pattern = %d{yyyy-MM-dd HH:mm:ss} %p %c{1.}: %m%n
+appender.rolling.policies.type = Policies
+appender.rolling.policies.time.type = TimeBasedTriggeringPolicy
+appender.rolling.policies.size.type = SizeBasedTriggeringPolicy
+appender.rolling.policies.size.size = 100MB
+appender.rolling.strategy.type = DefaultRolloverStrategy
+appender.rolling.strategy.max = 10
+
+# ----- 彻底禁用控制台输出 (关键) -----
+# 我们不定义 Console Appender，所以上面的 rootLogger 里没有引用它。
+# 这样 Log4j 就不会向标准输出流发送任何日志。
+
+# 针对特定包名的日志控制（可选：比如你的 UDF 包名）
+# logger.my_udf.name = com.yourcompany.udf
+# logger.my_udf.level = ERROR
+
