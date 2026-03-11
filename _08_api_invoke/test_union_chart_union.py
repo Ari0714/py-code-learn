@@ -11,7 +11,6 @@ from openpyxl.styles import Border, Side
 from openpyxl.styles import PatternFill
 
 
-
 result_list = []  # 最终输出结果
 charts_date = 31
 
