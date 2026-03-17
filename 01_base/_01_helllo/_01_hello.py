@@ -3,7 +3,6 @@ import time
 
 print("hello world")
 
-
 '''time'''
 print(time.time())
 print(time.localtime())

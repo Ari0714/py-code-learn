@@ -1,0 +1,89 @@
+
+import psycopg2
+from functools import wraps
+from datetime import datetime
+
+# 数据库配置
+DB_CONFIG = {
+    "host": "localhost",
+    "database": "your_db",
+    "user": "postgres",
+    "password": "your_password"
+}
+
+def task_with_skip_check(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        task_name = func.__name__
+        today = datetime.now().date()
+
+        # --- Pre-hook: 状态检测 ---
+        status, last_run = get_current_status(task_name)
+
+        # 如果状态为 SUCCESS 且日期是今天，则跳过
+        if status == "SUCCESS" and last_run and last_run.date() == today:
+            print(f"⏭️ [Skip] 任务 '{task_name}' 今天已成功运行，跳过本次执行。")
+            return None # 或者根据需求返回特定的值
+
+        # --- Pre-hook: 记录开始运行 ---
+        update_db_status(task_name, "RUNNING")
+        print(f"🚀 [Start] 任务 '{task_name}' 开始执行...")
+
+        try:
+            result = func(*args, **kwargs)
+            # --- Post-hook: 运行成功 ---
+            update_db_status(task_name, "SUCCESS")
+            return result
+        except Exception as e:
+            # --- Post-hook: 运行失败 ---
+            update_db_status(task_name, "FAILED", str(e))
+            raise e
+
+    return wrapper
+
+def get_current_status(task_name):
+    """查询该任务最后一次的状态和时间"""
+    sql = "SELECT status, last_run FROM task_status WHERE task_name = %s"
+    try:
+        with psycopg2.connect(**DB_CONFIG) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (task_name,))
+                row = cur.fetchone()
+                return row if row else (None, None)
+    except Exception as e:
+        print(f"⚠️ 查询状态失败: {e}")
+        return None, None
+
+def update_db_status(task_name, status, error_msg=None):
+    """更新或插入状态（Upsert）"""
+    sql = """
+        INSERT INTO task_status (task_name, status, last_run, error_message)
+        VALUES (%s, %s, %s, %s)
+        ON CONFLICT (task_name)
+        DO UPDATE SET
+            status = EXCLUDED.status,
+            last_run = EXCLUDED.last_run,
+            error_message = EXCLUDED.error_message;
+    """
+    try:
+        with psycopg2.connect(**DB_CONFIG) as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, (task_name, status, datetime.now(), error_msg))
+                conn.commit()
+    except Exception as e:
+        print(f"⚠️ 更新数据库失败: {e}")
+
+# --- 使用测试 ---
+
+@task_with_skip_check
+def daily_report_task():
+    print("📊 正在生成每日报表...")
+    return "Report Data"
+
+if __name__ == "__main__":
+    # 第一次运行：执行并记入数据库
+    daily_report_task()
+
+    # 第二次运行（在同一天）：由于检测到 SUCCESS，会直接跳过
+    daily_report_task()
+
