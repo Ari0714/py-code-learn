@@ -1,4 +1,147 @@
 
+
+
+
+import psycopg2
+from psycopg2 import pool
+from datetime import datetime
+
+class DBManager:
+    def __init__(self, config):
+        # 使用连接池提高性能
+        self.pool = psycopg2.pool.SimpleConnectionPool(1, 10, **config)
+
+    def get_task_status(self, task_name):
+        """查询任务最后一次的状态和时间"""
+        sql = "SELECT status, last_run FROM task_status WHERE task_name = %s"
+        conn = self.pool.getconn()
+        try:
+            with conn.cursor() as cur:
+                cur.execute(sql, (task_name,))
+                return cur.fetchone() # 返回 (status, last_run) 或 None
+        finally:
+            self.pool.putconn(conn)
+
+    def update_task_status(self, task_name, status, error_msg=None):
+        """更新任务状态 (Upsert)"""
+        sql = """
+            INSERT INTO task_status (task_name, status, last_run, error_message)
+            VALUES (%s, %s, %s, %s)
+            ON CONFLICT (task_name)
+            DO UPDATE SET
+                status = EXCLUDED.status,
+                last_run = EXCLUDED.last_run,
+                error_message = EXCLUDED.error_message;
+        """
+        conn = self.pool.getconn()
+        try:
+            with conn.cursor() as cur:
+                cur.execute(sql, (task_name, status, datetime.now(), error_msg))
+                conn.commit()
+        finally:
+            self.pool.putconn(conn)
+
+
+import psycopg2
+from psycopg2 import pool
+from datetime import datetime
+
+class DBManager:
+    def __init__(self, config):
+        # Initialize connection pool for better performance
+        self.pool = psycopg2.pool.SimpleConnectionPool(1, 10, **config)
+
+    def get_task_status(self, task_name):
+        """Fetch the last status and timestamp for a specific task."""
+        query = "SELECT status, last_run FROM task_status WHERE task_name = %s"
+        conn = self.pool.getconn()
+        try:
+            with conn.cursor() as cur:
+                cur.execute(query, (task_name,))
+                return cur.fetchone() # Returns (status, last_run) or None
+        finally:
+            self.pool.putconn(conn)
+
+    def update_task_status(self, task_name, status, error_msg=None):
+        """Upsert task status: Insert new record or update existing one."""
+        query = """
+            INSERT INTO task_status (task_name, status, last_run, error_message)
+            VALUES (%s, %s, %s, %s)
+            ON CONFLICT (task_name)
+            DO UPDATE SET
+                status = EXCLUDED.status,
+                last_run = EXCLUDED.last_run,
+                error_message = EXCLUDED.error_message;
+        """
+        conn = self.pool.getconn()
+        try:
+            with conn.cursor() as cur:
+                cur.execute(query, (task_name, status, datetime.now(), error_msg))
+                conn.commit()
+        finally:
+            self.pool.putconn(conn)
+
+
+from functools import wraps
+from datetime import datetime
+from db_utils import DBManager
+
+# Database Configuration
+DB_CONFIG = {
+    "host": "localhost",
+    "database": "your_db",
+    "user": "postgres",
+    "password": "your_password"
+}
+
+# Global DB Instance
+db = DBManager(DB_CONFIG)
+
+def check_daily_status(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        task_name = func.__name__
+        today = datetime.now().date()
+
+        # 1. Pre-hook: Detect existing status
+        record = db.get_task_status(task_name)
+
+        if record:
+            status, last_run = record
+            # If status is SUCCESS and the date is today, skip the task
+            if status == "SUCCESS" and last_run and last_run.date() == today:
+                print(f"--- [SKIP] Task '{task_name}' already succeeded today ({last_run}). ---")
+                return None
+
+        # 2. Pre-hook: Set status to RUNNING
+        print(f"--- [START] Running task: {task_name} ---")
+        db.update_task_status(task_name, "RUNNING")
+
+        try:
+            result = func(*args, **kwargs)
+
+            # 3. Post-hook: Success update
+            db.update_task_status(task_name, "SUCCESS")
+            print(f"--- [SUCCESS] Task '{task_name}' completed. ---")
+            return result
+
+        except Exception as e:
+            # 4. Post-hook: Failure update with error log
+            db.update_task_status(task_name, "FAILED", error_msg=str(e))
+            print(f"--- [FAILED] Task '{task_name}' encountered an error: {e} ---")
+            raise e
+
+    return wrapper
+
+
+
+
+
+
+
+----------------------------
+
+
 import psycopg2
 from functools import wraps
 from datetime import datetime
