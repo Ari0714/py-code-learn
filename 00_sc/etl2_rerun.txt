@@ -1,6 +1,13 @@
 
 
 
+CREATE TABLE task_status (
+    task_name TEXT PRIMARY KEY,
+    status TEXT,
+    last_run TIMESTAMP,
+    error_message TEXT
+);
+
 
 import psycopg2
 from psycopg2 import pool
