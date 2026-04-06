@@ -401,7 +401,7 @@ def divergence_analysis(result_list, file_date):
     tmp = defaultdict(list)
     # stocks = set()
     stocks = [
-        "voo", "qqq", "smh", "gld", "","",
+        "spy", "qqq", "smh", "gld", "","",
         "nvda", "goog", "tsla", "aapl", "meta","","",
         "amd", "tsm", "avgo", "crdo", "mu", "lite", "aaoi","","",
         "iren", "cifr", "nbis", "wulf", "clsk","","",
@@ -479,7 +479,7 @@ def divergence_analysis(result_list, file_date):
 if __name__ == '__main__':
 
     for stock_name in [
-        "voo", "qqq", "smh", "gld",
+        "spy", "qqq", "smh", "gld",
         "nvda", "goog", "tsla", "aapl", "meta",
         "amd", "tsm", "avgo", "crdo", "mu", "lite", "aaoi",
         "iren", "cifr", "nbis", "wulf", "clsk",
