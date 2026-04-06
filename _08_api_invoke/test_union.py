@@ -144,7 +144,7 @@ if __name__ == '__main__':
 
     # 29 stocks
     stock_list = [
-        "voo", "qqq", "smh",
+        "voo", "qqq", "smh", "gld",
         "nvda", "goog", "tsla", "aapl", "meta",
         "amd", "tsm", "avgo", "crdo", "mu", "lite", "aaoi",
         "iren", "cifr", "nbis", "wulf", "clsk",
