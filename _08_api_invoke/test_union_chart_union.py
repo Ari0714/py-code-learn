@@ -9,7 +9,7 @@ from collections import defaultdict
 from openpyxl import load_workbook
 from openpyxl.styles import Border, Side
 from openpyxl.styles import PatternFill
-
+from test_union_stocks_list import stock_list, stocks_blank
 
 result_list = []  # 最终输出结果
 charts_date = 31
@@ -400,14 +400,6 @@ def plot_multi_indicators(df, html_file, stock_name):
 def divergence_analysis(result_list, file_date):
     tmp = defaultdict(list)
     # stocks = set()
-    stocks = [
-        "spy", "qqq", "smh", "gld", "",
-        "nvda", "goog", "tsla", "aapl", "meta","","",
-        "amd", "tsm", "avgo", "aehr", "mu", "lite", "aaoi","",
-        "iren", "cifr", "nbis", "wulf", "clsk","","",
-        "rklb", "asts", "onds","","",
-        "be", "te", "oklo", "uuuu","","",
-        "hood", "pltr"]
     dates = set()
     # 补充列如果没当日的标记
     dates.add(f'{str(file_date.year)[-2:]}' + f'{file_date.month:02d}' + f'{file_date.day-1:02d}')
@@ -425,7 +417,7 @@ def divergence_analysis(result_list, file_date):
 
     # 构建矩阵
     matrix = []
-    for stock in (list(stocks)):
+    for stock in (list(stocks_blank)):
         row = [stock]
         for date in dates:
             statuses = tmp.get((stock, date), [])
@@ -478,17 +470,8 @@ def divergence_analysis(result_list, file_date):
 
 if __name__ == '__main__':
 
-    for stock_name in [
-        "spy", "qqq", "smh", "gld",
-        "nvda", "goog", "tsla", "aapl", "meta",
-        "amd", "tsm", "avgo", "aehr", "mu", "lite", "aaoi",
-        "iren", "cifr", "nbis", "wulf", "clsk",
-        "rklb", "asts", "onds",
-        "be", "te", "oklo", "uuuu",
-        "hood", "pltr"]:
-    # for stock_name in [
-    #     "smh"
-    #     ]:
+    for stock_name in stock_list:
+    # for stock_name in ["smh"]:
 
         print(f"\n=========={stock_name}============")
         # end_date = datetime.strptime("2025-12-17", "%Y-%m-%d").date()

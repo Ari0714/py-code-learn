@@ -18,6 +18,7 @@ from get_macd import get_macd
 from get_mfi import get_mfi
 from get_rsi import get_rsi
 from get_stocksPrices import get_data_insert
+from test_union_stocks_list import stock_list
 
 
 def get_all_data(stock_name, start_date, end_date, typee):
@@ -142,16 +143,7 @@ def union_rsi(stock, end_date, year):
 
 if __name__ == '__main__':
 
-    # 30 stocks
-    # stock_list = [
-    #     "spy", "qqq", "smh", "gld",
-    #     "nvda", "goog", "tsla", "aapl", "meta",
-    #     "amd", "tsm", "avgo", "aehr", "mu", "lite", "aaoi",
-    #     "iren", "cifr", "nbis", "wulf", "clsk",
-    #     "rklb", "asts", "onds",
-    #     "be", "te", "oklo", "uuuu",
-    #     "hood", "pltr"]
-    stock_list = ["aehr"]
+    # stock_list = ["aehr"]
 
     # end_date = datetime.strptime("2021-12-31", "%Y-%m-%d").date()
     # 获取今日日期, 计算去年今日
