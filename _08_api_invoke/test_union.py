@@ -143,16 +143,15 @@ def union_rsi(stock, end_date, year):
 if __name__ == '__main__':
 
     # 30 stocks
-    stock_list = [
-        "spy", "qqq", "smh", "gld",
-        "nvda", "goog", "tsla", "aapl", "meta",
-        "amd", "tsm", "avgo", "crdo", "mu", "lite", "aaoi",
-        "iren", "cifr", "nbis", "wulf", "clsk",
-        "rklb", "asts", "onds",
-        "be", "te", "oklo", "uuuu",
-        "hood", "pltr"]
     # stock_list = [
-    #     "te"]
+    #     "spy", "qqq", "smh", "gld",
+    #     "nvda", "goog", "tsla", "aapl", "meta",
+    #     "amd", "tsm", "avgo", "aehr", "mu", "lite", "aaoi",
+    #     "iren", "cifr", "nbis", "wulf", "clsk",
+    #     "rklb", "asts", "onds",
+    #     "be", "te", "oklo", "uuuu",
+    #     "hood", "pltr"]
+    stock_list = ["aehr"]
 
     # end_date = datetime.strptime("2021-12-31", "%Y-%m-%d").date()
     # 获取今日日期, 计算去年今日

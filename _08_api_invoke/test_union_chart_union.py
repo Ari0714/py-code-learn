@@ -403,7 +403,7 @@ def divergence_analysis(result_list, file_date):
     stocks = [
         "spy", "qqq", "smh", "gld", "",
         "nvda", "goog", "tsla", "aapl", "meta","","",
-        "amd", "tsm", "avgo", "crdo", "mu", "lite", "aaoi","",
+        "amd", "tsm", "avgo", "aehr", "mu", "lite", "aaoi","",
         "iren", "cifr", "nbis", "wulf", "clsk","","",
         "rklb", "asts", "onds","","",
         "be", "te", "oklo", "uuuu","","",
@@ -481,7 +481,7 @@ if __name__ == '__main__':
     for stock_name in [
         "spy", "qqq", "smh", "gld",
         "nvda", "goog", "tsla", "aapl", "meta",
-        "amd", "tsm", "avgo", "crdo", "mu", "lite", "aaoi",
+        "amd", "tsm", "avgo", "aehr", "mu", "lite", "aaoi",
         "iren", "cifr", "nbis", "wulf", "clsk",
         "rklb", "asts", "onds",
         "be", "te", "oklo", "uuuu",
